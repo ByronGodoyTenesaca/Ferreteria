@@ -11,6 +11,19 @@ public class Cliente extends Persona{
         this.numeroTarjeta = numeroTarjeta;
     }
 
+    public String getNumeroTarjeta() {
+        return numeroTarjeta;
+    }
+
+    public void setNumeroTarjeta(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "numeroTarjeta=" + numeroTarjeta + '}';
+    }
+
    
     
 }
