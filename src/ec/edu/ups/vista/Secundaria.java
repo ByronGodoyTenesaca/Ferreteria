@@ -1,11 +1,15 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorCliente;
+
 public class Secundaria extends javax.swing.JFrame {
 
     private Clientes c;
+    private ControladorCliente controladorCliente;
     public Secundaria() {
         initComponents();
-        c=new Clientes();
+        
+        controladorCliente=new ControladorCliente();
     }
 
     @SuppressWarnings("unchecked")
@@ -179,6 +183,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
+        c=new Clientes(controladorCliente);
         c.setVisible(true);
         desktopPane.add(c);
         

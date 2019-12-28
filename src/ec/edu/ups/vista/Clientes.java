@@ -1,11 +1,16 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.modelo.Cliente;
+import javax.swing.table.DefaultTableModel;
 
 public class Clientes extends javax.swing.JInternalFrame {
 
-    public Clientes() {
+    private ControladorCliente controladorCliente;
+    public Clientes(ControladorCliente controladorCliente) {
         initComponents();
+        this.controladorCliente=controladorCliente;
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -42,10 +47,10 @@ public class Clientes extends javax.swing.JInternalFrame {
         rbtnFemenino = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbxBuscar = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCliente = new javax.swing.JTable();
 
         jButton1.setText("Nuevo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +246,13 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setText("Buscar por:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion", "Cedula", "Nombres", "Profesion", " " }));
+        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion", "Cedula", "Nombre", "Profesion", " " }));
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -256,7 +267,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel10))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
@@ -269,7 +280,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -298,7 +309,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -314,8 +325,8 @@ public class Clientes extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(30);
-        jScrollPane1.setViewportView(jTable1);
+        tblCliente.setRowHeight(30);
+        jScrollPane1.setViewportView(tblCliente);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -407,15 +418,45 @@ public class Clientes extends javax.swing.JInternalFrame {
        
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        if(evt.getKeyCode()==10){
+            if((String)cbxBuscar.getSelectedItem()== "Cedula"){
+                String cedula=txtCedula.getText();
+                Cliente c=controladorCliente.ListarCedula(cedula);
+                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+                Object[] dato={
+                    c.getCodigo(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getCedula(),
+                    c.getEmail(),
+                    c.getNumeroTarjeta(),
+                    c.getGenero(),
+                    c.getTelefono()
+                  // ========>>> falta la de profesion
+                };
+                modelo.addRow(dato);
+            
+            }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
+                
+                
+            }else{
+                
+            }
+        
+        } 
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbxBuscar;
     private javax.swing.JComboBox<String> cbxProfesion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -431,10 +472,10 @@ public class Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rbtnFemenino;
     private javax.swing.ButtonGroup rbtnGenero;
     private javax.swing.JRadioButton rbtnMasculino;
+    private javax.swing.JTable tblCliente;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCedula;

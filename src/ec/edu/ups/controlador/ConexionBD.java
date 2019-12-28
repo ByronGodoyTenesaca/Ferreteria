@@ -9,6 +9,10 @@ import java.util.logging.Logger;
 public class ConexionBD {
 
     private Connection conexion;
+    private String login="Ferreteria";
+    private String pasword="ferreteria";
+    private String url="jdbc:oracle:thin:@localhost:1521:orcl";
+    
     public ConexionBD() {
     }
 
@@ -20,33 +24,35 @@ public class ConexionBD {
         this.conexion = conexion;
     }
     
-    
-    
    public void Conectar(){
     try{
-    String usuario ="SYSTEM";
-    String contraseña = "SYSTEM";
-    Class.forName("oracle.jdbc.OracleDriver");
-    String cadenaConexion = "jdbc:oracle:thin:@localhost:1521:XE";
-    setConexion(DriverManager.getConnection
-            (cadenaConexion,usuario,contraseña));
+    
+    Class.forName("oracle.jdbc.driver.OracleDriver");
+    conexion=DriverManager.getConnection(url,login,pasword);
+    conexion.setAutoCommit(false);
     if( getConexion()!=null)
     {
-    System.out.println("Se ha establecido la conexion con el esquema BDVENTAS");
+    System.out.println("Se ha establecido la conexion");
     }
     else{System.out.println("error de conexion");}
     }
-    catch(Exception e)
-    {e.printStackTrace();}
+    
+    catch(Exception e){
+        e.printStackTrace();
+    }
 }
    
    public void Desconectar(){
         try {
             conexion.close();
+            System.out.println("desconectado");
         } catch (SQLException ex) {
             
         }
    }
     
+    public static void main(String[] args) {
+        new ConexionBD().Conectar();
+    }
    
 }
