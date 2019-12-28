@@ -330,6 +330,11 @@ public class Clientes extends javax.swing.JInternalFrame {
             }
         });
         tblCliente.setRowHeight(30);
+        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCliente);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -458,9 +463,10 @@ public class Clientes extends javax.swing.JInternalFrame {
                     c.getCedula(),
                     c.getEmail(),
                     c.getNumeroTarjeta(),
+                    "ing",// ========>>> falta la de profesion
                     c.getGenero(),
                     c.getTelefono()
-                  // ========>>> falta la de profesion
+                  
                 };
                 modelo.addRow(dato);
                 }
@@ -471,6 +477,24 @@ public class Clientes extends javax.swing.JInternalFrame {
         
         } 
     }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        int seleccion =tblCliente.getSelectedRow();
+        txtNombres.setText(String.valueOf(tblCliente.getValueAt(seleccion, 1)));
+        txtApellidos.setText(String.valueOf(tblCliente.getValueAt(seleccion, 2)));
+        txtDireccion.setText(String.valueOf(tblCliente.getValueAt(seleccion, 3)));
+        txtCedula.setText(String.valueOf(tblCliente.getValueAt(seleccion, 4)));
+        txtEmail.setText(String.valueOf(tblCliente.getValueAt(seleccion, 5)));
+        txtTarjeta.setText(String.valueOf(tblCliente.getValueAt(seleccion, 6)));
+        txtTelefono.setText(String.valueOf(tblCliente.getValueAt(seleccion, 9)));
+        if (tblCliente.getValueAt(seleccion, 8)=="Masculino"){
+            rbtnMasculino.setSelected(true);
+            rbtnFemenino.setSelected(false);
+        }else{
+             rbtnMasculino.setSelected(false);
+            rbtnFemenino.setSelected(true);
+        }
+    }//GEN-LAST:event_tblClienteMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

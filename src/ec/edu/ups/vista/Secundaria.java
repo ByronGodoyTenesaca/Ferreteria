@@ -6,8 +6,10 @@ import ec.edu.ups.controlador.ControladorProfesion;
 public class Secundaria extends javax.swing.JFrame {
 
     private Clientes c;
+    private Producto p;
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
+    
     public Secundaria() {
         initComponents();
         
@@ -54,6 +56,11 @@ public class Secundaria extends javax.swing.JFrame {
         });
 
         jButton2.setText("Productos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Empleados");
 
@@ -191,6 +198,14 @@ public class Secundaria extends javax.swing.JFrame {
         desktopPane.add(c);
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        p=new Producto();
+        p.setVisible(true);
+        desktopPane.add(p);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
