@@ -1,15 +1,19 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorCliente;
+import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Cliente;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class Clientes extends javax.swing.JInternalFrame {
 
     private ControladorCliente controladorCliente;
-    public Clientes(ControladorCliente controladorCliente) {
+    private ControladorProfesion controladorProfesion;
+    public Clientes(ControladorCliente controladorCliente, ControladorProfesion controladorProfesion) {
         initComponents();
         this.controladorCliente=controladorCliente;
+        this.controladorProfesion=controladorProfesion;
         
     }
 
@@ -19,10 +23,10 @@ public class Clientes extends javax.swing.JInternalFrame {
 
         rbtnGenero = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -52,31 +56,31 @@ public class Clientes extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCliente = new javax.swing.JTable();
 
-        jButton1.setText("Nuevo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Guardar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Modificar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Eliminar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -92,23 +96,23 @@ public class Clientes extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 497, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -362,7 +366,7 @@ public class Clientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxProfesionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         txtApellidos.setText("");
         txtBuscar.setText("");
         txtCedula.setText("");
@@ -371,16 +375,17 @@ public class Clientes extends javax.swing.JInternalFrame {
         txtNombres.setText("");
         txtTarjeta.setText("");
         txtTelefono.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String cedula=txtCedula.getText();
         
+        controladorCliente.Eliminar(cedula);
+        btnNuevoActionPerformed(evt);
         
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        Cliente cliente=new Cliente();
        cliente.setApellidos(txtApellidos.getText());
        cliente.setCedula(txtCedula.getText());
@@ -394,12 +399,13 @@ public class Clientes extends javax.swing.JInternalFrame {
        }else{
            cliente.setGenero("Masculino");
        }
+       controladorCliente.CrearCliente(cliente,controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem()));
+        btnNuevoActionPerformed(evt);
        
        
-       
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Cliente cliente=new Cliente();
        cliente.setApellidos(txtApellidos.getText());
        cliente.setCedula(txtCedula.getText());
@@ -413,10 +419,10 @@ public class Clientes extends javax.swing.JInternalFrame {
        }else{
            cliente.setGenero("Masculino");
        }
+       controladorCliente.Actualizar(cliente, controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem()));
        
        
-       
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
@@ -439,7 +445,25 @@ public class Clientes extends javax.swing.JInternalFrame {
                 modelo.addRow(dato);
             
             }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
+                int codigo = controladorProfesion.buscarCodigo(txtBuscar.getText());
+                List<Cliente> lista=controladorCliente.ListarProfesion(codigo);
+                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 
+                for (Cliente c : lista) {
+                    Object[] dato={
+                    c.getCodigo(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getCedula(),
+                    c.getEmail(),
+                    c.getNumeroTarjeta(),
+                    c.getGenero(),
+                    c.getTelefono()
+                  // ========>>> falta la de profesion
+                };
+                modelo.addRow(dato);
+                }
                 
             }else{
                 
@@ -450,13 +474,13 @@ public class Clientes extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxBuscar;
     private javax.swing.JComboBox<String> cbxProfesion;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

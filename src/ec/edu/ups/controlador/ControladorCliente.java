@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class ControladorCliente {
     
-    private ConexionBD conexion;
+    private ConexionBD conexion=new ConexionBD();
     
     
     public void CrearCliente(Cliente c,int n){
@@ -90,21 +90,21 @@ public class ControladorCliente {
         try {
             // List<Cliente> lista=new ArrayList<>();
             Cliente c=new Cliente();
-            String sql="SELECT * FROM CLIENTE WHERE CLI_CEDULA = ?";
+            String sql="SELECT * FROM CLIENTE WHERE CLI_CEDULA = "+Cedula+";";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
             while(respuesta.next()){
                 c.setCodigo(respuesta.getInt(1));
-                c.setNombres(sql);
-                c.setApellidos(sql);
-                c.setDireccion(Cedula);
+                c.setNombres(respuesta.getString(2));
+                c.setApellidos(respuesta.getString(3));
+                c.setDireccion(respuesta.getString(4));
                 c.setCedula(Cedula);
-                c.setEmail(sql);
-                c.setNumeroTarjeta(Cedula);
-                c.setGenero(Cedula);
-                c.setTelefono(sql);
+                c.setEmail(respuesta.getString(6));
+                c.setNumeroTarjeta(respuesta.getString(7));
+                c.setGenero(respuesta.getString(8));
+                c.setTelefono(respuesta.getString(9));
                 
 
 // ---------->>>>  falta la de profesion  
@@ -114,6 +114,36 @@ public class ControladorCliente {
             return c;
         } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "No se pudo encontrar a la persona");
+        }
+        return null;
+     }
+     
+     public List<Cliente> ListarProfesion(int n){
+        try {
+             List<Cliente> lista=new ArrayList<>();
+            
+            String sql="SELECT * FROM CLIENTE WHERE CLI_PROFESION = "+n+";";
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            
+            while(respuesta.next()){
+                Cliente c=new Cliente();
+                c.setCodigo(respuesta.getInt(1));
+                c.setNombres(respuesta.getString(2));
+                c.setApellidos(respuesta.getString(3));
+                c.setDireccion(respuesta.getString(4));
+                c.setCedula(respuesta.getString(5));
+                c.setEmail(respuesta.getString(6));
+                c.setNumeroTarjeta(respuesta.getString(7));
+                c.setGenero(respuesta.getString(8));
+                c.setTelefono(respuesta.getString(9));
+                // ---------->>>>  falta la de profesion 
+                lista.add(c);
+            }
+            return lista;
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "No se pudo encontrar a las profesiones");
         }
         return null;
      }
