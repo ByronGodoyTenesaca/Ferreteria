@@ -1,6 +1,8 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorCliente;
+import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProfesion;
 
 public class Secundaria extends javax.swing.JFrame {
@@ -202,7 +204,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        p=new Producto();
+        p=new Producto(new ControladorCategoria(),new ControladorMedida());
         p.setVisible(true);
         desktopPane.add(p);
     }//GEN-LAST:event_jButton2ActionPerformed
