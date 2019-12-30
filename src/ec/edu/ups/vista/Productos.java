@@ -22,8 +22,8 @@ public class Productos extends javax.swing.JInternalFrame {
         this.controladorCategoria=controladorCategoria;
         this.controladorMedida=controladorMedida;
         this.controladorProducto=controladorProducto;
-        llenarMedida();
-        llenarCategoria();
+        //llenarMedida();
+        //llenarCategoria();
     }
 
     public void llenarCategoria(){
