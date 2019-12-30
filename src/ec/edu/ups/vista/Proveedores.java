@@ -1,19 +1,17 @@
 package ec.edu.ups.vista;
 
-import ec.edu.ups.controlador.ControladorCliente;
-import ec.edu.ups.controlador.ControladorProfesion;
-import ec.edu.ups.modelo.Cliente;
+import ec.edu.ups.controlador.ControladorProveedor;
+import ec.edu.ups.modelo.Proveedor;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class Clientes extends javax.swing.JInternalFrame {
+public class Proveedores extends javax.swing.JInternalFrame {
 
-    private ControladorCliente controladorCliente;
-    private ControladorProfesion controladorProfesion;
-    public Clientes(ControladorCliente controladorCliente, ControladorProfesion controladorProfesion) {
+    private ControladorProveedor controladorProveedor;
+    private int codigo;
+    public Proveedores(ControladorProveedor controladorProveedor) {
         initComponents();
-        this.controladorCliente=controladorCliente;
-        this.controladorProfesion=controladorProfesion;
+        this.controladorProveedor=controladorProveedor;
         
     }
 
@@ -37,7 +35,6 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         txtNombres = new javax.swing.JTextField();
@@ -45,16 +42,15 @@ public class Clientes extends javax.swing.JInternalFrame {
         txtDireccion = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        txtTarjeta = new javax.swing.JTextField();
-        cbxProfesion = new javax.swing.JComboBox<>();
         rbtnMasculino = new javax.swing.JRadioButton();
         rbtnFemenino = new javax.swing.JRadioButton();
+        txtEmpresa = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         cbxBuscar = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCliente = new javax.swing.JTable();
+        tblProveedor = new javax.swing.JTable();
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -139,20 +135,10 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel6.setText("Telefono:");
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setText("Profesión:");
-
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel8.setText("Tarjeta Credito:");
+        jLabel7.setText("Empresa:");
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Genero:");
-
-        cbxProfesion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion", "mecanico" }));
-        cbxProfesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxProfesionActionPerformed(evt);
-            }
-        });
 
         rbtnGenero.add(rbtnMasculino);
         rbtnMasculino.setText("Masculino");
@@ -188,21 +174,17 @@ public class Clientes extends javax.swing.JInternalFrame {
                                 .addComponent(rbtnMasculino)
                                 .addGap(18, 18, 18)
                                 .addComponent(rbtnFemenino))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel7)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(cbxProfesion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,15 +204,11 @@ public class Clientes extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addComponent(jLabel7)
                         .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(cbxProfesion)
-                        .addGap(1, 1, 1)))
-                .addGap(18, 18, 18)
+                    .addComponent(txtEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel8)
-                    .addComponent(txtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-                    .addComponent(txtTarjeta, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                    .addComponent(txtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -263,29 +241,26 @@ public class Clientes extends javax.swing.JInternalFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(jLabel10))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtBuscar)))
-                .addContainerGap())
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel10))
+                    .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(53, 53, 53)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
                 .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(26, 26, 26)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -313,29 +288,29 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
+        tblProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Cedula", "Nombres", "Apellidos", "Direccion", "Email", "Celular", "Profesion", "Tarjeta Credito", "Genero"
+                "Codigo", "Cedula", "Nombres", "Apellidos", "Direccion", "Email", "Telefono", "Empresa", "Genero"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblCliente.setRowHeight(30);
-        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProveedor.setRowHeight(30);
+        tblProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblClienteMouseClicked(evt);
+                tblProveedorMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblCliente);
+        jScrollPane1.setViewportView(tblProveedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -355,7 +330,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -368,10 +343,6 @@ public class Clientes extends javax.swing.JInternalFrame {
         new Secundaria().setVisible(true);
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void cbxProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProfesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxProfesionActionPerformed
-
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         txtApellidos.setText("");
         txtBuscar.setText("");
@@ -379,54 +350,52 @@ public class Clientes extends javax.swing.JInternalFrame {
         txtDireccion.setText("");
         txtEmail.setText("");
         txtNombres.setText("");
-        txtTarjeta.setText("");
+        txtEmpresa.setText("");
         txtTelefono.setText("");
-        cbxProfesion.setSelectedIndex(0);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        String cedula=txtCedula.getText();
-        
-        controladorCliente.Eliminar(cedula);
+        controladorProveedor.Eliminar(codigo);
         btnNuevoActionPerformed(evt);
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       Cliente cliente=new Cliente();
+       Proveedor cliente=new Proveedor();
        cliente.setApellidos(txtApellidos.getText());
        cliente.setCedula(txtCedula.getText());
        cliente.setDireccion(txtDireccion.getText());
        cliente.setEmail(txtEmail.getText());
        cliente.setNombres(txtNombres.getText());
-       cliente.setNumeroTarjeta(txtTarjeta.getText());
+       cliente.setEmpresa(txtEmpresa.getText());
        cliente.setTelefono(txtTelefono.getText());
        if(rbtnFemenino.isSelected()){
            cliente.setGenero("Femenino");
        }else{
            cliente.setGenero("Masculino");
        }
-       controladorCliente.CrearCliente(cliente,controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem()));
+       controladorProveedor.crearProveedor(cliente);
         btnNuevoActionPerformed(evt);
        
        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        Cliente cliente=new Cliente();
+        Proveedor cliente=new Proveedor();
        cliente.setApellidos(txtApellidos.getText());
        cliente.setCedula(txtCedula.getText());
        cliente.setDireccion(txtDireccion.getText());
        cliente.setEmail(txtEmail.getText());
        cliente.setNombres(txtNombres.getText());
-       cliente.setNumeroTarjeta(txtTarjeta.getText());
+       cliente.setEmpresa(txtEmpresa.getText());
        cliente.setTelefono(txtTelefono.getText());
+       cliente.setCodigo(codigo);
        if(rbtnFemenino.isSelected()){
            cliente.setGenero("Femenino");
        }else{
            cliente.setGenero("Masculino");
        }
-       controladorCliente.Actualizar(cliente, controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem()));
+       controladorProveedor.actualizarProveedor(cliente);
        
        
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -435,8 +404,8 @@ public class Clientes extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()== "Cedula"){
                 String cedula=txtCedula.getText();
-                Cliente c=controladorCliente.ListarCedula(cedula);
-                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+                Proveedor c=controladorProveedor.buscarCedula(txtBuscar.getText());
+                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
                 Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -445,19 +414,18 @@ public class Clientes extends javax.swing.JInternalFrame {
                     c.getDireccion(),
                     c.getEmail(),
                     c.getTelefono(),
-                    // ========>>> falta la de profesion
-                    c.getNumeroTarjeta(),
+                    c.getEmpresa(),
                     c.getGenero()
-                  
+                    
+                 
                 };
                 modelo.addRow(dato);
             
-            }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
-                int codigo = controladorProfesion.buscarCodigo(txtBuscar.getText());
-                List<Cliente> lista=controladorCliente.ListarProfesion(codigo);
-                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+            }else if((String)cbxBuscar.getSelectedItem()== "Empresa"){
+                Proveedor c = controladorProveedor.buscarEmpresa(txtBuscar.getText());
+                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
                 
-                for (Cliente c : lista) {
+               
                     Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -466,13 +434,12 @@ public class Clientes extends javax.swing.JInternalFrame {
                     c.getDireccion(),
                     c.getEmail(),
                     c.getTelefono(),
-                    "ing",// ========>>> falta la de profesion
-                    c.getNumeroTarjeta(),
-                    c.getGenero(),
+                    c.getEmpresa(),
+                    c.getGenero()
                   
                 };
                 modelo.addRow(dato);
-                }
+                
                 
             }else{
                 
@@ -481,25 +448,24 @@ public class Clientes extends javax.swing.JInternalFrame {
         } 
     }//GEN-LAST:event_txtBuscarKeyPressed
 
-    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
-        int seleccion =tblCliente.getSelectedRow();
-        txtNombres.setText(String.valueOf(tblCliente.getValueAt(seleccion, 2)));
-        txtApellidos.setText(String.valueOf(tblCliente.getValueAt(seleccion, 3)));
-        txtDireccion.setText(String.valueOf(tblCliente.getValueAt(seleccion, 4)));
-        txtCedula.setText(String.valueOf(tblCliente.getValueAt(seleccion, 1)));
-        txtEmail.setText(String.valueOf(tblCliente.getValueAt(seleccion, 5)));
-        txtTarjeta.setText(String.valueOf(tblCliente.getValueAt(seleccion, 8)));
-        txtTelefono.setText(String.valueOf(tblCliente.getValueAt(seleccion, 6)));
-        if (tblCliente.getValueAt(seleccion, 9)=="Masculino"){
+    private void tblProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMouseClicked
+        int seleccion =tblProveedor.getSelectedRow();
+        codigo=(int)tblProveedor.getValueAt(seleccion, 0);
+        txtNombres.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 2)));
+        txtApellidos.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 3)));
+        txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 4)));
+        txtCedula.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 1)));
+        txtEmail.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 5)));
+        txtEmpresa.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 7)));
+        txtTelefono.setText(String.valueOf(tblProveedor.getValueAt(seleccion,6)));
+        if (tblProveedor.getValueAt(seleccion, 8)=="Masculino"){
             rbtnMasculino.setSelected(true);
             rbtnFemenino.setSelected(false);
         }else{
              rbtnMasculino.setSelected(false);
             rbtnFemenino.setSelected(true);
         }
-        
-       //=====>> falta rpfesion
-    }//GEN-LAST:event_tblClienteMouseClicked
+    }//GEN-LAST:event_tblProveedorMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -509,7 +475,6 @@ public class Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxBuscar;
-    private javax.swing.JComboBox<String> cbxProfesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -518,7 +483,6 @@ public class Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -528,14 +492,14 @@ public class Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbtnFemenino;
     private javax.swing.ButtonGroup rbtnGenero;
     private javax.swing.JRadioButton rbtnMasculino;
-    private javax.swing.JTable tblCliente;
+    private javax.swing.JTable tblProveedor;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombres;
-    private javax.swing.JTextField txtTarjeta;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

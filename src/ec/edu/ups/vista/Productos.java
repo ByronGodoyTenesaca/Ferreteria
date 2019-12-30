@@ -3,9 +3,11 @@ package ec.edu.ups.vista;
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
+import ec.edu.ups.controlador.ControladorProveedor;
 import ec.edu.ups.modelo.Categoria;
 import ec.edu.ups.modelo.Medida;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.modelo.Proveedor;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,16 +16,20 @@ public class Productos extends javax.swing.JInternalFrame {
     private ControladorCategoria controladorCategoria;
     private ControladorMedida controladorMedida;
     private ControladorProducto controladorProducto;
+    private ControladorProveedor controladorProveedor;
     private List<Medida>listaMedida;
     private List<Categoria>listaCategoria;
+    private List<Proveedor>listaProveedor;
     private int codigo;
-    public Productos(ControladorCategoria controladorCategoria,ControladorMedida controladorMedida,ControladorProducto controladorProducto) {
+    public Productos(ControladorCategoria controladorCategoria,ControladorMedida controladorMedida,ControladorProducto controladorProducto,ControladorProveedor controladorProveedor) {
         initComponents();
         this.controladorCategoria=controladorCategoria;
         this.controladorMedida=controladorMedida;
         this.controladorProducto=controladorProducto;
+        this.controladorProveedor=controladorProveedor;
         //llenarMedida();
         //llenarCategoria();
+        //llenarProveedor();
     }
 
     public void llenarCategoria(){
@@ -35,7 +41,11 @@ public class Productos extends javax.swing.JInternalFrame {
     }
     
     public void llenarProveedor(){
-       // ===========>>> falta llenar
+       List<Proveedor>lista=controladorProveedor.listar();
+       listaProveedor=lista;
+        for (Proveedor p : lista) {
+            cbxProveedor.addItem(p.getNombres());
+        }
     }
     
     public void llenarMedida(){
@@ -183,6 +193,11 @@ public class Productos extends javax.swing.JInternalFrame {
         jPanel3.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 56, 350, 30));
 
         cbxProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija una Opcion" }));
+        cbxProveedor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxProveedorItemStateChanged(evt);
+            }
+        });
         jPanel3.add(cbxProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 104, 266, 36));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -346,11 +361,11 @@ public class Productos extends javax.swing.JInternalFrame {
         txtNombre.setText("");
         txtPrecioCompra.setText("");
         txtPrecioVenta.setText("");
-        cbxCategoria.setSelectedIndex(1);
-        cbxBuscar.setSelectedIndex(1);
-        cbxFabricacion.setSelectedIndex(1);
-        cbxMedida.setSelectedIndex(1);
-        cbxProveedor.setSelectedIndex(1);
+        cbxCategoria.setSelectedIndex(0);
+        cbxBuscar.setSelectedIndex(0);
+        cbxFabricacion.setSelectedIndex(0);
+        cbxMedida.setSelectedIndex(0);
+        cbxProveedor.setSelectedIndex(0);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -472,6 +487,17 @@ public class Productos extends javax.swing.JInternalFrame {
         cbxFabricacion.setSelectedItem(tblProducto.getValueAt(seleccion, 9));
         
     }//GEN-LAST:event_tblProductoMouseClicked
+
+    private void cbxProveedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxProveedorItemStateChanged
+       String proveedor=(String)cbxProveedor.getSelectedItem();
+       
+        for (Proveedor p : listaProveedor) {
+            if(p.getNombres()==proveedor){
+                txtMarca.setText(p.getEmpresa());
+                break;
+            }
+        }
+    }//GEN-LAST:event_cbxProveedorItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

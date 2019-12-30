@@ -5,6 +5,7 @@ import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProfesion;
+import ec.edu.ups.controlador.ControladorProveedor;
 
 public class Secundaria extends javax.swing.JFrame {
 
@@ -25,12 +26,13 @@ public class Secundaria extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
-        jPanel1 = new javax.swing.JPanel();
+        pnlAcceso = new javax.swing.JPanel();
         btnCliente = new javax.swing.JButton();
         btnProducto = new javax.swing.JButton();
         btnEmpleado = new javax.swing.JButton();
         btnFacturacion = new javax.swing.JButton();
         btnSesion = new javax.swing.JButton();
+        btnProveedor = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -70,12 +72,24 @@ public class Secundaria extends javax.swing.JFrame {
         btnFacturacion.setText("Facturacion");
 
         btnSesion.setText("Sesion");
+        btnSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSesionActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        btnProveedor.setText("Proveedor");
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlAccesoLayout = new javax.swing.GroupLayout(pnlAcceso);
+        pnlAcceso.setLayout(pnlAccesoLayout);
+        pnlAccesoLayout.setHorizontalGroup(
+            pnlAccesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAccesoLayout.createSequentialGroup()
                 .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -84,20 +98,23 @@ public class Secundaria extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(btnFacturacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 459, Short.MAX_VALUE))
+                .addGap(0, 361, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlAccesoLayout.setVerticalGroup(
+            pnlAccesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addComponent(btnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnFacturacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        desktopPane.add(jPanel1);
-        jPanel1.setBounds(0, 0, 950, 50);
+        desktopPane.add(pnlAcceso);
+        pnlAcceso.setBounds(0, 0, 950, 50);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Clientes");
@@ -205,10 +222,20 @@ public class Secundaria extends javax.swing.JFrame {
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto());
+        p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor());
         p.setVisible(true);
         desktopPane.add(p);
     }//GEN-LAST:event_btnProductoActionPerformed
+
+    private void btnSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSesionActionPerformed
+        this.dispose();
+        new Login().setVisible(true);
+        
+    }//GEN-LAST:event_btnSesionActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProveedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,6 +278,7 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnFacturacion;
     private javax.swing.JButton btnProducto;
+    private javax.swing.JButton btnProveedor;
     private javax.swing.JButton btnSesion;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
@@ -264,10 +292,10 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JPanel pnlAcceso;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
