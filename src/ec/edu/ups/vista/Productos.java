@@ -3,12 +3,15 @@ package ec.edu.ups.vista;
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
+import ec.edu.ups.controlador.ControladorProductoProveedor;
 import ec.edu.ups.controlador.ControladorProveedor;
 import ec.edu.ups.modelo.Categoria;
 import ec.edu.ups.modelo.Medida;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.modelo.ProductoProveedor;
 import ec.edu.ups.modelo.Proveedor;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Productos extends javax.swing.JInternalFrame {
@@ -17,16 +20,18 @@ public class Productos extends javax.swing.JInternalFrame {
     private ControladorMedida controladorMedida;
     private ControladorProducto controladorProducto;
     private ControladorProveedor controladorProveedor;
+    private ControladorProductoProveedor cpp;
     private List<Medida>listaMedida;
     private List<Categoria>listaCategoria;
     private List<Proveedor>listaProveedor;
     private int codigo;
-    public Productos(ControladorCategoria controladorCategoria,ControladorMedida controladorMedida,ControladorProducto controladorProducto,ControladorProveedor controladorProveedor) {
+    public Productos(ControladorCategoria controladorCategoria,ControladorMedida controladorMedida,ControladorProducto controladorProducto,ControladorProveedor controladorProveedor,ControladorProductoProveedor cpp) {
         initComponents();
         this.controladorCategoria=controladorCategoria;
         this.controladorMedida=controladorMedida;
         this.controladorProducto=controladorProducto;
         this.controladorProveedor=controladorProveedor;
+        this.cpp=cpp;
         //llenarMedida();
         //llenarCategoria();
         //llenarProveedor();
@@ -68,6 +73,7 @@ public class Productos extends javax.swing.JInternalFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -136,6 +142,13 @@ public class Productos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnIngresar.setText("Ingresar Stock");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -149,8 +162,10 @@ public class Productos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 489, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,6 +173,7 @@ public class Productos extends javax.swing.JInternalFrame {
             .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -273,7 +289,7 @@ public class Productos extends javax.swing.JInternalFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbxBuscar, 0, 182, Short.MAX_VALUE)
                             .addComponent(txtBuscar))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +361,7 @@ public class Productos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -371,6 +387,7 @@ public class Productos extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
         Producto p=new Producto();
+        ProductoProveedor pp=new ProductoProveedor();
         p.setCantidad(Integer.parseInt(txtCantidad.getText()));
         p.setDescripcion(txtDescripcion.getText());
         p.setLugarFabricacion((String)cbxFabricacion.getSelectedItem());
@@ -396,9 +413,25 @@ public class Productos extends javax.swing.JInternalFrame {
         }
 
         controladorProducto.Crear(p);
+        pp.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        pp.setCodigoProducto(controladorProducto.buscarcodproveedor(txtNombre.getText()));
+        pp.setCodigoProveedor(buscarCodigoProv());
+        cpp.CrearProductoProveedor(pp);
+        
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    public int buscarCodigoProv(){
+        int codigo=0;
+        for (Proveedor p : listaProveedor) {
+            if(p.getNombres()==(String)cbxProveedor.getSelectedItem()){
+                codigo=p.getCodigo();
+                break;
+            }
+            
+        }
+        return codigo;
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         
         Producto p=new Producto();
@@ -455,15 +488,16 @@ public class Productos extends javax.swing.JInternalFrame {
                 DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
                 List<Producto>lista=controladorProducto.buscarCategoria(codigo);
                 for (Producto p : lista) {
+                   
                     Object[] dato={
                         p.getCodigo(),
                         txtBuscar.getText(),
                         p.getNombre(),
-                        //====>> falta marca
+                        buscarMarca(p.getCodigo()),
                         p.getCantidad(),
                         p.getPrecioCompra(),
                         p.getPrecioVenta(),
-                        //====>>falta el proveedor
+                        buscarProveedor(p.getCodigo()),
                         p.getDescripcion(),
                         p.getLugarFabricacion()
                     };
@@ -474,8 +508,36 @@ public class Productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
 
+    public String buscarMarca(int codigo){
+        int codigoProv=cpp.buscarcodproveedor(codigo);
+        String marca="";
+        for (Proveedor p : listaProveedor) {
+            if(p.getCodigo()==codigoProv){
+                marca=p.getEmpresa();
+                break;
+                                
+            }
+            return marca;
+        }
+        return null;
+    }
+    
+    
+    public String buscarProveedor(int codigo){
+        int codigoProv=cpp.buscarcodproveedor(codigo);
+        String nombre="";
+        for (Proveedor p : listaProveedor) {
+            if(p.getCodigo()==codigoProv){
+                nombre=p.getNombres();
+                break;       
+            }
+            return nombre;
+        }
+        return null;
+    }
     private void tblProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductoMouseClicked
         int seleccion =tblProducto.getSelectedRow();
+        codigo=(int)tblProducto.getValueAt(seleccion, 0);
         cbxCategoria.setSelectedItem(tblProducto.getValueAt(seleccion, 1));
         txtNombre.setText((String)tblProducto.getValueAt(seleccion, 2));
         txtMarca.setText((String)tblProducto.getValueAt(seleccion, 3));
@@ -499,10 +561,20 @@ public class Productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cbxProveedorItemStateChanged
 
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+    
+        int num2=Integer.parseInt(JOptionPane.showInputDialog("Cuantos articulos va a registrar"));
+        int num=Integer.parseInt(txtCantidad.getText());
+        int suma=num+num2;
+        controladorProducto.ingresarMercaderia(codigo, suma);
+        
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
