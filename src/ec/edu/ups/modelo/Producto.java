@@ -72,7 +72,7 @@ public class Producto {
         this.lugarFabricacion = lugarFabricacion;
     }
 
-    public boolean isIva() {
+    public boolean getIva() {
         return iva;
     }
 

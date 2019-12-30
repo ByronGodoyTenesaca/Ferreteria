@@ -1,13 +1,10 @@
 package ec.edu.ups.controlador;
 
-import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Profesion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ControladorProfesion {
@@ -17,7 +14,7 @@ public class ControladorProfesion {
         try {
             PreparedStatement pst=null;
             String sql="INSERT INTO PROFESION (PRO_CODIGO, PRO_PROFESION, PRO_DESCUENTO)"
-                    + "VALUES(CLIENTE_SEQ.NEXTVAL,?,?) ";
+                    + "VALUES(PROFESION_SEQ.NEXTVAL,?,?) ";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, p.getNombre());
@@ -33,12 +30,12 @@ public class ControladorProfesion {
     public void ActualizarProfesion(Profesion p){
         try {
             PreparedStatement pst=null;
-            String sql="UPDATE PROFESION SET PRO_CODIGO= ?, PRO_PROFESION= ?, PRO_DESCUENTO= ?"
+            String sql="UPDATE PROFESION SET PRO_DESCUENTO= ?"
                     + "WHERE PRO_PROFESION= ?";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setString(1, p.getNombre());
-            pst.setDouble(2, p.getDescuento());
+            pst.setString(2, p.getNombre());
+            pst.setDouble(1, p.getDescuento());
             pst.execute();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Profesion Creada Correctamente");
