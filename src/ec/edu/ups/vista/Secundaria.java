@@ -8,8 +8,6 @@ import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.controlador.ControladorProveedor;
-import ec.edu.ups.vista.empleado.VistaCargo;
-import ec.edu.ups.vista.empleado.VistaEmpleado;
 
 public class Secundaria extends javax.swing.JFrame {
 
