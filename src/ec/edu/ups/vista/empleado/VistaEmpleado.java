@@ -1,17 +1,19 @@
 
 package ec.edu.ups.vista.empleado;
 
+import ec.edu.ups.controlador.ControladorEmpleado;
+
 /**
  *
  * @author Ronal
  */
 public class VistaEmpleado extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaEmpleado
-     */
-    public VistaEmpleado() {
+    private ControladorEmpleado controladorEmpleado;
+    
+    public VistaEmpleado(ControladorEmpleado controlador) {
         initComponents();
+        controladorEmpleado = controlador;
     }
 
     

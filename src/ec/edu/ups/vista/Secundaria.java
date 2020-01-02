@@ -1,11 +1,15 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorCargo;
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorCliente;
+import ec.edu.ups.controlador.ControladorEmpleado;
 import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.controlador.ControladorProveedor;
+import ec.edu.ups.vista.empleado.VistaCargo;
+import ec.edu.ups.vista.empleado.VistaEmpleado;
 
 public class Secundaria extends javax.swing.JFrame {
 
@@ -13,12 +17,19 @@ public class Secundaria extends javax.swing.JFrame {
     private Productos p;
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
+    private VistaEmpleado vistaEmpleado;
+    private VistaCargo vistaCargo;
+    private ControladorEmpleado controladorEmpleado;
+    private ControladorCargo controladorCargo;
     
     public Secundaria() {
         initComponents();
-        
         controladorCliente=new ControladorCliente();
         controladorProfesion=new ControladorProfesion();
+        vistaEmpleado = new VistaEmpleado();
+        vistaCargo = new VistaCargo();
+        controladorCargo = new ControladorCargo();
+        controladorEmpleado = new ControladorEmpleado();
     }
 
     @SuppressWarnings("unchecked")
@@ -45,7 +56,7 @@ public class Secundaria extends javax.swing.JFrame {
         pasteMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
+        itmCargo = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -68,6 +79,11 @@ public class Secundaria extends javax.swing.JFrame {
         });
 
         btnEmpleado.setText("Empleados");
+        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmpleadoActionPerformed(evt);
+            }
+        });
 
         btnFacturacion.setText("Facturacion");
 
@@ -167,9 +183,14 @@ public class Secundaria extends javax.swing.JFrame {
         helpMenu.setMnemonic('h');
         helpMenu.setText("Empleados");
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
+        itmCargo.setMnemonic('c');
+        itmCargo.setText("Cargo");
+        itmCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmCargoActionPerformed(evt);
+            }
+        });
+        helpMenu.add(itmCargo);
 
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
@@ -237,6 +258,20 @@ public class Secundaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProveedorActionPerformed
 
+    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
+        // TODO add your handling code here:
+        vistaEmpleado = new VistaEmpleado(controladorEmpleado);
+        desktopPane.add(vistaEmpleado);
+        vistaEmpleado.show();
+    }//GEN-LAST:event_btnEmpleadoActionPerformed
+
+    private void itmCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCargoActionPerformed
+        // TODO add your handling code here:
+        vistaCargo = new VistaCargo(controladorCargo);
+        desktopPane.add(vistaCargo);
+        vistaCargo.show();
+    }//GEN-LAST:event_itmCargoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,7 +315,6 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JButton btnProducto;
     private javax.swing.JButton btnProveedor;
     private javax.swing.JButton btnSesion;
-    private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
@@ -289,6 +323,7 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem itmCargo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
