@@ -139,6 +139,8 @@ public class ControladorProveedor {
         return null;
     }
     
+    
+    
     public List<Proveedor> listar(){
         List<Proveedor>lista=new ArrayList<>();
         try {

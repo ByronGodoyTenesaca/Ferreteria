@@ -6,12 +6,14 @@ import java.sql.SQLException;
 
 public class ConexionBD {
 
-    private Connection conexion;
+    private Connection conexion= null;
     private String login = "Ferreteria";
     private String pasword = "ferreteria";
     private String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 
-    public ConexionBD() {
+ 
+
+   public ConexionBD() {
     }
 
     public Connection getConexion() {
@@ -28,13 +30,9 @@ public class ConexionBD {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conexion = DriverManager.getConnection(url, login, pasword);
             conexion.setAutoCommit(false);
-            if (getConexion() != null) {
-                System.out.println("Se ha establecido la conexion");
-            } else {
-                System.out.println("error de conexion");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+           
+        } catch (ClassNotFoundException | SQLException e) {
+            
         }
     }
 
@@ -48,7 +46,9 @@ public class ConexionBD {
     }
 
     public static void main(String[] args) {
-        new ConexionBD().Conectar();
+        
+            new ConexionBD().Conectar();
+        
     }
 
 }

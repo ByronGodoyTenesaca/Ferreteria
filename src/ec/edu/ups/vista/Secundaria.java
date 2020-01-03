@@ -6,6 +6,7 @@ import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorEmpleado;
 import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
+import ec.edu.ups.controlador.ControladorProductoProveedor;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.controlador.ControladorProveedor;
 
@@ -24,10 +25,11 @@ public class Secundaria extends javax.swing.JFrame {
         initComponents();
         controladorCliente=new ControladorCliente();
         controladorProfesion=new ControladorProfesion();
-        vistaEmpleado = new VistaEmpleado();
-        vistaCargo = new VistaCargo();
+        vistaEmpleado = new VistaEmpleado(controladorEmpleado);
+        vistaCargo = new VistaCargo(controladorCargo);
         controladorCargo = new ControladorCargo();
         controladorEmpleado = new ControladorEmpleado();
+        //this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +63,7 @@ public class Secundaria extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCliente.setText("Cliente");
         btnCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +132,8 @@ public class Secundaria extends javax.swing.JFrame {
 
         desktopPane.add(pnlAcceso);
         pnlAcceso.setBounds(0, 0, 950, 50);
+
+        getContentPane().add(desktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 780));
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Clientes");
@@ -207,21 +212,6 @@ public class Secundaria extends javax.swing.JFrame {
 
         setJMenuBar(menuBar);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -241,7 +231,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor());
+        p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor(),new ControladorProductoProveedor());
         p.setVisible(true);
         desktopPane.add(p);
     }//GEN-LAST:event_btnProductoActionPerformed

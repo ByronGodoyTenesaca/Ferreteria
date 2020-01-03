@@ -130,6 +130,7 @@ public class Login extends javax.swing.JFrame {
             
         }else{
             new Secundaria().setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

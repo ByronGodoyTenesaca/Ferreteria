@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ControladorProfesion {
@@ -90,6 +92,27 @@ public class ControladorProfesion {
                 profesion=respuesta.getString(2);
             }
             return profesion;
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "no se puede encontrar el codigo");
+            }
+        return null;
+    }
+     
+     public List<Profesion> listar(){
+        try {
+            String sql="SELECT * FROM PROFESION;";
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            List<Profesion> lista=new ArrayList<>();
+            while(respuesta.next()){
+                Profesion p=new Profesion();
+                p.setCodigo(respuesta.getInt(1));
+                p.setNombre(respuesta.getString(2));
+                p.setDescuento(respuesta.getDouble(3));
+                lista.add(p);
+            }
+            return lista;
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "no se puede encontrar el codigo");
             }

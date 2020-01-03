@@ -3,6 +3,7 @@ package ec.edu.ups.vista;
 import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Cliente;
+import ec.edu.ups.modelo.Profesion;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,7 +15,7 @@ public class Clientes extends javax.swing.JInternalFrame {
         initComponents();
         this.controladorCliente=controladorCliente;
         this.controladorProfesion=controladorProfesion;
-        
+        //llenar();
     }
 
     @SuppressWarnings("unchecked")
@@ -362,10 +363,16 @@ public class Clientes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void llenar(){
+        List<Profesion> lista=controladorProfesion.listar();
+        for (Profesion p : lista) {
+            cbxProfesion.addItem(p.getNombre());
+        }
+    }
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
       
         this.dispose();
-        new Secundaria().setVisible(true);
+       // new Secundaria().setVisible(true);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbxProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProfesionActionPerformed
@@ -406,7 +413,7 @@ public class Clientes extends javax.swing.JInternalFrame {
        }else{
            cliente.setGenero("Masculino");
        }
-       controladorCliente.CrearCliente(cliente,controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem()));
+       controladorCliente.CrearCliente(cliente,1);
         btnNuevoActionPerformed(evt);
        
        
@@ -445,7 +452,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                     c.getDireccion(),
                     c.getEmail(),
                     c.getTelefono(),
-                    // ========>>> falta la de profesion
+                    "ing",// ========>>> falta la de profesion
                     c.getNumeroTarjeta(),
                     c.getGenero()
                   

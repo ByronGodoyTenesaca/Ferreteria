@@ -117,4 +117,40 @@ public class ControladorProducto {
         }
         return null;
      }
+     
+     public int buscarcodproveedor(String nombre){
+        try {
+            String sql="SELECT * FROM PRODUCTO WHERE PRO_NOMBRE ="+nombre+";";
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            int codigoPro=0;
+            while(respuesta.next()){
+                codigoPro=respuesta.getInt(1);
+            }
+            return codigoPro;
+        } catch (SQLException ex) {
+           
+        }
+        return 0;
+    }
+     
+     public void ingresarMercaderia(int codigo,int suma){
+        try {
+            PreparedStatement pst=null;
+            String sql="UPDATE PRODUCTO SET PRO_CANTIDAD=?"
+                    + "WHERE PRO_CODIGO = ?";
+            conexion.Conectar();
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.setInt(1, suma);
+            pst.setInt(2, codigo);
+            
+            pst.execute();
+            conexion.Desconectar();
+            JOptionPane.showMessageDialog(null,"Stock ingresado Satisfactoriamente");
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo Actualizar el Stock");
+        }
+    }
 }
