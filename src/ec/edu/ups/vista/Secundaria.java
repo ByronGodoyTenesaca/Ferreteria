@@ -9,6 +9,7 @@ import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProductoProveedor;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.controlador.ControladorProveedor;
+import java.awt.Dimension;
 
 public class Secundaria extends javax.swing.JFrame {
 
@@ -29,7 +30,8 @@ public class Secundaria extends javax.swing.JFrame {
         vistaCargo = new VistaCargo(controladorCargo);
         controladorCargo = new ControladorCargo();
         controladorEmpleado = new ControladorEmpleado();
-        //this.setExtendedState(MAXIMIZED_BOTH);
+        this.setExtendedState(MAXIMIZED_BOTH);
+      
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +39,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
-        pnlAcceso = new javax.swing.JPanel();
+        pntAccesos = new javax.swing.JPanel();
         btnCliente = new javax.swing.JButton();
         btnProducto = new javax.swing.JButton();
         btnEmpleado = new javax.swing.JButton();
@@ -63,7 +65,8 @@ public class Secundaria extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pntAccesos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCliente.setText("Cliente");
         btnCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +74,7 @@ public class Secundaria extends javax.swing.JFrame {
                 btnClienteActionPerformed(evt);
             }
         });
+        pntAccesos.add(btnCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 91, 50));
 
         btnProducto.setText("Productos");
         btnProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +82,7 @@ public class Secundaria extends javax.swing.JFrame {
                 btnProductoActionPerformed(evt);
             }
         });
+        pntAccesos.add(btnProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 0, 91, 50));
 
         btnEmpleado.setText("Empleados");
         btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -85,8 +90,10 @@ public class Secundaria extends javax.swing.JFrame {
                 btnEmpleadoActionPerformed(evt);
             }
         });
+        pntAccesos.add(btnEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 0, -1, 50));
 
         btnFacturacion.setText("Facturacion");
+        pntAccesos.add(btnFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(294, 0, -1, 50));
 
         btnSesion.setText("Sesion");
         btnSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +101,7 @@ public class Secundaria extends javax.swing.JFrame {
                 btnSesionActionPerformed(evt);
             }
         });
+        pntAccesos.add(btnSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 0, 91, 50));
 
         btnProveedor.setText("Proveedor");
         btnProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -101,39 +109,12 @@ public class Secundaria extends javax.swing.JFrame {
                 btnProveedorActionPerformed(evt);
             }
         });
+        pntAccesos.add(btnProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 50));
 
-        javax.swing.GroupLayout pnlAccesoLayout = new javax.swing.GroupLayout(pnlAcceso);
-        pnlAcceso.setLayout(pnlAccesoLayout);
-        pnlAccesoLayout.setHorizontalGroup(
-            pnlAccesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAccesoLayout.createSequentialGroup()
-                .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEmpleado)
-                .addGap(3, 3, 3)
-                .addComponent(btnFacturacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 361, Short.MAX_VALUE))
-        );
-        pnlAccesoLayout.setVerticalGroup(
-            pnlAccesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-            .addComponent(btnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnFacturacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        desktopPane.add(pntAccesos);
+        pntAccesos.setBounds(0, 0, 950, 50);
 
-        desktopPane.add(pnlAcceso);
-        pnlAcceso.setBounds(0, 0, 950, 50);
-
-        getContentPane().add(desktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 780));
+        getContentPane().add(desktopPane, java.awt.BorderLayout.CENTER);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Clientes");
@@ -220,20 +201,28 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        desktopPane.removeAll();
+        //desktopPane.removeAll();
         desktopPane.repaint();
         c=new Clientes(controladorCliente,controladorProfesion);
         c.setVisible(true);
         desktopPane.add(c);
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension FrameSize = c.getSize();
+        c.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        c.show();
         
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-        desktopPane.removeAll();
+       // desktopPane.removeAll();
         desktopPane.repaint();
         p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor(),new ControladorProductoProveedor());
         p.setVisible(true);
         desktopPane.add(p);
+         Dimension desktopSize = desktopPane.getSize();
+        Dimension FrameSize = p.getSize();
+        p.setLocation((desktopSize.width - FrameSize.width), (desktopSize.height- FrameSize.height));
+        p.show();
     }//GEN-LAST:event_btnProductoActionPerformed
 
     private void btnSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSesionActionPerformed
@@ -249,6 +238,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
         // TODO add your handling code here:
         vistaEmpleado = new VistaEmpleado(controladorEmpleado);
+        vistaEmpleado.setVisible(true);
         desktopPane.add(vistaEmpleado);
         vistaEmpleado.show();
     }//GEN-LAST:event_btnEmpleadoActionPerformed
@@ -318,7 +308,7 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JPanel pnlAcceso;
+    private javax.swing.JPanel pntAccesos;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
