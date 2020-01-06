@@ -245,7 +245,7 @@ public class Categorias extends javax.swing.JInternalFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
-        new Secundaria().setVisible(true);
+        //new Secundaria().setVisible(true);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed

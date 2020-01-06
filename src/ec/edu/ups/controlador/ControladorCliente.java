@@ -33,6 +33,10 @@ public class ControladorCliente {
             pst.setInt(10, n);
             pst.execute();
             
+            
+            sql="commit";
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.execute();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Cliente Creado Correctamente");
             
@@ -61,6 +65,11 @@ public class ControladorCliente {
             pst.setInt(8, n);
             pst.setString(9, c.getCedula());
             pst.execute();
+            
+            sql="commit";
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.execute();
+            
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Cliente Actualizado Correctamente");
             
@@ -79,6 +88,11 @@ public class ControladorCliente {
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, Cedula);
              pst.execute();
+             
+             sql="commit";
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.execute();
+            
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Cliente Eliminado Correctamente");
             

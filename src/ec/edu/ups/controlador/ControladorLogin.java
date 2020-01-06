@@ -10,6 +10,8 @@ public class ControladorLogin {
     private ConexionBD conexion;
     
     public ControladorLogin() {
+        
+        conexion = new ConexionBD();
     
     }
   
@@ -17,20 +19,22 @@ public class ControladorLogin {
         
         try {
             int codigo=0;
-            String sql="SELECT * FROM EMPLEADO WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASEÑA='"+pasword+"';";
+            String sql="SELECT * FROM EMPLEADO WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASENIA='"+pasword+"'";
+            //String sql="SELECT * FROM EMPLEADO";
             System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet res=sta.executeQuery(sql);
+            //System.out.println(res.next());
             while(res.next()){
-                codigo=res.getInt(10);
-                JOptionPane.showMessageDialog(null, "bienvenido"+res.getString(2));
+                System.out.println("login correcto");
+                codigo=res.getInt(1);
+                JOptionPane.showMessageDialog(null, "bienvenido: "+res.getString(2));
             }
-            
-            
-            
+            return codigo;
             
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Usuario y Contraseña incorrecto");
         }catch(java.lang.NullPointerException e){
             e.printStackTrace();

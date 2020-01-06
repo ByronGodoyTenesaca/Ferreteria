@@ -16,6 +16,7 @@ public class Clientes extends javax.swing.JInternalFrame {
         this.controladorCliente=controladorCliente;
         this.controladorProfesion=controladorProfesion;
         //llenar();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -372,6 +373,7 @@ public class Clientes extends javax.swing.JInternalFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
       
         this.dispose();
+             
        // new Secundaria().setVisible(true);
     }//GEN-LAST:event_btnSalirActionPerformed
 

@@ -29,8 +29,6 @@ public class ConexionBD {
 
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conexion = DriverManager.getConnection(url, login, pasword);
-            conexion.setAutoCommit(false);
-           
         } catch (ClassNotFoundException | SQLException e) {
             
         }
@@ -43,12 +41,6 @@ public class ConexionBD {
         } catch (SQLException ex) {
 
         }
-    }
-
-    public static void main(String[] args) {
-        
-            new ConexionBD().Conectar();
-        
-    }
+    }   
 
 }

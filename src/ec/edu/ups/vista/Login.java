@@ -129,7 +129,7 @@ public class Login extends javax.swing.JFrame {
             txtPasword.setText("");
             
         }else{
-            new Secundaria().setVisible(true);
+            new Secundaria(Cargo).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
