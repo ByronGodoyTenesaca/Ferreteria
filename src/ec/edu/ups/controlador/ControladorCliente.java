@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class ControladorCliente {
     
@@ -14,12 +16,22 @@ public class ControladorCliente {
     private int codigo=0;
 
     public ControladorCliente() {
-    
+        //ver();
     
     }
     
     public void ver(){
-        String sql="select max(CLI_CODIGO)+1 as id from FER_CLIENTES";
+        try {
+            String sql="select max(CLI_CODIGO)+1 as id from FER_CLIENTES;";
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            while(respuesta.next()){
+                codigo=respuesta.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
