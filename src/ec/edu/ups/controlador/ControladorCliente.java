@@ -11,17 +11,27 @@ import javax.swing.JOptionPane;
 public class ControladorCliente {
     
     private ConexionBD conexion=new ConexionBD();
+    private int codigo=0;
+
+    public ControladorCliente() {
+    
+    
+    }
+    
+    public void ver(){
+        String sql="select max(CLI_CODIGO)+1 as id from FER_CLIENTES";
+    }
     
     
     public void CrearCliente(Cliente c,int n){
         try {
             PreparedStatement pst=null;
-            String sql="INSERT INTO CLIENTE (CLI_CODIGO, CLI_NOMBRE, CLI_APELLIDO, CLI_DIRECCION, CLI_CEDULA, CLI_EMAIL, CLI_NUM_TARJETA, CLI_GENERO, CLI_TELEFONO, PROFESION_PRO_CODIGO)"
+            String sql="INSERT INTO FER_CLIENTES (CLI_CODIGO, CLI_NOMBRE, CLI_APELLIDO, CLI_DIRECCION, CLI_CEDULA, CLI_EMAIL, CLI_NUM_TARJETA, CLI_GENERO, CLI_TELEFONO, PROFESION_PRO_CODIGO)"
                     + " VALUES (?,?,?,?,?,?,?,?,?,?)";
-            String s="commit;";
+            //String s="commit;";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setInt(1, 1);
+            pst.setInt(1, codigo);
             pst.setString(2, c.getNombres());
             pst.setString(3, c.getApellidos());
             pst.setString(4, c.getDireccion());
@@ -50,7 +60,7 @@ public class ControladorCliente {
      public void Actualizar(Cliente c,int n){
             try {
             PreparedStatement pst=null;
-            String sql="UPDATE CLIENTE SET CLI_NOMBRE= ?, CLI_APELLIDO= ?, CLI_DIRECCION= ?, CLI_EMAIL= ?, CLI_NUM_TARJETA= ?, CLI_GENERO= ?, CLI_TELEFONO= ?, PROFESION_PRO_CODIGO= ?"
+            String sql="UPDATE FER_CLIENTES SET CLI_NOMBRE= ?, CLI_APELLIDO= ?, CLI_DIRECCION= ?, CLI_EMAIL= ?, CLI_NUM_TARJETA= ?, CLI_GENERO= ?, CLI_TELEFONO= ?, PROFESION_PRO_CODIGO= ?"
                     + " WHERE CLI_CEDULA =?";
             
             conexion.Conectar();
@@ -82,7 +92,7 @@ public class ControladorCliente {
      public void Eliminar(String Cedula){
           try {
             PreparedStatement pst=null;
-            String sql="DELETE FROM CLIENTE WHERE CLI_CEDULA =?";
+            String sql="DELETE FROM FER_CLIENTES WHERE CLI_CEDULA =?";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
@@ -105,10 +115,12 @@ public class ControladorCliente {
         try {
             // List<Cliente> lista=new ArrayList<>();
             Cliente c=new Cliente();
-            String sql="SELECT * FROM CLIENTE WHERE CLI_CEDULA = "+Cedula+";";
+            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_CEDULA = '"+Cedula+"';";
+            System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
+            System.out.println(respuesta);
             
             while(respuesta.next()){
                 c.setCodigo(respuesta.getInt(1));
@@ -137,7 +149,7 @@ public class ControladorCliente {
         try {
              List<Cliente> lista=new ArrayList<>();
             
-            String sql="SELECT * FROM CLIENTE WHERE CLI_PROFESION = "+n+";";
+            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_PROFESION = "+n+";";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

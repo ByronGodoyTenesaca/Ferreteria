@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConexionBD {
 
     private Connection conexion= null;
-    private String login = "Ferreteria";
+    private String login = "ProyectoFerreteria";
     private String pasword = "ferreteria";
     private String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 

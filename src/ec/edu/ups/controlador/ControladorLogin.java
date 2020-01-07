@@ -19,7 +19,7 @@ public class ControladorLogin {
         
         try {
             int codigo=0;
-            String sql="SELECT * FROM EMPLEADO WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASENIA='"+pasword+"'";
+            String sql="SELECT * FROM FER_EMPLEADOS WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASEÑA='"+pasword+"'";
             //String sql="SELECT * FROM EMPLEADO";
             System.out.println(sql);
             conexion.Conectar();

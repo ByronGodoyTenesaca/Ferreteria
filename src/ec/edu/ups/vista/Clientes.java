@@ -443,8 +443,9 @@ public class Clientes extends javax.swing.JInternalFrame {
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()== "Cedula"){
-                String cedula=txtCedula.getText();
-                Cliente c=controladorCliente.ListarCedula(cedula);
+                String cedula=txtBuscar.getText();
+                Cliente c=new Cliente();
+                c=controladorCliente.ListarCedula(cedula);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 Object[] dato={
                     c.getCodigo(),

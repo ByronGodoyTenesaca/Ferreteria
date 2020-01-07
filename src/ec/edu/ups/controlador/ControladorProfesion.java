@@ -19,9 +19,16 @@ public class ControladorProfesion {
                     + "VALUES(PROFESION_SEQ.NEXTVAL,?,?) ";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
+           
             pst.setString(1, p.getNombre());
             pst.setDouble(2, p.getDescuento());
             pst.execute();
+            
+            sql="commit;";
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.execute();
+            
+            
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Profesion Creada Correctamente");
         } catch (SQLException ex) {
@@ -100,7 +107,7 @@ public class ControladorProfesion {
      
      public List<Profesion> listar(){
         try {
-            String sql="SELECT * FROM PROFESION;";
+            String sql="SELECT * FROM FER_PROFESIONES;";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

@@ -51,6 +51,7 @@ public class Secundaria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         desktopPane = new javax.swing.JDesktopPane();
         pntAccesos = new javax.swing.JPanel();
         btnCliente = new javax.swing.JButton();
@@ -60,6 +61,8 @@ public class Secundaria extends javax.swing.JFrame {
         btnSesion = new javax.swing.JButton();
         btnProveedor = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
+        menuCliente = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuProducto = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -69,6 +72,8 @@ public class Secundaria extends javax.swing.JFrame {
         menuFactura = new javax.swing.JMenu();
         menuReportes = new javax.swing.JMenu();
         menuSesion = new javax.swing.JMenu();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +126,18 @@ public class Secundaria extends javax.swing.JFrame {
         pntAccesos.setBounds(0, 0, 950, 50);
 
         getContentPane().add(desktopPane, java.awt.BorderLayout.CENTER);
+
+        menuCliente.setText("Cliente");
+
+        jMenuItem1.setText("Profesion");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuCliente.add(jMenuItem1);
+
+        menuBar.add(menuCliente);
 
         menuProducto.setMnemonic('e');
         menuProducto.setText("Productos");
@@ -247,6 +264,10 @@ public class Secundaria extends javax.swing.JFrame {
         p.show();
     }//GEN-LAST:event_copyMenuItemActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,7 +315,10 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem itmCargo;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuEmpleado;
     private javax.swing.JMenu menuFactura;
     private javax.swing.JMenu menuProducto;
