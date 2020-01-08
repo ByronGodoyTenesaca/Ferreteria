@@ -415,7 +415,7 @@ public class Clientes extends javax.swing.JInternalFrame {
        }else{
            cliente.setGenero("Masculino");
        }
-       controladorCliente.CrearCliente(cliente,1);
+       //controladorCliente.CrearCliente(cliente,1);
         btnNuevoActionPerformed(evt);
        
        
@@ -444,8 +444,8 @@ public class Clientes extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()== "Cedula"){
                 String cedula=txtBuscar.getText();
-                Cliente c=new Cliente();
-                c=controladorCliente.ListarCedula(cedula);
+                
+                Cliente c=controladorCliente.ListarCedula(cedula);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 Object[] dato={
                     c.getCodigo(),
@@ -463,8 +463,8 @@ public class Clientes extends javax.swing.JInternalFrame {
                 modelo.addRow(dato);
             
             }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
-                int codigo = controladorProfesion.buscarCodigo(txtBuscar.getText());
-                List<Cliente> lista=controladorCliente.ListarProfesion(codigo);
+                //int codigo = controladorProfesion.buscarCodigo(txtBuscar.getText());
+                List<Cliente> lista=controladorCliente.ListarProfesion(1);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 
                 for (Cliente c : lista) {

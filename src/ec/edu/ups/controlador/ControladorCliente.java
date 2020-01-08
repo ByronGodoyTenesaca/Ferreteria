@@ -12,12 +12,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class ControladorCliente {
     
-    private ConexionBD conexion=new ConexionBD();
+    private ConexionBD conexion;
     private int codigo=0;
 
     public ControladorCliente() {
         //ver();
-    
+    conexion=new ConexionBD();
     }
     
     public void ver(){
@@ -35,15 +35,15 @@ public class ControladorCliente {
     }
     
     
-    public void CrearCliente(Cliente c,int n){
+    public void CrearCliente(Cliente c,int n) throws SQLException{
         try {
             PreparedStatement pst=null;
             String sql="INSERT INTO FER_CLIENTES (CLI_CODIGO, CLI_NOMBRE, CLI_APELLIDO, CLI_DIRECCION, CLI_CEDULA, CLI_EMAIL, CLI_NUM_TARJETA, CLI_GENERO, CLI_TELEFONO, PROFESION_PRO_CODIGO)"
                     + " VALUES (?,?,?,?,?,?,?,?,?,?)";
-            //String s="commit;";
+            
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setInt(1, codigo);
+            pst.setInt(1, 5);
             pst.setString(2, c.getNombres());
             pst.setString(3, c.getApellidos());
             pst.setString(4, c.getDireccion());
@@ -53,16 +53,13 @@ public class ControladorCliente {
             pst.setString(8, c.getGenero());
             pst.setString(9, c.getTelefono());
             pst.setInt(10, n);
-            pst.execute();
-            
-            
-            sql="commit";
-            pst=conexion.getConexion().prepareStatement(sql);
-            pst.execute();
+            pst.executeUpdate();
+            conexion.getConexion().commit();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Cliente Creado Correctamente");
             
         } catch (SQLException ex) {
+            conexion.getConexion().rollback();
             JOptionPane.showMessageDialog(null, "No se pudo crear el Cliente");
             ex.printStackTrace();
         }
@@ -86,11 +83,8 @@ public class ControladorCliente {
             pst.setString(7, c.getTelefono());
             pst.setInt(8, n);
             pst.setString(9, c.getCedula());
-            pst.execute();
-            
-            sql="commit";
-            pst=conexion.getConexion().prepareStatement(sql);
-            pst.execute();
+           pst.executeUpdate();
+        
             
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Cliente Actualizado Correctamente");
@@ -109,11 +103,8 @@ public class ControladorCliente {
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, Cedula);
-             pst.execute();
-             
-             sql="commit";
-            pst=conexion.getConexion().prepareStatement(sql);
-            pst.execute();
+            pst.executeUpdate();
+            
             
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Cliente Eliminado Correctamente");
@@ -127,7 +118,7 @@ public class ControladorCliente {
         try {
             // List<Cliente> lista=new ArrayList<>();
             Cliente c=new Cliente();
-            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_CEDULA = '"+Cedula+"';";
+            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_CEDULA = '"+Cedula+"'";
             System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
@@ -152,6 +143,7 @@ public class ControladorCliente {
             }
             return c;
         } catch (SQLException ex) {
+            ex.printStackTrace();
            JOptionPane.showMessageDialog(null, "No se pudo encontrar a la persona");
         }
         return null;
@@ -161,7 +153,7 @@ public class ControladorCliente {
         try {
              List<Cliente> lista=new ArrayList<>();
             
-            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_PROFESION = "+n+";";
+            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_PROFESION = "+n+"";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
