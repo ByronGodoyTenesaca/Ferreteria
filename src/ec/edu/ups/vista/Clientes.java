@@ -4,6 +4,7 @@ import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Profesion;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,11 +12,12 @@ public class Clientes extends javax.swing.JInternalFrame {
 
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
+    
     public Clientes(ControladorCliente controladorCliente, ControladorProfesion controladorProfesion) {
         initComponents();
         this.controladorCliente=controladorCliente;
         this.controladorProfesion=controladorProfesion;
-        //llenar();
+        llenar();
         
     }
 
@@ -149,7 +151,7 @@ public class Clientes extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Genero:");
 
-        cbxProfesion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion", "mecanico" }));
+        cbxProfesion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion" }));
         cbxProfesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxProfesionActionPerformed(evt);
@@ -402,21 +404,26 @@ public class Clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       Cliente cliente=new Cliente();
-       cliente.setApellidos(txtApellidos.getText());
-       cliente.setCedula(txtCedula.getText());
-       cliente.setDireccion(txtDireccion.getText());
-       cliente.setEmail(txtEmail.getText());
-       cliente.setNombres(txtNombres.getText());
-       cliente.setNumeroTarjeta(txtTarjeta.getText());
-       cliente.setTelefono(txtTelefono.getText());
-       if(rbtnFemenino.isSelected()){
-           cliente.setGenero("Femenino");
-       }else{
-           cliente.setGenero("Masculino");
-       }
-       //controladorCliente.CrearCliente(cliente,1);
-        btnNuevoActionPerformed(evt);
+        try {
+            Cliente cliente=new Cliente();
+            cliente.setApellidos(txtApellidos.getText());
+            cliente.setCedula(txtCedula.getText());
+            cliente.setDireccion(txtDireccion.getText());
+            cliente.setEmail(txtEmail.getText());
+            cliente.setNombres(txtNombres.getText());
+            cliente.setNumeroTarjeta(txtTarjeta.getText());
+            cliente.setTelefono(txtTelefono.getText());
+            if(rbtnFemenino.isSelected()){
+                cliente.setGenero("Femenino");
+            }else{
+                cliente.setGenero("Masculino");
+            }
+            int codigo=controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem());
+            controladorCliente.CrearCliente(cliente,codigo);
+            btnNuevoActionPerformed(evt);
+        } catch (SQLException ex) {
+            
+        }
        
        
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -455,7 +462,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                     c.getDireccion(),
                     c.getEmail(),
                     c.getTelefono(),
-                    "ing",// ========>>> falta la de profesion
+                    c.getProfesion(),
                     c.getNumeroTarjeta(),
                     c.getGenero()
                   
@@ -463,8 +470,8 @@ public class Clientes extends javax.swing.JInternalFrame {
                 modelo.addRow(dato);
             
             }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
-                //int codigo = controladorProfesion.buscarCodigo(txtBuscar.getText());
-                List<Cliente> lista=controladorCliente.ListarProfesion(1);
+               String profesion = txtBuscar.getText();
+                List<Cliente> lista=controladorCliente.ListarProfesion(profesion);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 
                 for (Cliente c : lista) {
@@ -476,7 +483,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                     c.getDireccion(),
                     c.getEmail(),
                     c.getTelefono(),
-                    "ing",// ========>>> falta la de profesion
+                    c.getProfesion(),
                     c.getNumeroTarjeta(),
                     c.getGenero(),
                   
@@ -484,8 +491,27 @@ public class Clientes extends javax.swing.JInternalFrame {
                 modelo.addRow(dato);
                 }
                 
-            }else{
+            }else if((String)cbxBuscar.getSelectedItem()== "Nombre"){
+                String nombre = txtBuscar.getText();
+                List<Cliente> lista=controladorCliente.ListarNombre(nombre);
+                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 
+                for (Cliente c : lista) {
+                    Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getProfesion(),
+                    c.getNumeroTarjeta(),
+                    c.getGenero(),
+                  
+                };
+                modelo.addRow(dato);
+                }
             }
         
         } 

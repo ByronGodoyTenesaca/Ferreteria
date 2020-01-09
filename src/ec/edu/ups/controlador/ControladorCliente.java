@@ -7,33 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class ControladorCliente {
     
     private ConexionBD conexion;
-    private int codigo=0;
 
     public ControladorCliente() {
-        //ver();
     conexion=new ConexionBD();
     }
-    
-    public void ver(){
-        try {
-            String sql="select max(CLI_CODIGO)+1 as id from FER_CLIENTES;";
-            conexion.Conectar();
-            Statement sta=conexion.getConexion().createStatement();
-            ResultSet respuesta=sta.executeQuery(sql);
-            while(respuesta.next()){
-                codigo=respuesta.getInt(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     
     public void CrearCliente(Cliente c,int n) throws SQLException{
         try {
@@ -43,7 +24,7 @@ public class ControladorCliente {
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setInt(1, 5);
+            pst.setInt(1, 6);
             pst.setString(2, c.getNombres());
             pst.setString(3, c.getApellidos());
             pst.setString(4, c.getDireccion());
@@ -118,7 +99,11 @@ public class ControladorCliente {
         try {
             // List<Cliente> lista=new ArrayList<>();
             Cliente c=new Cliente();
-            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_CEDULA = '"+Cedula+"'";
+            String sql="SELECT "
+                    + "CLI_CODIGO,CLI_NOMBRE,CLI_APELLIDO,CLI_DIRECCION,CLI_CEDULA,CLI_EMAIL,CLI_NUM_TARJETA,\n" 
+                    + "CLI_GENERO,CLI_TELEFONO,PRO_PROFESION"
+                    + " FROM FER_CLIENTES C, FER_PROFESIONES P "
+                    + "WHERE CLI_CEDULA = '"+Cedula+"' AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO";
             System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
@@ -135,12 +120,11 @@ public class ControladorCliente {
                 c.setNumeroTarjeta(respuesta.getString(7));
                 c.setGenero(respuesta.getString(8));
                 c.setTelefono(respuesta.getString(9));
-                
-
-// ---------->>>>  falta la de profesion  
+                c.setProfesion(respuesta.getString(10));
                 break;
                 
             }
+            conexion.Desconectar();
             return c;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -149,11 +133,15 @@ public class ControladorCliente {
         return null;
      }
      
-     public List<Cliente> ListarProfesion(int n){
+     public List<Cliente> ListarProfesion(String n){
         try {
              List<Cliente> lista=new ArrayList<>();
             
-            String sql="SELECT * FROM FER_CLIENTES WHERE CLI_PROFESION = "+n+"";
+             String sql="SELECT "
+                    + "CLI_CODIGO,CLI_NOMBRE,CLI_APELLIDO,CLI_DIRECCION,CLI_CEDULA,CLI_EMAIL,CLI_NUM_TARJETA,\n" 
+                    + "CLI_GENERO,CLI_TELEFONO,PRO_PROFESION"
+                    + " FROM FER_CLIENTES C, FER_PROFESIONES P "
+                    + "WHERE P.PRO_PROFESION = '"+n+"' AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -169,11 +157,52 @@ public class ControladorCliente {
                 c.setNumeroTarjeta(respuesta.getString(7));
                 c.setGenero(respuesta.getString(8));
                 c.setTelefono(respuesta.getString(9));
-                // ---------->>>>  falta la de profesion 
+                c.setProfesion(respuesta.getString(10));
                 lista.add(c);
             }
+            conexion.Desconectar();
             return lista;
         } catch (SQLException ex) {
+            ex.printStackTrace();
+           JOptionPane.showMessageDialog(null, "No se pudo encontrar a las profesiones");
+        }
+        return null;
+     }
+     
+     
+     
+     public List<Cliente> ListarNombre(String n){
+        try {
+             List<Cliente> lista=new ArrayList<>();
+            
+             String sql="SELECT "
+                    + "CLI_CODIGO,CLI_NOMBRE,CLI_APELLIDO,CLI_DIRECCION,CLI_CEDULA,CLI_EMAIL,CLI_NUM_TARJETA," 
+                    + "CLI_GENERO,CLI_TELEFONO,PRO_PROFESION"
+                    + " FROM FER_CLIENTES C, FER_PROFESIONES P "
+                    + "WHERE C.CLI_NOMBRE LIKE '"+n+"%' AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO";
+             System.out.println(sql);
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            
+            while(respuesta.next()){
+                Cliente c=new Cliente();
+                c.setCodigo(respuesta.getInt(1));
+                c.setNombres(respuesta.getString(2));
+                c.setApellidos(respuesta.getString(3));
+                c.setDireccion(respuesta.getString(4));
+                c.setCedula(respuesta.getString(5));
+                c.setEmail(respuesta.getString(6));
+                c.setNumeroTarjeta(respuesta.getString(7));
+                c.setGenero(respuesta.getString(8));
+                c.setTelefono(respuesta.getString(9));
+                c.setProfesion(respuesta.getString(10));
+                lista.add(c);
+            }
+            conexion.Desconectar();
+            return lista;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
            JOptionPane.showMessageDialog(null, "No se pudo encontrar a las profesiones");
         }
         return null;

@@ -257,15 +257,21 @@ public class Secundaria extends javax.swing.JFrame {
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
         Medida m=new Medida(controladorMedida);
         m.setVisible(true);
+        desktopPane.add(m);
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension FrameSize = m.getSize();
+        m.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
+        m.show();
+    }//GEN-LAST:event_copyMenuItemActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Profesiones p=new Profesiones(controladorProfesion);
+        p.setVisible(true);
         desktopPane.add(p);
         Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = p.getSize();
         p.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
         p.show();
-    }//GEN-LAST:event_copyMenuItemActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

@@ -15,23 +15,22 @@ public class ControladorProfesion {
     public void crearProfesion(Profesion p){
         try {
             PreparedStatement pst=null;
-            String sql="INSERT INTO PROFESION (PRO_CODIGO, PRO_PROFESION, PRO_DESCUENTO)"
-                    + "VALUES(PROFESION_SEQ.NEXTVAL,?,?) ";
+            String sql="INSERT INTO FER_PROFESIONES (PRO_CODIGO, PRO_PROFESION, PRO_DESCUENTO)"
+                    + "VALUES(?,?,?) ";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
            
-            pst.setString(1, p.getNombre());
-            pst.setDouble(2, p.getDescuento());
+            pst.setInt(1, 2);
+            pst.setString(2, p.getNombre());
+            pst.setDouble(3, p.getDescuento());
             pst.execute();
             
-            sql="commit;";
-            pst=conexion.getConexion().prepareStatement(sql);
-            pst.execute();
-            
+            conexion.getConexion().commit();
             
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Profesion Creada Correctamente");
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "no se pudo crear la profesion");
         }
     }
@@ -39,28 +38,30 @@ public class ControladorProfesion {
     public void ActualizarProfesion(Profesion p){
         try {
             PreparedStatement pst=null;
-            String sql="UPDATE PROFESION SET PRO_DESCUENTO= ?"
+            String sql="UPDATE FER_PROFESIONES SET PRO_DESCUENTO= ?"
                     + "WHERE PRO_PROFESION= ?";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(2, p.getNombre());
             pst.setDouble(1, p.getDescuento());
             pst.execute();
+            conexion.getConexion().commit();
+            
             conexion.Desconectar();
-            JOptionPane.showMessageDialog(null, "Profesion Creada Correctamente");
+            JOptionPane.showMessageDialog(null, "Profesion Actualizado Correctamente");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "no se pudo crear la profesion");
         }
     }
     
-    public void eliminarProfesion(int codigo){
+    public void eliminarProfesion(String codigo){
         try {
             PreparedStatement pst=null;
-            String sql="DELETE FROM CLIENTE WHERE PRO_CODIGO =?";
+            String sql="DELETE FROM FER_PROFESIONES WHERE PRO_PROFESION = ?";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setInt(1, codigo);
+            pst.setString(1, codigo);
              pst.execute();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Profesion Eliminado Correctamente");
@@ -72,7 +73,8 @@ public class ControladorProfesion {
     
     public int buscarCodigo(String p){
         try {
-            String sql="SELECT * FROM PROFESION WHERE PRO_PROFESION = "+p+";";
+            String sql="SELECT * FROM FER_PROFESIONES WHERE PRO_PROFESION = '"+p+"'";
+            System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -82,21 +84,24 @@ public class ControladorProfesion {
             }
             return codigo;
             }catch(SQLException e){
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "no se puede encontrar el codigo");
             }
         return 0;
     }
     
     
-     public String buscarNombre(String p){
+     public Profesion buscarNombre(String p){
         try {
-            String sql="SELECT * FROM PROFESION WHERE PRO_PROFESION = "+p+";";
+            String sql="SELECT * FROM FER_PROFESIONES WHERE PRO_PROFESION = "+p+";";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            String profesion="";
+            Profesion profesion=new Profesion();
             while(respuesta.next()){
-                profesion=respuesta.getString(2);
+                profesion.setCodigo(respuesta.getInt(1));
+                profesion.setNombre(respuesta.getString(2));
+                profesion.setDescuento(respuesta.getDouble(3));
             }
             return profesion;
             }catch(SQLException e){
@@ -107,7 +112,7 @@ public class ControladorProfesion {
      
      public List<Profesion> listar(){
         try {
-            String sql="SELECT * FROM FER_PROFESIONES;";
+            String sql="SELECT * FROM FER_PROFESIONES";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -119,6 +124,7 @@ public class ControladorProfesion {
                 p.setDescuento(respuesta.getDouble(3));
                 lista.add(p);
             }
+            conexion.Desconectar();
             return lista;
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "no se puede encontrar el codigo");
