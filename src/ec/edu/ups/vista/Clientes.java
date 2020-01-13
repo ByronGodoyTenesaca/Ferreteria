@@ -372,6 +372,8 @@ public class Clientes extends javax.swing.JInternalFrame {
             cbxProfesion.addItem(p.getNombre());
         }
     }
+    
+    
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
       
         this.dispose();
@@ -450,10 +452,11 @@ public class Clientes extends javax.swing.JInternalFrame {
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()== "Cedula"){
+                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 String cedula=txtBuscar.getText();
-                
+                modelo.setRowCount(0);
                 Cliente c=controladorCliente.ListarCedula(cedula);
-                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+               
                 Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -473,7 +476,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                String profesion = txtBuscar.getText();
                 List<Cliente> lista=controladorCliente.ListarProfesion(profesion);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
-                
+                modelo.setRowCount(0);
                 for (Cliente c : lista) {
                     Object[] dato={
                     c.getCodigo(),
@@ -495,7 +498,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 String nombre = txtBuscar.getText();
                 List<Cliente> lista=controladorCliente.ListarNombre(nombre);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
-                
+                modelo.setRowCount(0);
                 for (Cliente c : lista) {
                     Object[] dato={
                     c.getCodigo(),
@@ -533,8 +536,7 @@ public class Clientes extends javax.swing.JInternalFrame {
              rbtnMasculino.setSelected(false);
             rbtnFemenino.setSelected(true);
         }
-        
-       //=====>> falta rpfesion
+        cbxProfesion.setSelectedItem(tblCliente.getValueAt(seleccion, 7));
     }//GEN-LAST:event_tblClienteMouseClicked
 
 
