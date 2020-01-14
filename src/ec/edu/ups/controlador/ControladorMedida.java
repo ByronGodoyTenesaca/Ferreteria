@@ -16,12 +16,14 @@ public class ControladorMedida {
     public void CrearMedida(String nombre){
         try {
             PreparedStatement pst=null;
-            String sql="INSERT INTO FER_TIPO_MEDIDA (MED_CODIGO,MED_NOMBRE)"
+            String sql="INSERT INTO FER_TIPO_MEDIDAS (MED_CODIGO,MED_NOMBRE)"
                     + "VALUES (FER_TIPO_MEDIDA_SEQ.NEXTVAL,?)";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, nombre);
+             pst.executeUpdate();
+            conexion.getConexion().commit();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Medida Creada Correctamente");
             
@@ -33,7 +35,7 @@ public class ControladorMedida {
     public void Eliminar(String nombre){
           try {
             PreparedStatement pst=null;
-            String sql="DELETE FROM FER_TIPO_MEDIDA WHERE MED_NOMBRE =?";
+            String sql="DELETE FROM FER_TIPO_MEDIDAS WHERE MED_NOMBRE =?";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
@@ -51,7 +53,7 @@ public class ControladorMedida {
     public Medida buscar(String nombre){
         
         try {
-            String sql="SELECT * FROM FER_TIPO_MEDIDA WHERE MED_NOMBRE="+nombre+";";
+            String sql="SELECT * FROM FER_TIPO_MEDIDAS WHERE MED_NOMBRE="+nombre+";";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -71,7 +73,7 @@ public class ControladorMedida {
     public List<Medida> Listar(){
         
         try {
-            String sql="SELECT * FROM FER_TIPO_MEDIDA;";
+            String sql="SELECT * FROM FER_TIPO_MEDIDAS";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

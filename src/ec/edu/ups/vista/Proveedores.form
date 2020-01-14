@@ -423,7 +423,7 @@
                     <StringItem index="0" value="Escoja una opcion"/>
                     <StringItem index="1" value="Cedula"/>
                     <StringItem index="2" value="Nombre"/>
-                    <StringItem index="3" value="Profesion"/>
+                    <StringItem index="3" value="Empresa"/>
                     <StringItem index="4" value=" "/>
                   </StringArray>
                 </Property>

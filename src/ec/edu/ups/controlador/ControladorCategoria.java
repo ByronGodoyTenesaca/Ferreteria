@@ -1,7 +1,6 @@
 package ec.edu.ups.controlador;
 
 import ec.edu.ups.modelo.Categoria;
-import ec.edu.ups.modelo.Medida;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,12 +16,14 @@ public class ControladorCategoria {
     public void CrearCategoria(String nombre){
         try {
             PreparedStatement pst=null;
-            String sql="INSERT INTO CATEGORIA (CAT_CODIGO,CAT_NOMBRE)"
-                    + "VALUES (FER_TIPO_MEDIDA_SEQ.NEXTVAL,?)";
+            String sql="INSERT INTO FER_CATEGORIAS (CAT_CODIGO,CAT_NOMBRE)"
+                    + "VALUES (FER_CATEGORIAS_SEQ.NEXTVAL,?)";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, nombre);
+            pst.executeUpdate();
+            conexion.getConexion().commit();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Categoria Creada Correctamente");
             
@@ -34,7 +35,7 @@ public class ControladorCategoria {
     public void Eliminar(String nombre){
           try {
             PreparedStatement pst=null;
-            String sql="DELETE FROM CATEGORIA WHERE CAT_NOMBRE =?";
+            String sql="DELETE FROM FER_CATEGORIAS WHERE CAT_NOMBRE =?";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
@@ -52,7 +53,7 @@ public class ControladorCategoria {
     public Categoria buscar(String nombre){
         
         try {
-            String sql="SELECT * FROM CATEGORIA WHERE CAT_MOMBRE="+nombre+";";
+            String sql="SELECT * FROM FER_CATEGORIAS WHERE CAT_MOMBRE="+nombre+"";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -61,6 +62,7 @@ public class ControladorCategoria {
                 m.setCodigo(respuesta.getInt(1));
                 m.setCategoria(respuesta.getString(2));
             }
+            
             return m;
         } catch (SQLException ex) {
             
@@ -72,7 +74,7 @@ public class ControladorCategoria {
     public List<Categoria> Listar(){
         
         try {
-            String sql="SELECT * FROM CATEGORIA;";
+            String sql="SELECT * FROM FER_CATEGORIAS";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

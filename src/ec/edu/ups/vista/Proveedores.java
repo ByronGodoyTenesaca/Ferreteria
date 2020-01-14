@@ -228,7 +228,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setText("Buscar por:");
 
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion", "Cedula", "Nombre", "Profesion", " " }));
+        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una opcion", "Cedula", "Nombre", "Empresa", " " }));
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -361,20 +361,20 @@ public class Proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       Proveedor cliente=new Proveedor();
-       cliente.setApellidos(txtApellidos.getText());
-       cliente.setCedula(txtCedula.getText());
-       cliente.setDireccion(txtDireccion.getText());
-       cliente.setEmail(txtEmail.getText());
-       cliente.setNombres(txtNombres.getText());
-       cliente.setEmpresa(txtEmpresa.getText());
-       cliente.setTelefono(txtTelefono.getText());
+       Proveedor p=new Proveedor();
+       p.setApellidos(txtApellidos.getText());
+       p.setCedula(txtCedula.getText());
+       p.setDireccion(txtDireccion.getText());
+       p.setEmail(txtEmail.getText());
+       p.setNombres(txtNombres.getText());
+       p.setEmpresa(txtEmpresa.getText());
+       p.setTelefono(txtTelefono.getText());
        if(rbtnFemenino.isSelected()){
-           cliente.setGenero("Femenino");
+           p.setGenero("Femenino");
        }else{
-           cliente.setGenero("Masculino");
+           p.setGenero("Masculino");
        }
-       controladorProveedor.crearProveedor(cliente);
+       controladorProveedor.crearProveedor(p);
         btnNuevoActionPerformed(evt);
        
        
@@ -459,11 +459,11 @@ public class Proveedores extends javax.swing.JInternalFrame {
         txtEmpresa.setText(String.valueOf(tblProveedor.getValueAt(seleccion, 7)));
         txtTelefono.setText(String.valueOf(tblProveedor.getValueAt(seleccion,6)));
         if (tblProveedor.getValueAt(seleccion, 8)=="Masculino"){
-            rbtnMasculino.setSelected(true);
-            rbtnFemenino.setSelected(false);
-        }else{
-             rbtnMasculino.setSelected(false);
+            rbtnMasculino.setSelected(false);
             rbtnFemenino.setSelected(true);
+        }else{
+             rbtnMasculino.setSelected(true);
+            rbtnFemenino.setSelected(false);
         }
     }//GEN-LAST:event_tblProveedorMouseClicked
 

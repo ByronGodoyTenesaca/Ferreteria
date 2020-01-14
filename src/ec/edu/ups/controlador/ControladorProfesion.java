@@ -16,13 +16,13 @@ public class ControladorProfesion {
         try {
             PreparedStatement pst=null;
             String sql="INSERT INTO FER_PROFESIONES (PRO_CODIGO, PRO_PROFESION, PRO_DESCUENTO)"
-                    + "VALUES(?,?,?) ";
+                    + "VALUES(FER_PROFESIONES_SEQ.nextval,?,?) ";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
            
-            pst.setInt(1, 2);
-            pst.setString(2, p.getNombre());
-            pst.setDouble(3, p.getDescuento());
+            //pst.setInt(1, 2);
+            pst.setString(1, p.getNombre());
+            pst.setDouble(2, p.getDescuento());
             pst.execute();
             
             conexion.getConexion().commit();

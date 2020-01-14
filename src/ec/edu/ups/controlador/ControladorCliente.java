@@ -20,20 +20,20 @@ public class ControladorCliente {
         try {
             PreparedStatement pst=null;
             String sql="INSERT INTO FER_CLIENTES (CLI_CODIGO, CLI_NOMBRE, CLI_APELLIDO, CLI_DIRECCION, CLI_CEDULA, CLI_EMAIL, CLI_NUM_TARJETA, CLI_GENERO, CLI_TELEFONO, PROFESION_PRO_CODIGO)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?)";
+                    + " VALUES (FER_CLIENTES_SEQ.nextval,?,?,?,?,?,?,?,?,?)";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setInt(1, 6);
-            pst.setString(2, c.getNombres());
-            pst.setString(3, c.getApellidos());
-            pst.setString(4, c.getDireccion());
-            pst.setString(5, c.getCedula());
-            pst.setString(6, c.getEmail());
-            pst.setString(7, c.getNumeroTarjeta());
-            pst.setString(8, c.getGenero());
-            pst.setString(9, c.getTelefono());
-            pst.setInt(10, n);
+            //pst.setInt(1, 6);
+            pst.setString(1, c.getNombres());
+            pst.setString(2, c.getApellidos());
+            pst.setString(3, c.getDireccion());
+            pst.setString(4, c.getCedula());
+            pst.setString(5, c.getEmail());
+            pst.setString(6, c.getNumeroTarjeta());
+            pst.setString(7, c.getGenero());
+            pst.setString(8, c.getTelefono());
+            pst.setInt(9, n);
             pst.executeUpdate();
             conexion.getConexion().commit();
             conexion.Desconectar();

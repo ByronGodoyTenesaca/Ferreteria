@@ -32,9 +32,9 @@ public class Productos extends javax.swing.JInternalFrame {
         this.controladorProducto=controladorProducto;
         this.controladorProveedor=controladorProveedor;
         this.cpp=cpp;
-        //llenarMedida();
-        //llenarCategoria();
-        //llenarProveedor();
+        llenarMedida();
+        llenarCategoria();
+        llenarProveedor();
     }
 
     public void llenarCategoria(){

@@ -16,8 +16,8 @@ public class ControladorProducto {
     public void Crear(Producto p){
         try {
             PreparedStatement pst=null;
-            String sql="INSERT INTO PRODUCTO (POR_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO, FER_TIPO_MEDIDA_MED_CODIGO)"
-                    + "VALUES (PRODUCTO_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO FER_PRODUCTOS (PRO_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO, FER_TIPO_MEDIDA_MED_CODIGO)"
+                    + "VALUES (FER_PRODUCTOS_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, p.getNombre());
@@ -30,11 +30,13 @@ public class ControladorProducto {
             pst.setInt(8, p.getCodigoCategoria());
             pst.setInt(9, p.getCodigoMedida());
             
-            pst.execute();
+            pst.executeUpdate();
+            conexion.getConexion().commit();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Producto Creado Correctamente");
             
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo crear el producto");
         }
     }
@@ -42,7 +44,7 @@ public class ControladorProducto {
     public void Actualizar(Producto p){
         try {
             PreparedStatement pst=null;
-            String sql="UPDATE PRODUCTO SET PRO_NOMBRE=?,PRO_DESCRIPCION=?,PRO_COSTO_VENTA=?,PRO_COSTO_COMPRA=?,PRO_CANTIDAD=?,PRO_LUGAR_FABRICACION=?,"
+            String sql="UPDATE FER_PRODUCTOS SET PRO_NOMBRE=?,PRO_DESCRIPCION=?,PRO_COSTO_VENTA=?,PRO_COSTO_COMPRA=?,PRO_CANTIDAD=?,PRO_LUGAR_FABRICACION=?,"
                     + "PRO_IVA=?,FER_CATEGORIA_CAT_CODIGO=?, FER_TIPO_MEDIDA_MED_CODIGO=?"
                     + "WHERE PRO_CODIGO = ?";
             conexion.Conectar();
@@ -71,7 +73,7 @@ public class ControladorProducto {
      public void Eliminar(int codigo){
           try {
             PreparedStatement pst=null;
-            String sql="DELETE FROM PRODUCTO WHERE PRO_CODIGO =?";
+            String sql="DELETE FROM FER_PRODUCTOS WHERE PRO_CODIGO =?";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
@@ -91,7 +93,7 @@ public class ControladorProducto {
         try {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
-            String sql="SELECT * FROM PRODUCTO WHERE FER_CATEGORIA_CAT_CODIGO="+cat+";";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE FER_CATEGORIA_CAT_CODIGO="+cat+";";
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
@@ -120,7 +122,7 @@ public class ControladorProducto {
      
      public int buscarcodproveedor(String nombre){
         try {
-            String sql="SELECT * FROM PRODUCTO WHERE PRO_NOMBRE ="+nombre+";";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ="+nombre+";";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -138,7 +140,7 @@ public class ControladorProducto {
      public void ingresarMercaderia(int codigo,int suma){
         try {
             PreparedStatement pst=null;
-            String sql="UPDATE PRODUCTO SET PRO_CANTIDAD=?"
+            String sql="UPDATE FER_PRODUCTOS SET PRO_CANTIDAD=?"
                     + "WHERE PRO_CODIGO = ?";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);

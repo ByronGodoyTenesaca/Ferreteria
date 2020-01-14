@@ -23,3 +23,8 @@ AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO;
 
 
 select * from FER_PROFESIONES;
+
+select * from FER_CATEGORIAS;
+select * from FER_TIPO_MEDIDAS;
+select * from FER_PROVEEDORES;
+select * from FER_PRODUCTOS;
