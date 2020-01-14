@@ -15,6 +15,7 @@ public class Secundaria extends javax.swing.JFrame {
 
     private Clientes c;
     private Productos p;
+    private Proveedores pr;
     private int n;
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
@@ -31,10 +32,12 @@ public class Secundaria extends javax.swing.JFrame {
         controladorProfesion=new ControladorProfesion();
         vistaEmpleado = new VistaEmpleado(controladorEmpleado);
         vistaCargo = new VistaCargo(controladorCargo);
+        
         controladorCargo = new ControladorCargo();
         controladorEmpleado = new ControladorEmpleado();
         controladorCategoria = new ControladorCategoria();
         controladorMedida = new ControladorMedida();
+        
         this.n=n;
         //controlar();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -53,81 +56,37 @@ public class Secundaria extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         desktopPane = new javax.swing.JDesktopPane();
-        pntAccesos = new javax.swing.JPanel();
-        btnCliente = new javax.swing.JButton();
-        btnProducto = new javax.swing.JButton();
-        btnEmpleado = new javax.swing.JButton();
-        btnFacturacion = new javax.swing.JButton();
-        btnSesion = new javax.swing.JButton();
-        btnProveedor = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         menuProducto = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
         menuEmpleado = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         itmCargo = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
         menuFactura = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         menuReportes = new javax.swing.JMenu();
         menuSesion = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pntAccesos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnCliente.setText("Cliente");
-        btnCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClienteActionPerformed(evt);
-            }
-        });
-        pntAccesos.add(btnCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 91, 50));
-
-        btnProducto.setText("Productos");
-        btnProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductoActionPerformed(evt);
-            }
-        });
-        pntAccesos.add(btnProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 0, 91, 50));
-
-        btnEmpleado.setText("Empleados");
-        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmpleadoActionPerformed(evt);
-            }
-        });
-        pntAccesos.add(btnEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 0, -1, 50));
-
-        btnFacturacion.setText("Facturacion");
-        pntAccesos.add(btnFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(294, 0, -1, 50));
-
-        btnSesion.setText("Sesion");
-        btnSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSesionActionPerformed(evt);
-            }
-        });
-        pntAccesos.add(btnSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 0, 91, 50));
-
-        btnProveedor.setText("Proveedor");
-        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProveedorActionPerformed(evt);
-            }
-        });
-        pntAccesos.add(btnProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 50));
-
-        desktopPane.add(pntAccesos);
-        pntAccesos.setBounds(0, 0, 950, 50);
-
         getContentPane().add(desktopPane, java.awt.BorderLayout.CENTER);
 
         menuCliente.setText("Cliente");
+
+        jMenuItem2.setText("Cliente");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuCliente.add(jMenuItem2);
 
         jMenuItem1.setText("Profesion");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +100,22 @@ public class Secundaria extends javax.swing.JFrame {
 
         menuProducto.setMnemonic('e');
         menuProducto.setText("Productos");
+
+        jMenuItem3.setText("Producto");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuProducto.add(jMenuItem3);
+
+        jMenuItem6.setText("Proveedor");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        menuProducto.add(jMenuItem6);
 
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Categoria");
@@ -165,6 +140,14 @@ public class Secundaria extends javax.swing.JFrame {
         menuEmpleado.setMnemonic('h');
         menuEmpleado.setText("Empleados");
 
+        jMenuItem4.setText("Empleado");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuEmpleado.add(jMenuItem4);
+
         itmCargo.setMnemonic('c');
         itmCargo.setText("Cargo");
         itmCargo.addActionListener(new java.awt.event.ActionListener() {
@@ -174,13 +157,13 @@ public class Secundaria extends javax.swing.JFrame {
         });
         menuEmpleado.add(itmCargo);
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        menuEmpleado.add(aboutMenuItem);
-
         menuBar.add(menuEmpleado);
 
         menuFactura.setText("Facturacion");
+
+        jMenuItem5.setText("Facturacion");
+        menuFactura.add(jMenuItem5);
+
         menuBar.add(menuFactura);
 
         menuReportes.setText("Reportes");
@@ -193,49 +176,6 @@ public class Secundaria extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        //desktopPane.removeAll();
-        desktopPane.repaint();
-        c=new Clientes(controladorCliente,controladorProfesion);
-        c.setVisible(true);
-        desktopPane.add(c);
-        Dimension desktopSize = desktopPane.getSize();
-        Dimension FrameSize = c.getSize();
-        c.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        c.show();
-        
-    }//GEN-LAST:event_btnClienteActionPerformed
-
-    private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-       // desktopPane.removeAll();
-        desktopPane.repaint();
-        p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor(),new ControladorProductoProveedor());
-        p.setVisible(true);
-        desktopPane.add(p);
-        Dimension desktopSize = desktopPane.getSize();
-        Dimension FrameSize = p.getSize();
-        p.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        p.show();
-    }//GEN-LAST:event_btnProductoActionPerformed
-
-    private void btnSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSesionActionPerformed
-        this.dispose();
-        new Login().setVisible(true);
-        
-    }//GEN-LAST:event_btnSesionActionPerformed
-
-    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProveedorActionPerformed
-
-    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
-        // TODO add your handling code here:
-        vistaEmpleado = new VistaEmpleado(controladorEmpleado);
-        vistaEmpleado.setVisible(true);
-        desktopPane.add(vistaEmpleado);
-        vistaEmpleado.show();
-    }//GEN-LAST:event_btnEmpleadoActionPerformed
 
     private void itmCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCargoActionPerformed
         // TODO add your handling code here:
@@ -274,6 +214,48 @@ public class Secundaria extends javax.swing.JFrame {
         p.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+         //desktopPane.removeAll();
+        desktopPane.repaint();
+        c=new Clientes(controladorCliente,controladorProfesion);
+        c.setVisible(true);
+        desktopPane.add(c);
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension FrameSize = c.getSize();
+        c.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
+        c.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // desktopPane.removeAll();
+        desktopPane.repaint();
+        p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor(),new ControladorProductoProveedor());
+        p.setVisible(true);
+        desktopPane.add(p);
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension FrameSize = p.getSize();
+        p.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
+        p.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        vistaEmpleado = new VistaEmpleado(controladorEmpleado);
+        vistaEmpleado.setVisible(true);
+        desktopPane.add(vistaEmpleado);
+        vistaEmpleado.show();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        desktopPane.repaint();
+        pr=new Proveedores(new ControladorProveedor());
+        pr.setVisible(true);
+        desktopPane.add(pr);
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension FrameSize = pr.getSize();
+        pr.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
+        pr.show();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,19 +292,17 @@ public class Secundaria extends javax.swing.JFrame {
    // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JButton btnCliente;
-    private javax.swing.JButton btnEmpleado;
-    private javax.swing.JButton btnFacturacion;
-    private javax.swing.JButton btnProducto;
-    private javax.swing.JButton btnProveedor;
-    private javax.swing.JButton btnSesion;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem itmCargo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuEmpleado;
@@ -330,7 +310,6 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenu menuProducto;
     private javax.swing.JMenu menuReportes;
     private javax.swing.JMenu menuSesion;
-    private javax.swing.JPanel pntAccesos;
     // End of variables declaration//GEN-END:variables
 
 }
