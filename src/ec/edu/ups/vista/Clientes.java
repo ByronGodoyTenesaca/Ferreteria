@@ -530,11 +530,11 @@ public class Clientes extends javax.swing.JInternalFrame {
         txtTarjeta.setText(String.valueOf(tblCliente.getValueAt(seleccion, 8)));
         txtTelefono.setText(String.valueOf(tblCliente.getValueAt(seleccion, 6)));
         if (tblCliente.getValueAt(seleccion, 9)=="Masculino"){
-            rbtnMasculino.setSelected(true);
-            rbtnFemenino.setSelected(false);
-        }else{
-             rbtnMasculino.setSelected(false);
+            rbtnMasculino.setSelected(false);
             rbtnFemenino.setSelected(true);
+        }else{
+             rbtnMasculino.setSelected(true);
+            rbtnFemenino.setSelected(false);
         }
         cbxProfesion.setSelectedItem(tblCliente.getValueAt(seleccion, 7));
     }//GEN-LAST:event_tblClienteMouseClicked
