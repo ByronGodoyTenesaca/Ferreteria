@@ -16,22 +16,23 @@ public class ControladorEmpleado {
     public void crear(Empleado em) {
         conexion = new ConexionBD();
         PreparedStatement pst = null;
-        String sql = "INSERT INTO EMPLEADOS(EMP_CODIGO, EMP_NOMBRE, EMP_APELLIDO, EMP_DIRECCION, EMP_CEDULA, EMP_TELEFONO, EMP_EMAIL, EMP_GENERO, EMP_CONTRASENA, EMP_CARGO)"
-                + "VALUES (EMPLEADOS_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO EMPLEADO(EMP_CODIGO, EMP_NOMBRE, EMP_APELLIDO, EMP_DIRECCION, EMP_CEDULA, EMP_EMAIL, EMP_CONTRASEÑA,  EMP_GENERO, EMP_TELEFONO, EMP_CARGO)"
+                + "VALUES (CODIGO_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
         try {
             conexion.Conectar();
             pst = conexion.getConexion().prepareStatement(sql);
+            
             pst.setString(1, em.getNombres());
             pst.setString(2, em.getApellidos());
             pst.setString(3, em.getDireccion());
             pst.setString(4, em.getCedula());
-            pst.setString(5, em.getTelefono());
-            pst.setString(6, em.getEmail());
-            pst.setString(7, em.getGenero() + "");
-            pst.setString(8, em.getContraseña());
+            pst.setString(5, em.getEmail());
+            pst.setString(6, em.getContraseña());
+            pst.setString(7, em.getGenero()+"");
+            pst.setString(8, em.getTelefono());
             pst.setString(9, em.getCargo());
             pst.execute();
-            System.out.println("GUardado correctamente");
+            System.out.println("Guardado correctamente");
             conexion.Desconectar();
         } catch (SQLException e) {
             System.out.println("No se pudo guardar " + e.getMessage());

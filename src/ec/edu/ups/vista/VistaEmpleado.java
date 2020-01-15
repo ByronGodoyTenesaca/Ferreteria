@@ -1,7 +1,8 @@
-
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorEmpleado;
+import ec.edu.ups.modelo.Empleado;
+import javax.swing.GroupLayout;
 
 /**
  *
@@ -10,16 +11,18 @@ import ec.edu.ups.controlador.ControladorEmpleado;
 public class VistaEmpleado extends javax.swing.JInternalFrame {
 
     private ControladorEmpleado controladorEmpleado;
-    
+    private Empleado empleado;
+
     public VistaEmpleado(ControladorEmpleado controlador) {
         initComponents();
         controladorEmpleado = controlador;
     }
 
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Genero = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -42,15 +45,15 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         lblCelular = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
         lblCelular1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        RdMasculino = new javax.swing.JRadioButton();
+        RdFemenino = new javax.swing.JRadioButton();
         lblEmail1 = new javax.swing.JLabel();
-        txtEmail1 = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         lblBuscarE = new javax.swing.JLabel();
         choice1 = new java.awt.Choice();
         lblBuscarE1 = new javax.swing.JLabel();
-        txtContrasena1 = new javax.swing.JTextField();
+        txtValorBuscar = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
@@ -58,10 +61,25 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modifiacar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
 
@@ -123,9 +141,11 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         lblCelular1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCelular1.setText("Género :");
 
-        jRadioButton1.setText("Masculino");
+        Genero.add(RdMasculino);
+        RdMasculino.setText("Masculino");
 
-        jRadioButton2.setText("Femenino");
+        Genero.add(RdFemenino);
+        RdFemenino.setText("Femenino");
 
         lblEmail1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblEmail1.setText("Dirección :");
@@ -146,7 +166,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(txtContrasena1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtValorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +188,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addComponent(lblBuscarE1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContrasena1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtValorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -185,38 +205,38 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                     .addComponent(lblEmail)
                     .addComponent(lblEmail1))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblCargo)
-                                .addGap(52, 52, 52)
-                                .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblContraseña)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                            .addComponent(txtNombre)
+                            .addComponent(txtApellido)
+                            .addComponent(txtEmail))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCelular)
                                     .addComponent(lblCelular1))
                                 .addGap(45, 45, 45)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jRadioButton2))))))
-                    .addComponent(txtEmail1))
-                .addGap(18, 18, 18)
+                                    .addComponent(txtCelular)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(RdMasculino)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(RdFemenino)
+                                        .addGap(24, 24, 24))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblCargo)
+                                .addGap(52, 52, 52)
+                                .addComponent(txtCargo))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblContraseña)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(txtDireccion))
+                .addGap(18, 23, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -248,11 +268,11 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail)
                             .addComponent(lblCelular1)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(RdMasculino)
+                            .addComponent(RdFemenino))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail1))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -263,10 +283,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
 
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Cédula/Ruc", "Nombre", "Apellido", "E-mail", "Contraseña", "Cargo", "Celular", "Género", "Dirección"
@@ -278,17 +295,14 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(296, 296, 296))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(321, 321, 321))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -306,7 +320,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -318,8 +332,62 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Empleado e = new Empleado();
+        e.setCedula(txtCedula.getText());
+        e.setNombres(txtNombre.getText());
+        e.setApellidos(txtApellido.getText());
+        e.setEmail(txtEmail.getText());
+        e.setDireccion(txtDireccion.getText());
+        e.setContraseña(txtContrasena.getText());
+        e.setCargo(txtCargo.getText());
+        e.setTelefono(txtCelular.getText());
+        controladorEmpleado.crear(e);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        Empleado e = new Empleado();
+        e.setCedula(txtCedula.getText());
+        e.setNombres(txtNombre.getText());
+        e.setApellidos(txtApellido.getText());
+        e.setEmail(txtEmail.getText());
+        e.setDireccion(txtDireccion.getText());
+        e.setContraseña(txtContrasena.getText());
+        e.setCargo(txtCargo.getText());
+        e.setTelefono(txtCelular.getText());
+        String genero="";
+        if(RdFemenino.isSelected()){
+           genero = "Femenino";
+       }else{
+           genero = "Masculino";
+       }
+        e.setGenero(genero);
+        controladorEmpleado.crear(e);
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    public void limpiar() {
+        txtCedula.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCargo.setText("");
+        txtCelular.setText("");
+        txtEmail.setText("");
+        txtContrasena.setText("");
+        txtDireccion.setText("");
+        Genero.clearSelection();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup Genero;
+    private javax.swing.JRadioButton RdFemenino;
+    private javax.swing.JRadioButton RdMasculino;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -330,8 +398,6 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblBuscarE;
@@ -350,9 +416,9 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtContrasena;
-    private javax.swing.JTextField txtContrasena1;
+    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEmail1;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtValorBuscar;
     // End of variables declaration//GEN-END:variables
 }
