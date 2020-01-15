@@ -24,6 +24,7 @@ public class Productos extends javax.swing.JInternalFrame {
     private List<Medida>listaMedida;
     private List<Categoria>listaCategoria;
     private List<Proveedor>listaProveedor;
+    private List<ProductoProveedor>listaPP;
     private int codigo;
     public Productos(ControladorCategoria controladorCategoria,ControladorMedida controladorMedida,ControladorProducto controladorProducto,ControladorProveedor controladorProveedor,ControladorProductoProveedor cpp) {
         initComponents();
@@ -35,8 +36,12 @@ public class Productos extends javax.swing.JInternalFrame {
         llenarMedida();
         llenarCategoria();
         llenarProveedor();
+        llenarProductoProveedor();
     }
 
+    public void llenarProductoProveedor(){
+        listaPP=cpp.listar();
+    }
     public void llenarCategoria(){
        List<Categoria> lista= controladorCategoria.Listar();
        listaCategoria=lista;
@@ -267,7 +272,7 @@ public class Productos extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel10.setText("Buscar por:");
 
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija una Opcion" }));
+        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija una Opcion", "Proveedor", "Producto", "Categoria" }));
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -413,11 +418,12 @@ public class Productos extends javax.swing.JInternalFrame {
         }
 
         controladorProducto.Crear(p);
-        pp.setCantidad(Integer.parseInt(txtCantidad.getText()));
-        pp.setCodigoProducto(controladorProducto.buscarcodproveedor(txtNombre.getText()));
+        
+        /*pp.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        pp.setCodigoProducto(controladorProducto.buscarcodproducto(txtNombre.getText()));
         pp.setCodigoProveedor(buscarCodigoProv());
         cpp.CrearProductoProveedor(pp);
-        
+        */
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -480,7 +486,7 @@ public class Productos extends javax.swing.JInternalFrame {
         if (evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()=="Categoria"){
                 for (Categoria c : listaCategoria) {
-                    if(c.getCategoria()==txtBuscar.getText()){
+                    if(c.getCategoria().equals(txtBuscar.getText())){
                         codigo=c.getCodigo();
                         break;
                     }
@@ -488,16 +494,16 @@ public class Productos extends javax.swing.JInternalFrame {
                 DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
                 List<Producto>lista=controladorProducto.buscarCategoria(codigo);
                 for (Producto p : lista) {
-                   
+                  
                     Object[] dato={
                         p.getCodigo(),
                         txtBuscar.getText(),
                         p.getNombre(),
-                        buscarMarca(p.getCodigo()),
+                        marca,
                         p.getCantidad(),
                         p.getPrecioCompra(),
                         p.getPrecioVenta(),
-                        buscarProveedor(p.getCodigo()),
+                        Proveedor,
                         p.getDescripcion(),
                         p.getLugarFabricacion()
                     };
@@ -514,6 +520,7 @@ public class Productos extends javax.swing.JInternalFrame {
         for (Proveedor p : listaProveedor) {
             if(p.getCodigo()==codigoProv){
                 marca=p.getEmpresa();
+                System.out.println(marca);
                 break;
                                 
             }
@@ -529,6 +536,7 @@ public class Productos extends javax.swing.JInternalFrame {
         for (Proveedor p : listaProveedor) {
             if(p.getCodigo()==codigoProv){
                 nombre=p.getNombres();
+                System.out.println(nombre);
                 break;       
             }
             return nombre;
@@ -538,14 +546,15 @@ public class Productos extends javax.swing.JInternalFrame {
     private void tblProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductoMouseClicked
         int seleccion =tblProducto.getSelectedRow();
         codigo=(int)tblProducto.getValueAt(seleccion, 0);
+        
         cbxCategoria.setSelectedItem(tblProducto.getValueAt(seleccion, 1));
-        txtNombre.setText((String)tblProducto.getValueAt(seleccion, 2));
-        txtMarca.setText((String)tblProducto.getValueAt(seleccion, 3));
-        txtCantidad.setText((String)tblProducto.getValueAt(seleccion, 4));
-        txtPrecioCompra.setText((String)tblProducto.getValueAt(seleccion, 5));
-        txtPrecioVenta.setText((String)tblProducto.getValueAt(seleccion, 6));
+        txtNombre.setText((String.valueOf(tblProducto.getValueAt(seleccion, 2))));
+        txtMarca.setText(String.valueOf(tblProducto.getValueAt(seleccion, 3)));
+        txtCantidad.setText(String.valueOf(tblProducto.getValueAt(seleccion, 4)));
+        txtPrecioCompra.setText(String.valueOf(tblProducto.getValueAt(seleccion, 5)));
+        txtPrecioVenta.setText(String.valueOf(tblProducto.getValueAt(seleccion, 6)));
         cbxProveedor.setSelectedItem(tblProducto.getValueAt(seleccion, 7));
-        txtDescripcion.setText((String)tblProducto.getValueAt(seleccion, 8));
+        txtDescripcion.setText(String.valueOf(tblProducto.getValueAt(seleccion, 8)));
         cbxFabricacion.setSelectedItem(tblProducto.getValueAt(seleccion, 9));
         
     }//GEN-LAST:event_tblProductoMouseClicked
@@ -562,12 +571,21 @@ public class Productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbxProveedorItemStateChanged
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-    
-        int num2=Integer.parseInt(JOptionPane.showInputDialog("Cuantos articulos va a registrar"));
+        String numero=JOptionPane.showInputDialog("Cuantos articulos va a registrar");
+        if(numero != null){
+        ProductoProveedor pp=new ProductoProveedor();
+        int num2=Integer.parseInt(numero);
         int num=Integer.parseInt(txtCantidad.getText());
         int suma=num+num2;
+        for (Proveedor c : listaProveedor) {
+            if(c.getNombres()==(String)cbxProveedor.getSelectedItem()){
+                pp.setCodigoProveedor(c.getCodigo());
+            }
+        }
         controladorProducto.ingresarMercaderia(codigo, suma);
-        
+        pp.setCodigoProducto(codigo);
+        cpp.CrearProductoProveedor(pp);
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
 
