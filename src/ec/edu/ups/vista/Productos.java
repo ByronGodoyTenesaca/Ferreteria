@@ -240,6 +240,8 @@ public class Productos extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Origen de Fabricacion:");
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 189, -1, -1));
+
+        txtCantidad.setEditable(false);
         jPanel3.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 14, 130, 25));
         jPanel3.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 130, 30));
         jPanel3.add(txtPrecioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 47, 80, 30));
@@ -294,7 +296,7 @@ public class Productos extends javax.swing.JInternalFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbxBuscar, 0, 182, Short.MAX_VALUE)
                             .addComponent(txtBuscar))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,9 +316,9 @@ public class Productos extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -333,11 +335,11 @@ public class Productos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Codigo", "Categoria", "Nombre", "Marca", "Cantidad", "Precio Compra", "Precio Venta", "Proveedor", "Descripcion", "Lugar Fabricacion"
+                "Codigo", "Categoria", "Nombre", "Marca", "Cantidad", "Precio Compra", "Precio Venta", "Proveedor", "Descripcion", "Lugar Fabricacion", "Iva", "Medida"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -494,18 +496,20 @@ public class Productos extends javax.swing.JInternalFrame {
                 DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
                 List<Producto>lista=controladorProducto.buscarCategoria(codigo);
                 for (Producto p : lista) {
-                  
+                    //System.out.println(p.getCodigo());
                     Object[] dato={
                         p.getCodigo(),
                         txtBuscar.getText(),
                         p.getNombre(),
-                        marca,
+                        buscarMarca(p.getCodigo()),
                         p.getCantidad(),
                         p.getPrecioCompra(),
                         p.getPrecioVenta(),
-                        Proveedor,
+                        buscarProveedor(p.getCodigo()),
                         p.getDescripcion(),
-                        p.getLugarFabricacion()
+                        p.getLugarFabricacion(),
+                        iva(p.getIva()),
+                        buscarMedida(p.getCodigoMedida())
                     };
                     modelo.addRow(dato);
                 }
@@ -514,32 +518,48 @@ public class Productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
 
-    public String buscarMarca(int codigo){
-        int codigoProv=cpp.buscarcodproveedor(codigo);
-        String marca="";
-        for (Proveedor p : listaProveedor) {
-            if(p.getCodigo()==codigoProv){
-                marca=p.getEmpresa();
-                System.out.println(marca);
-                break;
-                                
+    public String iva(boolean iva){
+        if(iva){
+            return "Tiene iva";
+        }else{
+            return "No tiene iva";
+        }
+    }
+    public String buscarMedida(int codigo){
+        for (Medida m : listaMedida) {
+            if(m.getCodigo()==codigo){
+                return m.getTipo();
             }
-            return marca;
         }
         return null;
+    }
+    public String buscarMarca(int codigo){
+    
+       // System.out.println(codigo);
+        for (ProductoProveedor pp : listaPP) {
+            if(pp.getCodigoProducto()==codigo){
+                for (Proveedor p : listaProveedor) {
+                    if(p.getCodigo()==pp.getCodigoProveedor()){
+                        return p.getEmpresa();
+                        
+                    }
+                }
+            }
+        }
+    return null;
     }
     
     
     public String buscarProveedor(int codigo){
-        int codigoProv=cpp.buscarcodproveedor(codigo);
-        String nombre="";
-        for (Proveedor p : listaProveedor) {
-            if(p.getCodigo()==codigoProv){
-                nombre=p.getNombres();
-                System.out.println(nombre);
-                break;       
+        for (ProductoProveedor pp : listaPP) {
+            if(pp.getCodigoProducto()==codigo){
+                for (Proveedor p : listaProveedor) {
+                    if(p.getCodigo()==pp.getCodigoProveedor()){
+                        return p.getNombres();
+                        
+                    }
+                }
             }
-            return nombre;
         }
         return null;
     }
@@ -556,6 +576,14 @@ public class Productos extends javax.swing.JInternalFrame {
         cbxProveedor.setSelectedItem(tblProducto.getValueAt(seleccion, 7));
         txtDescripcion.setText(String.valueOf(tblProducto.getValueAt(seleccion, 8)));
         cbxFabricacion.setSelectedItem(tblProducto.getValueAt(seleccion, 9));
+        if(tblProducto.getValueAt(seleccion, 10)=="Tiene iva"){
+            rbtSi.setSelected(true);
+            rbtNo.setSelected(false);
+        }else{
+            rbtSi.setSelected(false);
+            rbtNo.setSelected(true);
+        }
+        cbxMedida.setSelectedItem(tblProducto.getValueAt(seleccion, 11));
         
     }//GEN-LAST:event_tblProductoMouseClicked
 
