@@ -493,8 +493,10 @@ public class Productos extends javax.swing.JInternalFrame {
                         break;
                     }
                 }
+                
                 DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
                 List<Producto>lista=controladorProducto.buscarCategoria(codigo);
+                modelo.setRowCount(0);
                 for (Producto p : lista) {
                     //System.out.println(p.getCodigo());
                     Object[] dato={
@@ -513,6 +515,8 @@ public class Productos extends javax.swing.JInternalFrame {
                     };
                     modelo.addRow(dato);
                 }
+            }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
+            
             }
             
         }
@@ -605,14 +609,19 @@ public class Productos extends javax.swing.JInternalFrame {
         int num2=Integer.parseInt(numero);
         int num=Integer.parseInt(txtCantidad.getText());
         int suma=num+num2;
+            System.out.println(num2+"+"+num+"="+suma);
         for (Proveedor c : listaProveedor) {
             if(c.getNombres()==(String)cbxProveedor.getSelectedItem()){
                 pp.setCodigoProveedor(c.getCodigo());
+                System.out.println(c.getCodigo());
             }
         }
         controladorProducto.ingresarMercaderia(codigo, suma);
         pp.setCodigoProducto(codigo);
+        pp.setCantidad(num2);
         cpp.CrearProductoProveedor(pp);
+        java.awt.event.KeyEvent e = null;
+        txtBuscarKeyPressed(e);
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

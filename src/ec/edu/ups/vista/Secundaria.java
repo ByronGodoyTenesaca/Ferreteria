@@ -189,12 +189,16 @@ public class Secundaria extends javax.swing.JFrame {
 
     private void itmCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCargoActionPerformed
         // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
         vistaCargo = new VistaCargo(controladorCargo);
         desktopPane.add(vistaCargo);
         vistaCargo.show();
     }//GEN-LAST:event_itmCargoActionPerformed
 
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
         Categorias c=new Categorias(controladorCategoria);
         c.setVisible(true);
         desktopPane.add(c);
@@ -205,6 +209,8 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_cutMenuItemActionPerformed
 
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
         Medida m=new Medida(controladorMedida);
         m.setVisible(true);
         desktopPane.add(m);
@@ -215,6 +221,8 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_copyMenuItemActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
         Profesiones p=new Profesiones(controladorProfesion);
         p.setVisible(true);
         desktopPane.add(p);
@@ -225,7 +233,7 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-         //desktopPane.removeAll();
+        desktopPane.removeAll();
         desktopPane.repaint();
         c=new Clientes(controladorCliente,controladorProfesion);
         c.setVisible(true);
@@ -237,7 +245,7 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // desktopPane.removeAll();
+        desktopPane.removeAll();
         desktopPane.repaint();
         p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor(),new ControladorProductoProveedor());
         p.setVisible(true);
@@ -249,6 +257,8 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
         vistaEmpleado = new VistaEmpleado(controladorEmpleado);
         vistaEmpleado.setVisible(true);
         desktopPane.add(vistaEmpleado);
@@ -256,6 +266,7 @@ public class Secundaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        desktopPane.removeAll();
         desktopPane.repaint();
         pr=new Proveedores(new ControladorProveedor());
         pr.setVisible(true);

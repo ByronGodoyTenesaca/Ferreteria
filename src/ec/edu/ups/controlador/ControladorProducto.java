@@ -93,7 +93,7 @@ public class ControladorProducto {
         try {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE FER_CATEGORIA_CAT_CODIGO="+cat+";";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE FER_CATEGORIA_CAT_CODIGO="+cat+"";
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
@@ -120,9 +120,9 @@ public class ControladorProducto {
         return null;
      }
      
-     public int buscarcodproveedor(String nombre){
+     public int buscarcodproducto(String nombre){
         try {
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ="+nombre+";";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ="+nombre+"";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -148,10 +148,12 @@ public class ControladorProducto {
             pst.setInt(2, codigo);
             
             pst.execute();
+            conexion.getConexion().commit();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null,"Stock ingresado Satisfactoriamente");
             
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo Actualizar el Stock");
         }
     }
