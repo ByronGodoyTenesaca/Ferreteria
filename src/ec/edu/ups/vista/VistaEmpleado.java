@@ -6,6 +6,7 @@ import ec.edu.ups.modelo.Cargo;
 import ec.edu.ups.modelo.Empleado;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +18,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
     private ControladorCargo controladorCargo;
     private Empleado empleado;
     private List<Cargo> lista;
+    private int codigo;
 
     public VistaEmpleado(ControladorEmpleado controlador, ControladorCargo controladorCargo) {
         initComponents();
@@ -52,8 +54,8 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         lblCelular = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
         lblCelular1 = new javax.swing.JLabel();
-        RdMasculino = new javax.swing.JRadioButton();
-        RdFemenino = new javax.swing.JRadioButton();
+        rbtnMasculino = new javax.swing.JRadioButton();
+        rbtnFemenino = new javax.swing.JRadioButton();
         lblEmail1 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
@@ -154,11 +156,11 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         lblCelular1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCelular1.setText("Género :");
 
-        Genero.add(RdMasculino);
-        RdMasculino.setText("Masculino");
+        Genero.add(rbtnMasculino);
+        rbtnMasculino.setText("Masculino");
 
-        Genero.add(RdFemenino);
-        RdFemenino.setText("Femenino");
+        Genero.add(rbtnFemenino);
+        rbtnFemenino.setText("Femenino");
 
         lblEmail1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblEmail1.setText("Dirección :");
@@ -171,7 +173,13 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         lblBuscarE1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblBuscarE1.setText("Valor a buscar :");
 
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtValorBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValorBuscarKeyPressed(evt);
+            }
+        });
+
+        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja una Opcion", "Nombre", "Cedula", "Puesto Trabajo" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -236,9 +244,9 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(45, 45, 45)
-                                        .addComponent(RdMasculino)
+                                        .addComponent(rbtnMasculino)
                                         .addGap(18, 18, 18)
-                                        .addComponent(RdFemenino))
+                                        .addComponent(rbtnFemenino))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(39, 39, 39)
                                         .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -284,8 +292,8 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail)
                             .addComponent(lblCelular1)
-                            .addComponent(RdMasculino)
-                            .addComponent(RdFemenino))
+                            .addComponent(rbtnMasculino)
+                            .addComponent(rbtnFemenino))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,6 +312,12 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
                 "Código", "Cédula/Ruc", "Nombre", "Apellido", "E-mail", "Contraseña", "Cargo", "Celular", "Género", "Dirección"
             }
         ));
+        tblEmpleados.setRowHeight(30);
+        tblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEmpleadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEmpleados);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -364,7 +378,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         e.setCargo(BuscarCargo((String)cbxCargo.getSelectedItem()));
         e.setTelefono(txtCelular.getText());
         String genero="";
-        if(RdFemenino.isSelected()){
+        if(rbtnFemenino.isSelected()){
            genero = "Femenino";
        }else{
            genero = "Masculino";
@@ -385,19 +399,130 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         e.setCargo(BuscarCargo((String)cbxCargo.getSelectedItem()));
         e.setTelefono(txtCelular.getText());
         String genero="";
-        if(RdFemenino.isSelected()){
+        if(rbtnFemenino.isSelected()){
            genero = "Femenino";
        }else{
            genero = "Masculino";
        }
         e.setGenero(genero);
-        controladorEmpleado.crear(e);
+        e.setCodigo(codigo);
+        controladorEmpleado.actualizar(e);
+        if((String)cbxBuscar.getSelectedItem()=="Cedula"){
+                buscarCedula();
+            }else if((String)cbxBuscar.getSelectedItem()=="Nombre"){
+                BuscarNombre();
+            }else{
+                BuscarPuesto();
+            }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        
+        controladorEmpleado.eliminar(codigo);
+        if((String)cbxBuscar.getSelectedItem()=="Cedula"){
+                buscarCedula();
+            }else if((String)cbxBuscar.getSelectedItem()=="Nombre"){
+                BuscarNombre();
+            }else{
+                BuscarPuesto();
+            }
+        limpiar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtValorBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorBuscarKeyPressed
+        if(evt.getKeyCode()==10){
+            if((String)cbxBuscar.getSelectedItem()=="Cedula"){
+                buscarCedula();
+            }else if((String)cbxBuscar.getSelectedItem()=="Nombre"){
+                BuscarNombre();
+            }else{
+                BuscarPuesto();
+            }
+        }
+    }//GEN-LAST:event_txtValorBuscarKeyPressed
+
+    private void tblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpleadosMouseClicked
+        int seleccion =tblEmpleados.getSelectedRow();
+        codigo=(int) tblEmpleados.getValueAt(seleccion, 0);
+        txtApellido.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 3)));
+        txtCedula.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 1)));
+        txtCelular.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 7)));
+        txtContrasena.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 5)));
+        txtDireccion.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 9)));
+        txtEmail.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 4)));
+        txtNombre.setText(String.valueOf(tblEmpleados.getValueAt(seleccion, 2)));
+        cbxCargo.setSelectedItem(tblEmpleados.getValueAt(seleccion, 6));
+        if (tblEmpleados.getValueAt(seleccion, 9)=="Masculino"){
+            rbtnMasculino.setSelected(false);
+            rbtnFemenino.setSelected(true);
+        }else{
+             rbtnMasculino.setSelected(true);
+            rbtnFemenino.setSelected(false);
+        }
+                
+    }//GEN-LAST:event_tblEmpleadosMouseClicked
+
+    public void buscarCedula(){
+        Empleado e=controladorEmpleado.buscarXCedula(txtValorBuscar.getText());
+        DefaultTableModel modelo= (DefaultTableModel) tblEmpleados.getModel();
+        modelo.setRowCount(0);
+       Object[] dato ={
+           e.getCodigo(),
+           e.getCedula(),
+           e.getNombres(),
+           e.getApellidos(),
+           e.getEmail(),
+           e.getContraseña(),
+           BuscarCargoN(e.getCargo()),
+           e.getTelefono(),
+           e.getGenero(),
+           e.getDireccion()
+       };
+       modelo.addRow(dato);
+    }
+    
+    public void BuscarNombre(){
+        List<Empleado> lista=controladorEmpleado.buscarXNombre(txtValorBuscar.getText());
+        DefaultTableModel modelo= (DefaultTableModel) tblEmpleados.getModel();
+        modelo.setRowCount(0);
+        for (Empleado e : lista) {
+           Object[] dato ={
+           e.getCodigo(),
+           e.getCedula(),
+           e.getNombres(),
+           e.getApellidos(),
+           e.getEmail(),
+           e.getContraseña(),
+           BuscarCargoN(e.getCargo()),
+           e.getTelefono(),
+           e.getGenero(),
+           e.getDireccion()
+           };
+           modelo.addRow(dato);
+        }
+    }
+    
+    public void BuscarPuesto(){
+        List<Empleado> lista=controladorEmpleado.buscarXTrabajo(BuscarCargo(txtValorBuscar.getText()));
+        DefaultTableModel modelo= (DefaultTableModel) tblEmpleados.getModel();
+        modelo.setRowCount(0);
+        for (Empleado e : lista) {
+           Object[] dato ={
+           e.getCodigo(),
+           e.getCedula(),
+           e.getNombres(),
+           e.getApellidos(),
+           e.getEmail(),
+           e.getContraseña(),
+           BuscarCargoN(e.getCargo()),
+           e.getTelefono(),
+           e.getGenero(),
+           e.getDireccion()
+           };
+           modelo.addRow(dato);
+        }
+    }
+    
+    
     public void llenarCargo(){
         List<Cargo> lista=controladorCargo.listar();
         this.lista=lista;
@@ -405,16 +530,25 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
             cbxCargo.addItem(c.getCargo());
         }
     }
+    public String BuscarCargoN(int Cargo){
+        for (Cargo c : lista) {
+            
+            if(Cargo==c.getCodigo()){
+                
+                return c.getCargo();
+            }
+        }
+        return null;
+    }
     
     public int BuscarCargo(String Cargo){
         for (Cargo c : lista) {
-            if(Cargo==c.getCargo()){
-                
+            
+            if(Cargo.equals(c.getCargo()) ){
+                System.out.println(c.getCodigo());
                 return c.getCodigo();
             }
         }
-        
-        
         return 0;
     }
     public void limpiar() {
@@ -426,16 +560,11 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         txtContrasena.setText("");
         txtDireccion.setText("");
         Genero.clearSelection();
-        txtValorBuscar.setText("");
-        cbxCargo.setSelectedIndex(0);
-        
-        
+        cbxCargo.setSelectedIndex(0); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Genero;
-    private javax.swing.JRadioButton RdFemenino;
-    private javax.swing.JRadioButton RdMasculino;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -459,6 +588,8 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEmail1;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JRadioButton rbtnFemenino;
+    private javax.swing.JRadioButton rbtnMasculino;
     private javax.swing.JTable tblEmpleados;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;

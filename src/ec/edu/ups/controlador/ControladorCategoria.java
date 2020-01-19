@@ -53,7 +53,7 @@ public class ControladorCategoria {
     public Categoria buscar(String nombre){
         
         try {
-            String sql="SELECT * FROM FER_CATEGORIAS WHERE CAT_NOMBRE='"+nombre+"'";
+            String sql="SELECT * FROM FER_CATEGORIAS WHERE CAT_NOMBRE LIKE '"+nombre+"%'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

@@ -228,6 +228,7 @@ public class Categorias extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         controladorCategoria.Eliminar(txtCategoria.getText());
+        Actualizar();
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -238,16 +239,19 @@ public class Categorias extends javax.swing.JInternalFrame {
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
-            Categoria m=controladorCategoria.buscar(txtBuscar.getText());
+            Actualizar();
+       }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    public void Actualizar(){
+    Categoria m=controladorCategoria.buscar(txtBuscar.getText());
             DefaultTableModel modelo=(DefaultTableModel) tblCategoria.getModel();
             Object[] dato={
                 m.getCodigo(),
                 m.getCategoria()
             };
               modelo.addRow(dato);
-       }
-    }//GEN-LAST:event_txtBuscarKeyPressed
-
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

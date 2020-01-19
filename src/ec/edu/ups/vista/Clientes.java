@@ -399,6 +399,15 @@ public class Clientes extends javax.swing.JInternalFrame {
         String cedula=txtCedula.getText();
         
         controladorCliente.Eliminar(cedula);
+        if((String)cbxBuscar.getSelectedItem()== "Cedula"){
+                ActualizarCedula();
+            
+            }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
+               ActualizarProfesion();
+                
+            }else if((String)cbxBuscar.getSelectedItem()== "Nombre"){
+                ActualizarNombre();
+            }
         btnNuevoActionPerformed(evt);
         
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -443,76 +452,29 @@ public class Clientes extends javax.swing.JInternalFrame {
            cliente.setGenero("Masculino");
        }
        controladorCliente.Actualizar(cliente, controladorProfesion.buscarCodigo((String)cbxProfesion.getSelectedItem()));
-       
+       if((String)cbxBuscar.getSelectedItem()== "Cedula"){
+                ActualizarCedula();
+            
+            }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
+               ActualizarProfesion();
+                
+            }else if((String)cbxBuscar.getSelectedItem()== "Nombre"){
+                ActualizarNombre();
+            }
+        btnNuevoActionPerformed(evt);
        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()== "Cedula"){
-                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
-                String cedula=txtBuscar.getText();
-                modelo.setRowCount(0);
-                Cliente c=controladorCliente.ListarCedula(cedula);
-               
-                Object[] dato={
-                    c.getCodigo(),
-                    c.getCedula(),
-                    c.getNombres(),
-                    c.getApellidos(),
-                    c.getDireccion(),
-                    c.getEmail(),
-                    c.getTelefono(),
-                    c.getProfesion(),
-                    c.getNumeroTarjeta(),
-                    c.getGenero()
-                  
-                };
-                modelo.addRow(dato);
+                ActualizarCedula();
             
             }else if((String)cbxBuscar.getSelectedItem()== "Profesion"){
-               String profesion = txtBuscar.getText();
-                List<Cliente> lista=controladorCliente.ListarProfesion(profesion);
-                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
-                modelo.setRowCount(0);
-                for (Cliente c : lista) {
-                    Object[] dato={
-                    c.getCodigo(),
-                    c.getCedula(),
-                    c.getNombres(),
-                    c.getApellidos(),
-                    c.getDireccion(),
-                    c.getEmail(),
-                    c.getTelefono(),
-                    c.getProfesion(),
-                    c.getNumeroTarjeta(),
-                    c.getGenero(),
-                  
-                };
-                modelo.addRow(dato);
-                }
+               ActualizarProfesion();
                 
             }else if((String)cbxBuscar.getSelectedItem()== "Nombre"){
-                String nombre = txtBuscar.getText();
-                List<Cliente> lista=controladorCliente.ListarNombre(nombre);
-                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
-                modelo.setRowCount(0);
-                for (Cliente c : lista) {
-                    Object[] dato={
-                    c.getCodigo(),
-                    c.getCedula(),
-                    c.getNombres(),
-                    c.getApellidos(),
-                    c.getDireccion(),
-                    c.getEmail(),
-                    c.getTelefono(),
-                    c.getProfesion(),
-                    c.getNumeroTarjeta(),
-                    c.getGenero(),
-                  
-                };
-                modelo.addRow(dato);
-                }
+                ActualizarNombre();
             }
         
         } 
@@ -536,8 +498,74 @@ public class Clientes extends javax.swing.JInternalFrame {
         }
         cbxProfesion.setSelectedItem(tblCliente.getValueAt(seleccion, 7));
     }//GEN-LAST:event_tblClienteMouseClicked
+    public void ActualizarCedula(){
+         DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+                String cedula=txtBuscar.getText();
+                modelo.setRowCount(0);
+                Cliente c=controladorCliente.ListarCedula(cedula);
+               
+                Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getProfesion(),
+                    c.getNumeroTarjeta(),
+                    c.getGenero()
+                  
+                };
+                modelo.addRow(dato);
+    }
 
-
+    public void ActualizarProfesion(){
+        String profesion = txtBuscar.getText();
+                List<Cliente> lista=controladorCliente.ListarProfesion(profesion);
+                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+                modelo.setRowCount(0);
+                for (Cliente c : lista) {
+                    Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getProfesion(),
+                    c.getNumeroTarjeta(),
+                    c.getGenero(),
+                  
+                };
+                modelo.addRow(dato);
+                }
+    }
+    
+    public void ActualizarNombre(){
+        String nombre = txtBuscar.getText();
+                List<Cliente> lista=controladorCliente.ListarNombre(nombre);
+                DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+                modelo.setRowCount(0);
+                for (Cliente c : lista) {
+                    Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getProfesion(),
+                    c.getNumeroTarjeta(),
+                    c.getGenero(),
+                  
+                };
+                modelo.addRow(dato);
+                }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;

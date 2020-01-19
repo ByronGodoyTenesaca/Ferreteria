@@ -247,13 +247,13 @@ public class Proveedores extends javax.swing.JInternalFrame {
                 .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel10))
-                    .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(67, 67, 67)
+                .addComponent(jLabel10)
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,8 +261,8 @@ public class Proveedores extends javax.swing.JInternalFrame {
                 .addGap(53, 53, 53)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -359,6 +359,15 @@ public class Proveedores extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         cpp.EliminarProveedor(codigo);
         controladorProveedor.Eliminar(codigo);
+        if((String)cbxBuscar.getSelectedItem()== "Cedula"){
+                BuscarCedula();
+            
+            }else if((String)cbxBuscar.getSelectedItem()== "Empresa"){
+                BuscarEmpresa();
+                
+            }else{
+                BuscarNombre();
+            }
         btnNuevoActionPerformed(evt);
         
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -399,6 +408,15 @@ public class Proveedores extends javax.swing.JInternalFrame {
            cliente.setGenero("Masculino");
        }
        controladorProveedor.actualizarProveedor(cliente);
+       if((String)cbxBuscar.getSelectedItem()== "Cedula"){
+                BuscarCedula();
+            
+            }else if((String)cbxBuscar.getSelectedItem()== "Empresa"){
+                BuscarEmpresa();
+                
+            }else{
+                BuscarNombre();
+            }
         btnNuevoActionPerformed(evt);
        
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -406,47 +424,13 @@ public class Proveedores extends javax.swing.JInternalFrame {
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()== "Cedula"){
-                String cedula=txtCedula.getText();
-                Proveedor c=controladorProveedor.buscarCedula(txtBuscar.getText());
-                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
-                modelo.setRowCount(0);
-                Object[] dato={
-                    c.getCodigo(),
-                    c.getCedula(),
-                    c.getNombres(),
-                    c.getApellidos(),
-                    c.getDireccion(),
-                    c.getEmail(),
-                    c.getTelefono(),
-                    c.getEmpresa(),
-                    c.getGenero()
-                    
-                 
-                };
-                modelo.addRow(dato);
+                BuscarCedula();
             
             }else if((String)cbxBuscar.getSelectedItem()== "Empresa"){
-                Proveedor c = controladorProveedor.buscarEmpresa(txtBuscar.getText());
-                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
-                modelo.setRowCount(0);
-               
-                    Object[] dato={
-                    c.getCodigo(),
-                    c.getCedula(),
-                    c.getNombres(),
-                    c.getApellidos(),
-                    c.getDireccion(),
-                    c.getEmail(),
-                    c.getTelefono(),
-                    c.getEmpresa(),
-                    c.getGenero()
-                  
-                };
-                modelo.addRow(dato);
-                
+                BuscarEmpresa();
                 
             }else{
-                
+                BuscarNombre();
             }
         
         } 
@@ -471,6 +455,70 @@ public class Proveedores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblProveedorMouseClicked
 
+    public void BuscarCedula(){
+        String cedula=txtCedula.getText();
+                Proveedor c=controladorProveedor.buscarCedula(txtBuscar.getText());
+                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
+                modelo.setRowCount(0);
+                Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getEmpresa(),
+                    c.getGenero()
+                    
+                 
+                };
+                modelo.addRow(dato);
+    }
+    
+    public void BuscarEmpresa(){
+        List<Proveedor> lista = controladorProveedor.buscarEmpresa(txtBuscar.getText());
+                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
+                modelo.setRowCount(0);
+               
+                    for(Proveedor c:lista){
+                    Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getEmpresa(),
+                    c.getGenero()
+                  
+                };
+                modelo.addRow(dato);
+               }
+    }
+    
+    public void BuscarNombre(){
+        List<Proveedor> lista = controladorProveedor.buscarNombre(txtBuscar.getText());
+                DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
+                modelo.setRowCount(0);
+               
+                    for(Proveedor c:lista){
+                    Object[] dato={
+                    c.getCodigo(),
+                    c.getCedula(),
+                    c.getNombres(),
+                    c.getApellidos(),
+                    c.getDireccion(),
+                    c.getEmail(),
+                    c.getTelefono(),
+                    c.getEmpresa(),
+                    c.getGenero()
+                  
+                };
+                modelo.addRow(dato);
+                    }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

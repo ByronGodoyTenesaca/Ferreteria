@@ -116,15 +116,16 @@ public class ControladorProveedor {
         return null;
     }
     
-    public Proveedor buscarEmpresa(String empresa){
+    public List<Proveedor> buscarEmpresa(String empresa){
         
         try {
-            String sql ="SELECT * FROM FER_PROVEEDORES WHERE PROV_EMPRESA='"+empresa+"'";
+            String sql ="SELECT * FROM FER_PROVEEDORES WHERE PROV_EMPRESA LIKE '"+empresa+"%'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            Proveedor p=new Proveedor();
+            List<Proveedor> lista=new ArrayList<>();
             while(respuesta.next()){
+                Proveedor p=new Proveedor();
                 p.setCodigo(respuesta.getInt(1));
                 p.setEmpresa(respuesta.getString(2));
                 p.setDireccion(respuesta.getString(3));
@@ -134,8 +135,9 @@ public class ControladorProveedor {
                 p.setCedula(respuesta.getString(7));
                 p.setEmail(respuesta.getString(8));
                 p.setGenero(respuesta.getString(9));
+                lista.add(p);
             }
-            return p;
+            return lista;
         } catch (SQLException ex) {
             
         }
@@ -143,15 +145,16 @@ public class ControladorProveedor {
     }
     
     
-    public Proveedor buscarNombre(String nombre){
+    public List<Proveedor> buscarNombre(String nombre){
         
         try {
             String sql ="SELECT * FROM FER_PROVEEDORES WHERE PROV_NOMBRE LIKE '"+nombre+"%'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            Proveedor p=new Proveedor();
+            List<Proveedor> lista= new ArrayList<>();
             while(respuesta.next()){
+                Proveedor p=new Proveedor();
                 p.setCodigo(respuesta.getInt(1));
                 p.setEmpresa(respuesta.getString(2));
                 p.setDireccion(respuesta.getString(3));
@@ -161,8 +164,9 @@ public class ControladorProveedor {
                 p.setCedula(respuesta.getString(7));
                 p.setEmail(respuesta.getString(8));
                 p.setGenero(respuesta.getString(9));
+                lista.add(p);
             }
-            return p;
+            return lista;
         } catch (SQLException ex) {
             
         }

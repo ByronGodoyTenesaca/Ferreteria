@@ -2,7 +2,11 @@ package ec.edu.ups.controlador;
 
 import ec.edu.ups.modelo.Empleado;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,8 +17,13 @@ public class ControladorEmpleado {
 
     private ConexionBD conexion;
 
+    public ControladorEmpleado() {
+    conexion = new ConexionBD();
+    }
+
+    
     public void crear(Empleado em) {
-        conexion = new ConexionBD();
+        
         PreparedStatement pst = null;
         String sql = "INSERT INTO FER_EMPLEADOS(EMP_CODIGO, EMP_NOMBRE, EMP_APELLIDO, EMP_DIRECCION, EMP_CEDULA, EMP_EMAIL, EMP_CONTRASEÑA,  EMP_GENERO, EMP_TELEFONO, CARGO_CAR_CODIGO)"
                 + "VALUES (FER_EMPLEADOS_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
@@ -41,10 +50,10 @@ public class ControladorEmpleado {
         }
     }
 
-    public void actualizar(Empleado e, int n) {
+    public void actualizar(Empleado e) {
         PreparedStatement pst = null;
-        String sql = "UPDATE EMPLEADO SET EMP_NOMBRE= ?, EMP_APELLIDO= ?, EMP_DIRECCION= ?, EMP_CEDULA= ?, EMP_TELEFONO= ?, EMP_EMAIL= ?, EMP_GENERO= ?, EMP_CONTRASENA= ?, CARGO_CAR_CODIGO=?"
-                + " WHERE EMP_CEDULA =?";
+        String sql = "UPDATE FER_EMPLEADOS SET EMP_NOMBRE= ?, EMP_APELLIDO= ?, EMP_DIRECCION= ?, EMP_CEDULA= ?, EMP_TELEFONO= ?, EMP_EMAIL= ?, EMP_GENERO= ?, EMP_CONTRASEÑA= ?, CARGO_CAR_CODIGO=?"
+                + " WHERE EMP_CODIGO =?";
         try {
             conexion.Conectar();
             pst = conexion.getConexion().prepareStatement(sql);
@@ -57,6 +66,7 @@ public class ControladorEmpleado {
             pst.setString(7, e.getGenero());
             pst.setString(8, e.getContraseña());
             pst.setInt(9, e.getCargo());
+            pst.setInt(10, e.getCodigo());
             pst.execute();
             JOptionPane.showMessageDialog(null, e.getNombres()+" Actualizado Correctamente");
             conexion.getConexion().commit();
@@ -67,14 +77,14 @@ public class ControladorEmpleado {
         }
     }
 
-    public void eliminar(String Cedula) {
+    public void eliminar(int Codigo) {
         try {
             PreparedStatement pst = null;
-            String sql = "DELETE FROM EMPLEADO WHERE EMP_CEDULA =?";
+            String sql = "DELETE FROM FER_EMPLEADOS WHERE EMP_CODIGO =?";
 
             conexion.Conectar();
             pst = conexion.getConexion().prepareStatement(sql);
-            pst.setString(1, Cedula);
+            pst.setInt(1, Codigo);
             pst.execute();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Empleado ELiminado Correctamente", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
@@ -83,6 +93,95 @@ public class ControladorEmpleado {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se puedo Eliminar Correctamente!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public Empleado buscarXCedula(String c){
+        try {
+            Empleado e= new Empleado();
+            String sql="SELECT * FROM FER_EMPLEADOS WHERE EMP_CEDULA='"+c+"'";
+           
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            
+            while(respuesta.next()){
+                e.setCodigo(respuesta.getInt(1));
+                e.setNombres(respuesta.getString(2));
+                e.setApellidos(respuesta.getString(3));
+                e.setDireccion(respuesta.getString(4));
+                e.setCedula(respuesta.getString(5));
+                e.setEmail(respuesta.getString(6));
+                e.setContraseña(respuesta.getString(7));
+                e.setGenero(respuesta.getString(8));
+                e.setTelefono(respuesta.getString(9));
+                e.setCargo(respuesta.getInt(10));
+            }
+            conexion.Desconectar();
+            return e;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<Empleado> buscarXNombre(String c){
+        try {
+            List<Empleado>lista=new ArrayList<>();
+            String sql="SELECT * FROM FER_EMPLEADOS WHERE EMP_NOMBRE LIKE '"+c+"%'";
+            
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            while(respuesta.next()){
+                Empleado e= new Empleado();
+                e.setCodigo(respuesta.getInt(1));
+                e.setNombres(respuesta.getString(2));
+                e.setApellidos(respuesta.getString(3));
+                e.setDireccion(respuesta.getString(4));
+                e.setCedula(respuesta.getString(5));
+                e.setEmail(respuesta.getString(6));
+                e.setContraseña(respuesta.getString(7));
+                e.setGenero(respuesta.getString(8));
+                e.setTelefono(respuesta.getString(9));
+                e.setCargo(respuesta.getInt(10));
+                lista.add(e);
+            }
+            conexion.Desconectar();
+            return lista;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+   public List<Empleado> buscarXTrabajo(int n){
+        try {
+            List<Empleado>lista=new ArrayList<>();
+            String sql="SELECT * FROM FER_EMPLEADOS WHERE CARGO_CAR_CODIGO= "+n+"";
+            
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            while(respuesta.next()){
+                Empleado e= new Empleado();
+                e.setCodigo(respuesta.getInt(1));
+                e.setNombres(respuesta.getString(2));
+                e.setApellidos(respuesta.getString(3));
+                e.setDireccion(respuesta.getString(4));
+                e.setCedula(respuesta.getString(5));
+                e.setEmail(respuesta.getString(6));
+                e.setContraseña(respuesta.getString(7));
+                e.setGenero(respuesta.getString(8));
+                e.setTelefono(respuesta.getString(9));
+                e.setCargo(respuesta.getInt(10));
+                lista.add(e);
+            }
+            conexion.Desconectar();
+            return lista;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
 

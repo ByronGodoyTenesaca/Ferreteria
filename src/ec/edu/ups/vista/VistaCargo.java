@@ -222,6 +222,7 @@ public class VistaCargo extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         controladorCargo.eliminar(codigo);
+        Actualizar();
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -231,17 +232,7 @@ public class VistaCargo extends javax.swing.JInternalFrame {
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
-            Cargo c=controladorCargo.Buscar(txtBuscar.getText());
-            DefaultTableModel modelo=(DefaultTableModel) tblCargo.getModel();
-            modelo.setRowCount(0);
-           
-            Object[] dato={
-                c.getCodigo(),
-                c.getCargo()
-            };
-            modelo.addRow(dato);
-           
-            
+            Actualizar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
 
@@ -251,6 +242,18 @@ public class VistaCargo extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tblCargoMouseClicked
 
+    public void Actualizar(){
+        Cargo c=controladorCargo.Buscar(txtBuscar.getText());
+            DefaultTableModel modelo=(DefaultTableModel) tblCargo.getModel();
+            modelo.setRowCount(0);
+           
+            Object[] dato={
+                c.getCodigo(),
+                c.getCargo()
+            };
+            modelo.addRow(dato);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
