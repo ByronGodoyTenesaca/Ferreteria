@@ -7,7 +7,7 @@ package ec.edu.ups.modelo;
 
 /**
  *
- * @author Ronal
+ * @author 
  */
 public class Cargo {
     private int codigo;

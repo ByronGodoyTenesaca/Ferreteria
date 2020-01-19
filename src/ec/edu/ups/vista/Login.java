@@ -1,6 +1,7 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorLogin;
+import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
 
@@ -125,6 +126,7 @@ public class Login extends javax.swing.JFrame {
         
         int Cargo=cl.inicioSesion(User,Pasword);
         if(Cargo==0){
+            JOptionPane.showMessageDialog(this, "Usuario y Contraseña incorrecto");
             txtUser.setText("");
             txtPasword.setText("");
             

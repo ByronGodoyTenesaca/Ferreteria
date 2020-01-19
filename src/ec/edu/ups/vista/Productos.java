@@ -240,8 +240,6 @@ public class Productos extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Origen de Fabricacion:");
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 189, -1, -1));
-
-        txtCantidad.setEditable(false);
         jPanel3.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 14, 130, 25));
         jPanel3.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 130, 30));
         jPanel3.add(txtPrecioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 47, 80, 30));
@@ -421,11 +419,11 @@ public class Productos extends javax.swing.JInternalFrame {
 
         controladorProducto.Crear(p);
         
-        /*pp.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        pp.setCantidad(Integer.parseInt(txtCantidad.getText()));
         pp.setCodigoProducto(controladorProducto.buscarcodproducto(txtNombre.getText()));
         pp.setCodigoProveedor(buscarCodigoProv());
         cpp.CrearProductoProveedor(pp);
-        */
+        
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -473,6 +471,8 @@ public class Productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        cpp.Eliminar(codigo);
         controladorProducto.Eliminar(codigo);
         btnNuevoActionPerformed(evt);
 
@@ -494,11 +494,22 @@ public class Productos extends javax.swing.JInternalFrame {
                     }
                 }
                 
+                actualizar();
+            }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
+            
+            }
+            
+        }
+        txtCantidad.setEditable(false);
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    public void actualizar(){
+        
                 DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
                 List<Producto>lista=controladorProducto.buscarCategoria(codigo);
                 modelo.setRowCount(0);
                 for (Producto p : lista) {
-                    //System.out.println(p.getCodigo());
+                    
                     Object[] dato={
                         p.getCodigo(),
                         txtBuscar.getText(),
@@ -515,13 +526,7 @@ public class Productos extends javax.swing.JInternalFrame {
                     };
                     modelo.addRow(dato);
                 }
-            }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
-            
-            }
-            
-        }
-    }//GEN-LAST:event_txtBuscarKeyPressed
-
+    }
     public String iva(boolean iva){
         if(iva){
             return "Tiene iva";
@@ -539,7 +544,6 @@ public class Productos extends javax.swing.JInternalFrame {
     }
     public String buscarMarca(int codigo){
     
-       // System.out.println(codigo);
         for (ProductoProveedor pp : listaPP) {
             if(pp.getCodigoProducto()==codigo){
                 for (Proveedor p : listaProveedor) {
@@ -567,6 +571,7 @@ public class Productos extends javax.swing.JInternalFrame {
         }
         return null;
     }
+    
     private void tblProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductoMouseClicked
         int seleccion =tblProducto.getSelectedRow();
         codigo=(int)tblProducto.getValueAt(seleccion, 0);
@@ -609,7 +614,7 @@ public class Productos extends javax.swing.JInternalFrame {
         int num2=Integer.parseInt(numero);
         int num=Integer.parseInt(txtCantidad.getText());
         int suma=num+num2;
-            System.out.println(num2+"+"+num+"="+suma);
+            
         for (Proveedor c : listaProveedor) {
             if(c.getNombres()==(String)cbxProveedor.getSelectedItem()){
                 pp.setCodigoProveedor(c.getCodigo());
@@ -620,8 +625,7 @@ public class Productos extends javax.swing.JInternalFrame {
         pp.setCodigoProducto(codigo);
         pp.setCantidad(num2);
         cpp.CrearProductoProveedor(pp);
-        java.awt.event.KeyEvent e = null;
-        txtBuscarKeyPressed(e);
+        actualizar();
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

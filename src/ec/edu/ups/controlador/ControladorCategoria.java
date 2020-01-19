@@ -53,7 +53,7 @@ public class ControladorCategoria {
     public Categoria buscar(String nombre){
         
         try {
-            String sql="SELECT * FROM FER_CATEGORIAS WHERE CAT_MOMBRE="+nombre+"";
+            String sql="SELECT * FROM FER_CATEGORIAS WHERE CAT_NOMBRE='"+nombre+"'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -65,7 +65,7 @@ public class ControladorCategoria {
             
             return m;
         } catch (SQLException ex) {
-            
+            ex.printStackTrace();
         }
         return null;
             

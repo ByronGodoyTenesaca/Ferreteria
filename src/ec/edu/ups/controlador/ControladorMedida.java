@@ -53,7 +53,7 @@ public class ControladorMedida {
     public Medida buscar(String nombre){
         
         try {
-            String sql="SELECT * FROM FER_TIPO_MEDIDAS WHERE MED_NOMBRE="+nombre+";";
+            String sql="SELECT * FROM FER_TIPO_MEDIDAS WHERE MED_NOMBRE='"+nombre+"'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

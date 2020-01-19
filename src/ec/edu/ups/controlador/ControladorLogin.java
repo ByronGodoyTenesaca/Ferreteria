@@ -27,8 +27,8 @@ public class ControladorLogin {
             ResultSet res=sta.executeQuery(sql);
             //System.out.println(res.next());
             while(res.next()){
-                System.out.println("login correcto");
-                codigo=res.getInt(1);
+                //System.out.println("login correcto");
+                codigo=res.getInt(10);
                 JOptionPane.showMessageDialog(null, "bienvenido: "+res.getString(2));
             }
             return codigo;

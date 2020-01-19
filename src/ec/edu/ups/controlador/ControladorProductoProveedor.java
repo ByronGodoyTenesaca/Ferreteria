@@ -19,6 +19,7 @@ public class ControladorProductoProveedor {
             String sql="INSERT INTO FER_PRODUCTO_PROVEEDORES (PROD_PRO_ID,PROD_PROV_CANTIDAD, FER_PROVEEDOR_PROV_CODIGO, FER_PRODUCTO_PRO_CODIGO)"
                     + "VALUES (FER_pRODUCTO_PROVEEDORES_SEQ.NEXTVAL,?,?,?)";
             
+            
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setDouble(1, pp.getCantidad());
@@ -83,4 +84,42 @@ public class ControladorProductoProveedor {
         }
         return null;
     }
+    
+    public void Eliminar(int codigo){
+          try {
+            PreparedStatement pst=null;
+            String sql="delete from FER_PRODUCTO_PROVEEDORES where FER_PRODUCTO_PRO_CODIGO =?";
+            
+            conexion.Conectar();
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.setInt(1, codigo);
+             pst.execute();
+             conexion.getConexion().commit();
+            conexion.Desconectar();
+            //JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo Eliminar el Producto");
+        }
+     }
+    
+    public void EliminarProveedor(int codigo){
+          try {
+            PreparedStatement pst=null;
+            String sql="delete from FER_PRODUCTO_PROVEEDORES where FER_PROVEEDOR_PROV_CODIGO =?";
+            
+            conexion.Conectar();
+            pst=conexion.getConexion().prepareStatement(sql);
+            pst.setInt(1, codigo);
+             pst.execute();
+             conexion.getConexion().commit();
+            conexion.Desconectar();
+            //JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo Eliminar el Producto");
+        }
+     }
 }

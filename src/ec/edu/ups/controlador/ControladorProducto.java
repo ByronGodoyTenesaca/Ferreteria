@@ -79,10 +79,12 @@ public class ControladorProducto {
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setInt(1, codigo);
              pst.execute();
+             conexion.getConexion().commit();
             conexion.Desconectar();
             JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
             
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo Eliminar el Producto");
         }
      }
@@ -122,7 +124,7 @@ public class ControladorProducto {
      
      public int buscarcodproducto(String nombre){
         try {
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ="+nombre+"";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ='"+nombre+"'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -132,7 +134,7 @@ public class ControladorProducto {
             }
             return codigoPro;
         } catch (SQLException ex) {
-           
+           ex.printStackTrace();
         }
         return 0;
     }

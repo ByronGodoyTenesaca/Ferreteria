@@ -7,12 +7,12 @@ package ec.edu.ups.modelo;
  */
 public class Empleado extends Persona{
     private String contraseña;
-    private String cargo;
+    private int cargo;
 
     public Empleado() {
     }
 
-    public Empleado(String contraseña, String cargo, int codigo, String nombres, String apellidos, String direccion, String cedula, String telefono, String email, String genero) {
+    public Empleado(String contraseña, int cargo, int codigo, String nombres, String apellidos, String direccion, String cedula, String telefono, String email, String genero) {
         super(codigo, nombres, apellidos, direccion, cedula, telefono, email, genero);
         this.contraseña = contraseña;
         this.cargo = cargo;
@@ -26,14 +26,15 @@ public class Empleado extends Persona{
         this.contraseña = contraseña;
     }
 
-    public String getCargo() {
+    public int getCargo() {
         return cargo;
     }
 
-    public void setCargo(String cargo) {
+    public void setCargo(int cargo) {
         this.cargo = cargo;
     }
 
+    
     @Override
     public String toString() {
         return "Empleado{" + "contrase\u00f1a=" + contraseña + ", cargo=" + cargo + '}';

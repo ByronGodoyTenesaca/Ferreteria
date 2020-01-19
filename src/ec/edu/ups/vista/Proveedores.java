@@ -1,5 +1,6 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorProductoProveedor;
 import ec.edu.ups.controlador.ControladorProveedor;
 import ec.edu.ups.modelo.Proveedor;
 import java.util.List;
@@ -8,11 +9,12 @@ import javax.swing.table.DefaultTableModel;
 public class Proveedores extends javax.swing.JInternalFrame {
 
     private ControladorProveedor controladorProveedor;
+    private ControladorProductoProveedor cpp;
     private int codigo;
-    public Proveedores(ControladorProveedor controladorProveedor) {
+    public Proveedores(ControladorProveedor controladorProveedor, ControladorProductoProveedor cpp) {
         initComponents();
         this.controladorProveedor=controladorProveedor;
-        
+        this.cpp=cpp;
     }
 
     @SuppressWarnings("unchecked")
@@ -355,6 +357,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        cpp.EliminarProveedor(codigo);
         controladorProveedor.Eliminar(codigo);
         btnNuevoActionPerformed(evt);
         
@@ -396,7 +399,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
            cliente.setGenero("Masculino");
        }
        controladorProveedor.actualizarProveedor(cliente);
-       
+        btnNuevoActionPerformed(evt);
        
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -406,6 +409,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
                 String cedula=txtCedula.getText();
                 Proveedor c=controladorProveedor.buscarCedula(txtBuscar.getText());
                 DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
+                modelo.setRowCount(0);
                 Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -424,7 +428,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
             }else if((String)cbxBuscar.getSelectedItem()== "Empresa"){
                 Proveedor c = controladorProveedor.buscarEmpresa(txtBuscar.getText());
                 DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
-                
+                modelo.setRowCount(0);
                
                     Object[] dato={
                     c.getCodigo(),

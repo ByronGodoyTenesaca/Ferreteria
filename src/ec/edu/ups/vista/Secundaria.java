@@ -30,8 +30,6 @@ public class Secundaria extends javax.swing.JFrame {
         initComponents();
         controladorCliente=new ControladorCliente();
         controladorProfesion=new ControladorProfesion();
-        vistaEmpleado = new VistaEmpleado(controladorEmpleado);
-        vistaCargo = new VistaCargo(controladorCargo);
         
         controladorCargo = new ControladorCargo();
         controladorEmpleado = new ControladorEmpleado();
@@ -39,14 +37,25 @@ public class Secundaria extends javax.swing.JFrame {
         controladorMedida = new ControladorMedida();
         
         this.n=n;
-        //controlar();
+        controlar();
         this.setExtendedState(MAXIMIZED_BOTH);
       
     }
     
     public void controlar(){
-        if(n==1){
-            menuProducto.setVisible(false);
+        if(n==2){
+            menuEmpleado.setVisible(false);
+            menuReportes.setVisible(false);
+            itemCategoria.setVisible(false);
+            itemMedida.setVisible(false);
+            itemProveedor.setVisible(false);
+            
+            
+        }else if(n==3){
+            menuCliente.setVisible(false);
+            menuEmpleado.setVisible(false);
+            menuFactura.setVisible(false);
+            menuReportes.setVisible(false);
         }
     }
 
@@ -62,9 +71,9 @@ public class Secundaria extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         menuProducto = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
+        itemProveedor = new javax.swing.JMenuItem();
+        itemCategoria = new javax.swing.JMenuItem();
+        itemMedida = new javax.swing.JMenuItem();
         menuEmpleado = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         itmCargo = new javax.swing.JMenuItem();
@@ -110,31 +119,31 @@ public class Secundaria extends javax.swing.JFrame {
         });
         menuProducto.add(jMenuItem3);
 
-        jMenuItem6.setText("Proveedor");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        itemProveedor.setText("Proveedor");
+        itemProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                itemProveedorActionPerformed(evt);
             }
         });
-        menuProducto.add(jMenuItem6);
+        menuProducto.add(itemProveedor);
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Categoria");
-        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        itemCategoria.setMnemonic('t');
+        itemCategoria.setText("Categoria");
+        itemCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cutMenuItemActionPerformed(evt);
+                itemCategoriaActionPerformed(evt);
             }
         });
-        menuProducto.add(cutMenuItem);
+        menuProducto.add(itemCategoria);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Medida");
-        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        itemMedida.setMnemonic('y');
+        itemMedida.setText("Medida");
+        itemMedida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyMenuItemActionPerformed(evt);
+                itemMedidaActionPerformed(evt);
             }
         });
-        menuProducto.add(copyMenuItem);
+        menuProducto.add(itemMedida);
 
         menuBar.add(menuProducto);
 
@@ -196,7 +205,7 @@ public class Secundaria extends javax.swing.JFrame {
         vistaCargo.show();
     }//GEN-LAST:event_itmCargoActionPerformed
 
-    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+    private void itemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoriaActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
         Categorias c=new Categorias(controladorCategoria);
@@ -206,9 +215,9 @@ public class Secundaria extends javax.swing.JFrame {
         Dimension FrameSize = c.getSize();
         c.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
         c.show();
-    }//GEN-LAST:event_cutMenuItemActionPerformed
+    }//GEN-LAST:event_itemCategoriaActionPerformed
 
-    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+    private void itemMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMedidaActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
         Medida m=new Medida(controladorMedida);
@@ -218,7 +227,7 @@ public class Secundaria extends javax.swing.JFrame {
         Dimension FrameSize = m.getSize();
         m.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
         m.show();
-    }//GEN-LAST:event_copyMenuItemActionPerformed
+    }//GEN-LAST:event_itemMedidaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         desktopPane.removeAll();
@@ -259,68 +268,35 @@ public class Secundaria extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        vistaEmpleado = new VistaEmpleado(controladorEmpleado);
+        vistaEmpleado = new VistaEmpleado(controladorEmpleado,new ControladorCargo());
         vistaEmpleado.setVisible(true);
         desktopPane.add(vistaEmpleado);
         vistaEmpleado.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void itemProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProveedorActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        pr=new Proveedores(new ControladorProveedor());
+        pr=new Proveedores(new ControladorProveedor(),new ControladorProductoProveedor());
         pr.setVisible(true);
         desktopPane.add(pr);
         Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = pr.getSize();
         pr.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
         pr.show();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_itemProveedorActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
        this.dispose();
         new Login().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-   // public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-/*        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Secundaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Secundaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Secundaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Secundaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-     //   java.awt.EventQueue.invokeLater(new Runnable() {
-       //     public void run() {
-         //       new Secundaria().setVisible(true);
-       //     }
-       // });
-   // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem itemCategoria;
+    private javax.swing.JMenuItem itemMedida;
+    private javax.swing.JMenuItem itemProveedor;
     private javax.swing.JMenuItem itmCargo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -328,7 +304,6 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCliente;

@@ -2,6 +2,7 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Profesion;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -33,7 +34,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblMedida = new javax.swing.JTable();
+        tblProfesion = new javax.swing.JTable();
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +160,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(jLabel2)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +192,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        tblMedida.setModel(new javax.swing.table.DefaultTableModel(
+        tblProfesion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -207,8 +208,13 @@ public class Profesiones extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblMedida.setRowHeight(30);
-        jScrollPane1.setViewportView(tblMedida);
+        tblProfesion.setRowHeight(30);
+        tblProfesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProfesionMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblProfesion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -240,7 +246,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         
         txtProfesion.setText("");
-        txtBuscar.setText("");
+       // txtBuscar.setText("");
         txtDescuento.setText("");
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -256,6 +262,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         controladorProfesion.eliminarProfesion(txtProfesion.getText());
+        actualizar();
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -266,24 +273,37 @@ public class Profesiones extends javax.swing.JInternalFrame {
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if(evt.getKeyCode()==10){
-            Profesion m=controladorProfesion.buscarNombre(txtBuscar.getText());
-            DefaultTableModel modelo=(DefaultTableModel) tblMedida.getModel();
-            Object[] dato={
-                m.getCodigo(),
-                m.getNombre(),
-                m.getDescuento()
-            };
-              modelo.addRow(dato);
+         actualizar();   
        }
     }//GEN-LAST:event_txtBuscarKeyPressed
 
+    public void actualizar(){
+        List<Profesion> m=controladorProfesion.buscarNombre(txtBuscar.getText());
+            DefaultTableModel modelo=(DefaultTableModel) tblProfesion.getModel();
+            modelo.setRowCount(0);
+            for(Profesion p:m){
+            Object[] dato={
+                p.getCodigo(),
+                p.getNombre(),
+                p.getDescuento()
+            };
+              modelo.addRow(dato);
+        }
+    }
     private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
         Profesion p=new Profesion();
         p.setNombre(txtProfesion.getText());
         p.setDescuento(Double.parseDouble(txtDescuento.getText()));
         controladorProfesion.ActualizarProfesion(p);
+        actualizar();
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnGuardar1ActionPerformed
+
+    private void tblProfesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProfesionMouseClicked
+        int seleccion =tblProfesion.getSelectedRow();
+        txtProfesion.setText(String.valueOf(tblProfesion.getValueAt(seleccion, 1)));
+        txtDescuento.setText(String.valueOf(tblProfesion.getValueAt(seleccion, 2)));
+    }//GEN-LAST:event_tblProfesionMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -300,7 +320,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblMedida;
+    private javax.swing.JTable tblProfesion;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtProfesion;

@@ -46,7 +46,7 @@ public class ControladorProveedor {
     public void actualizarProveedor(Proveedor c){
         try {
             PreparedStatement pst=null;
-            String sql="UPDATE FER_PROVEEDORES SET PROV_EMPRESA=?, PROV_DIRECCION=?, PROV_TELEFONO=?, PROV_NOMBRE=?, PROV_APELLIDO=?,  PROV_CEDULA=?, PROV_EMAIL=?, PROV_GENERO=?"
+            String sql="UPDATE FER_PROVEEDORES SET PROV_EMPRESA=?, PROV_DIRECCION=?, PROV_TELEFONO=?, PORV_NOMBRE=?, PROV_APELLIDO=?,  PROV_CEDULA=?, PROV_EMAIL=?, PROV_GENERO=?"
                     + " WHERE PROV_CODIGO =?";
             
             conexion.Conectar();
@@ -59,11 +59,14 @@ public class ControladorProveedor {
             pst.setString(1, c.getEmpresa());
             pst.setString(8, c.getGenero());
             pst.setString(3, c.getTelefono());
+            pst.setInt(9, c.getCodigo());
             pst.execute();
+            conexion.getConexion().commit();
             conexion.Desconectar();
-            JOptionPane.showMessageDialog(null, "Proveedor Creado Correctamente");
+            JOptionPane.showMessageDialog(null, "Proveedor Actualizado Correctamente");
             
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo crear el Proveedor");
         }
         

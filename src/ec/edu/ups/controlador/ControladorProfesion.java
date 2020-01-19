@@ -91,19 +91,23 @@ public class ControladorProfesion {
     }
     
     
-     public Profesion buscarNombre(String p){
+     public List<Profesion> buscarNombre(String p){
         try {
-            String sql="SELECT * FROM FER_PROFESIONES WHERE PRO_PROFESION = "+p+";";
+            String sql="SELECT * FROM FER_PROFESIONES WHERE PRO_PROFESION LIKE'"+p+"%'";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            Profesion profesion=new Profesion();
+            
+            List<Profesion> lista=new ArrayList<>();
             while(respuesta.next()){
+                Profesion profesion=new Profesion();
                 profesion.setCodigo(respuesta.getInt(1));
                 profesion.setNombre(respuesta.getString(2));
                 profesion.setDescuento(respuesta.getDouble(3));
+                lista.add(profesion);
             }
-            return profesion;
+            conexion.Desconectar();
+            return lista;
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "no se puede encontrar el codigo");
             }
