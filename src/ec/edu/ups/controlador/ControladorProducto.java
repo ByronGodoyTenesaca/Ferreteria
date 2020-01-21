@@ -69,6 +69,26 @@ public class ControladorProducto {
         }
     }
     
+    public void ActualizarMercaderia(Producto p){
+        try {
+            PreparedStatement pst=null;
+            String sql="UPDATE FER_PRODUCTOS SET PRO_CANTIDAD=?"
+                    + "WHERE PRO_CODIGO = ?";
+            conexion.Conectar();
+            pst=conexion.getConexion().prepareStatement(sql);
+           
+            pst.setInt(1, p.getCantidad());
+            pst.setInt(2, p.getCodigo());
+            
+            pst.execute();
+            conexion.Desconectar();
+            JOptionPane.showMessageDialog(null, "Producto Actualizado Correctamente");
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo Actualizar el producto");
+        }
+    }
+    
     
      public void Eliminar(int codigo){
           try {
@@ -120,7 +140,102 @@ public class ControladorProducto {
             
         }
         return null;
+     }   
+      
+      public List<Producto> buscarEmpresa(String cat){
+     
+        try {
+            List<Producto> lista=new ArrayList<>();
+            conexion.Conectar();
+            String sql="SELECT PRO_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,"
+                    + "PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO,"
+                    + "FER_TIPO_MEDIDA_MED_CODIGO "
+                    + "FROM FER_PRODUCTOS P,FER_PROVEEDORES PR,FER_PRODUCTO_PROVEEDORES PP "
+                    + "WHERE PR.PROV_EMPRESA LIKE '"+cat+"%' AND PR.PROV_CODIGO=PP.FER_PROVEEDOR_PROV_CODIGO "
+                    + "AND P.PRO_CODIGO=PP.FER_PRODUCTO_PRO_CODIGO "
+                    + "UNION "
+                    + "SELECT PRO_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,"
+                    + "PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO,"
+                    + "FER_TIPO_MEDIDA_MED_CODIGO FROM FER_PRODUCTOS";
+            System.out.println(sql);
+            Statement sta= conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            
+            while(respuesta.next()){
+                Producto p=new Producto();
+                p.setCodigo(respuesta.getInt(1));
+                p.setNombre(respuesta.getString(2));
+                p.setDescripcion(respuesta.getString(3));
+                p.setPrecioVenta(respuesta.getDouble(4));
+                p.setPrecioCompra(respuesta.getDouble(5));
+                p.setCantidad(respuesta.getInt(6));
+                p.setLugarFabricacion(respuesta.getString(7));
+                p.setIva(respuesta.getBoolean(8));
+                p.setCodigoCategoria(respuesta.getInt(9));
+                p.setCodigoMedida(respuesta.getInt(10));
+                
+                lista.add(p);
+            }
+            
+            return lista;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
      }
+     public List<Producto> buscarProducto(String cat){
+     
+        try {
+            List<Producto> lista=new ArrayList<>();
+            conexion.Conectar();
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE LIKE '"+cat+"%'";
+            Statement sta= conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            
+            while(respuesta.next()){
+                Producto p=new Producto();
+                p.setCodigo(respuesta.getInt(1));
+                p.setNombre(respuesta.getString(2));
+                p.setDescripcion(respuesta.getString(3));
+                p.setPrecioVenta(respuesta.getDouble(4));
+                p.setPrecioCompra(respuesta.getDouble(5));
+                p.setCantidad(respuesta.getInt(6));
+                p.setLugarFabricacion(respuesta.getString(7));
+                p.setIva(respuesta.getBoolean(8));
+                p.setCodigoCategoria(respuesta.getInt(9));
+                p.setCodigoMedida(respuesta.getInt(10));
+                
+                lista.add(p);
+            }
+            
+            return lista;
+        } catch (SQLException ex) {
+            
+        }
+        return null;
+     }
+     
+     public Producto buscarProductoFactura(int codigo){
+        try {
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_CODIGO = "+codigo+"";
+            System.out.println(sql);
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            Producto p=new Producto();
+            while(respuesta.next()){
+                p.setCodigo(respuesta.getInt(1));
+                p.setDescripcion(respuesta.getString(3));
+                p.setPrecioVenta(respuesta.getDouble(4));
+                p.setIva(respuesta.getBoolean(8));
+            }
+            conexion.Desconectar();
+            return p;
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+        }
+        return null;
+    }
      
      public int buscarcodproducto(String nombre){
         try {

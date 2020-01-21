@@ -234,14 +234,14 @@ public class Productos extends javax.swing.JInternalFrame {
         jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel8.setText("Marca:");
+        jLabel8.setText("Empresa:");
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Origen de Fabricacion:");
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 189, -1, -1));
         jPanel3.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 14, 130, 25));
-        jPanel3.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 130, 30));
+        jPanel3.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 150, 30));
         jPanel3.add(txtPrecioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 47, 80, 30));
         jPanel3.add(txtPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 80, 30));
 
@@ -272,7 +272,7 @@ public class Productos extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel10.setText("Buscar por:");
 
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija una Opcion", "Proveedor", "Producto", "Categoria" }));
+        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija una Opcion", "Empresa", "Producto", "Categoria" }));
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -333,7 +333,7 @@ public class Productos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Codigo", "Categoria", "Nombre", "Marca", "Cantidad", "Precio Compra", "Precio Venta", "Proveedor", "Descripcion", "Lugar Fabricacion", "Iva", "Medida"
+                "Codigo", "Categoria", "Nombre", "Empresa", "Cantidad", "Precio Compra", "Precio Venta", "Proveedor", "Descripcion", "Lugar Fabricacion", "Iva", "Medida"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -366,8 +366,8 @@ public class Productos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                .addGap(2, 2, 2))
         );
 
         pack();
@@ -467,6 +467,20 @@ public class Productos extends javax.swing.JInternalFrame {
         }
 
         controladorProducto.Actualizar(p);
+        if((String)cbxBuscar.getSelectedItem()=="Categoria"){
+                for (Categoria c : listaCategoria) {
+                    if(c.getCategoria().equals(txtBuscar.getText())){
+                        codigo=c.getCodigo();
+                        break;
+                    }
+                }
+                
+                actualizarCategoria();
+            }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
+                actualizarProducto();
+            }else{
+                actualizarEmpresa();
+            }
         btnNuevoActionPerformed(evt);
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -474,6 +488,20 @@ public class Productos extends javax.swing.JInternalFrame {
         
         cpp.Eliminar(codigo);
         controladorProducto.Eliminar(codigo);
+        if((String)cbxBuscar.getSelectedItem()=="Categoria"){
+                for (Categoria c : listaCategoria) {
+                    if(c.getCategoria().equals(txtBuscar.getText())){
+                        codigo=c.getCodigo();
+                        break;
+                    }
+                }
+                
+                actualizarCategoria();
+            }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
+                actualizarProducto();
+            }else{
+                actualizarEmpresa();
+            }
         btnNuevoActionPerformed(evt);
 
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -493,40 +521,98 @@ public class Productos extends javax.swing.JInternalFrame {
                         break;
                     }
                 }
-                
-                actualizar();
+                actualizarCategoria();
             }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
-            
+                actualizarProducto();
+            }else{
+                actualizarEmpresa();
             }
             
         }
         txtCantidad.setEditable(false);
     }//GEN-LAST:event_txtBuscarKeyPressed
 
-    public void actualizar(){
-        
-                DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
-                List<Producto>lista=controladorProducto.buscarCategoria(codigo);
-                modelo.setRowCount(0);
-                for (Producto p : lista) {
-                    
-                    Object[] dato={
-                        p.getCodigo(),
-                        txtBuscar.getText(),
-                        p.getNombre(),
-                        buscarMarca(p.getCodigo()),
-                        p.getCantidad(),
-                        p.getPrecioCompra(),
-                        p.getPrecioVenta(),
-                        buscarProveedor(p.getCodigo()),
-                        p.getDescripcion(),
-                        p.getLugarFabricacion(),
-                        iva(p.getIva()),
-                        buscarMedida(p.getCodigoMedida())
-                    };
-                    modelo.addRow(dato);
-                }
+    public void actualizarEmpresa(){
+        DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
+        List<Producto>lista=controladorProducto.buscarEmpresa(txtBuscar.getText());
+        modelo.setRowCount(0);
+        for (Producto p : lista) {
+
+            Object[] dato={
+                p.getCodigo(),
+                buscarCategoria(p.getCodigoCategoria()),
+                p.getNombre(),
+                buscarMarca(p.getCodigo()),
+                p.getCantidad(),
+                p.getPrecioCompra(),
+                p.getPrecioVenta(),
+                buscarProveedor(p.getCodigo()),
+                p.getDescripcion(),
+                p.getLugarFabricacion(),
+                iva(p.getIva()),
+                buscarMedida(p.getCodigoMedida())
+            };
+            modelo.addRow(dato);
+        }
     }
+    public void actualizarCategoria(){
+        
+        DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
+        List<Producto>lista=controladorProducto.buscarCategoria(codigo);
+        modelo.setRowCount(0);
+        for (Producto p : lista) {
+
+            Object[] dato={
+                p.getCodigo(),
+                buscarCategoria(p.getCodigoCategoria()),
+                p.getNombre(),
+                buscarMarca(p.getCodigo()),
+                p.getCantidad(),
+                p.getPrecioCompra(),
+                p.getPrecioVenta(),
+                buscarProveedor(p.getCodigo()),
+                p.getDescripcion(),
+                p.getLugarFabricacion(),
+                iva(p.getIva()),
+                buscarMedida(p.getCodigoMedida())
+            };
+            modelo.addRow(dato);
+        }
+    }
+    
+    public void actualizarProducto(){
+        DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
+        List<Producto>lista=controladorProducto.buscarProducto(txtBuscar.getText());
+        modelo.setRowCount(0);
+        for (Producto p : lista) {
+
+            Object[] dato={
+                p.getCodigo(),
+                buscarCategoria(p.getCodigoCategoria()),
+                p.getNombre(),
+                buscarMarca(p.getCodigo()),
+                p.getCantidad(),
+                p.getPrecioCompra(),
+                p.getPrecioVenta(),
+                buscarProveedor(p.getCodigo()),
+                p.getDescripcion(),
+                p.getLugarFabricacion(),
+                iva(p.getIva()),
+                buscarMedida(p.getCodigoMedida())
+            };
+            modelo.addRow(dato);
+        }
+    }
+    
+    public String buscarCategoria(int co){
+        for (Categoria c : listaCategoria) {
+            if(c.getCodigo()==co){
+                return c.getCategoria();
+            }
+        }
+        return null;
+    }
+    
     public String iva(boolean iva){
         if(iva){
             return "Tiene iva";
@@ -625,7 +711,7 @@ public class Productos extends javax.swing.JInternalFrame {
         pp.setCodigoProducto(codigo);
         pp.setCantidad(num2);
         cpp.CrearProductoProveedor(pp);
-        actualizar();
+        actualizarCategoria();
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

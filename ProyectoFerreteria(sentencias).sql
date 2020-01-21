@@ -15,7 +15,7 @@ increment by 1
 nocache;
 
 create sequence FER_EMPLEADOS_SEQ
-start with 3
+start with 5
 increment by 1
 nocache;
 

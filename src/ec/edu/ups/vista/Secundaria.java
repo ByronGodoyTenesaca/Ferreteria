@@ -4,6 +4,7 @@ import ec.edu.ups.controlador.ControladorCargo;
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorEmpleado;
+import ec.edu.ups.controlador.ControladorFactura;
 import ec.edu.ups.controlador.ControladorMedida;
 import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProductoProveedor;
@@ -16,6 +17,7 @@ public class Secundaria extends javax.swing.JFrame {
     private Clientes c;
     private Productos p;
     private Proveedores pr;
+    private Factura f;
     private int n;
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
@@ -172,6 +174,11 @@ public class Secundaria extends javax.swing.JFrame {
         menuFactura.setText("Facturacion");
 
         jMenuItem5.setText("Facturacion");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menuFactura.add(jMenuItem5);
 
         menuBar.add(menuFactura);
@@ -290,6 +297,14 @@ public class Secundaria extends javax.swing.JFrame {
        this.dispose();
         new Login().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        f=new Factura(new ControladorCliente(),new ControladorFactura(),new ControladorProducto());
+        f.setVisible(true);
+        desktopPane.add(f);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
