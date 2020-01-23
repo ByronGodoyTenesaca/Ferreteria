@@ -9,6 +9,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         cl=new ControladorLogin();
+        txtPasword.setText("byron");
+        txtUser.setText("byron@hotmail.com");
     }
 
     @SuppressWarnings("unchecked")

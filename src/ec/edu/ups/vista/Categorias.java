@@ -244,7 +244,7 @@ public class Categorias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     public void Actualizar(){
-    Categoria m=controladorCategoria.buscar(txtBuscar.getText());
+        Categoria m=controladorCategoria.buscar(txtBuscar.getText());
             DefaultTableModel modelo=(DefaultTableModel) tblCategoria.getModel();
             Object[] dato={
                 m.getCodigo(),

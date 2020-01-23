@@ -308,7 +308,7 @@ public class Secundaria extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane desktopPane;
+    public static javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem itemCategoria;
     private javax.swing.JMenuItem itemMedida;
     private javax.swing.JMenuItem itemProveedor;

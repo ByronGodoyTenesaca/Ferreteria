@@ -95,6 +95,11 @@ public class Producto {
     public void setCodigoMedida(int codigoMedida) {
         this.codigoMedida = codigoMedida;
     }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioVenta=" + precioVenta + ", precioCompra=" + precioCompra + ", cantidad=" + cantidad + ", lugarFabricacion=" + lugarFabricacion + ", iva=" + iva + ", codigoCategoria=" + codigoCategoria + ", codigoMedida=" + codigoMedida + '}';
+    }
     
     
 }

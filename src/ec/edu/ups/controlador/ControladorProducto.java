@@ -218,16 +218,21 @@ public class ControladorProducto {
      public Producto buscarProductoFactura(int codigo){
         try {
             String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_CODIGO = "+codigo+"";
-            System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             Producto p=new Producto();
             while(respuesta.next()){
                 p.setCodigo(respuesta.getInt(1));
+                p.setNombre(respuesta.getString(2));
                 p.setDescripcion(respuesta.getString(3));
                 p.setPrecioVenta(respuesta.getDouble(4));
+                p.setPrecioCompra(respuesta.getDouble(5));
+                p.setCantidad(respuesta.getInt(6));
+                p.setLugarFabricacion(respuesta.getString(7));
                 p.setIva(respuesta.getBoolean(8));
+                p.setCodigoCategoria(respuesta.getInt(9));
+                p.setCodigoMedida(respuesta.getInt(10));
             }
             conexion.Desconectar();
             return p;

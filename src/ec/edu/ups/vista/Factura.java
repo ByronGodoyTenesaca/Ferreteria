@@ -22,6 +22,7 @@ public class Factura extends javax.swing.JInternalFrame {
         this.controladorProducto=controladorProducto;
         fecha();
         txtNfactura.setText(String.valueOf(controladorFactura.numeroFactura()));
+        txtIva.setText("0");
     }
 
     public Factura() {
@@ -30,20 +31,20 @@ public class Factura extends javax.swing.JInternalFrame {
     
     public void llenarFactura(int codigo,int cantidad,int nuevoStock){
         
-        Producto producto=controladorProducto.buscarProductoFactura(codigo);
-        
+        Producto p=controladorProducto.buscarProductoFactura(codigo);
+        double total=cantidad*p.getPrecioVenta();
         DefaultTableModel modelo=(DefaultTableModel) tblDetallefactura.getModel();
-        double total=cantidad*producto.getPrecioVenta();
-        verificarIva(producto);
+        
         Object[] dato={
-            producto.getCodigo(),
-            producto.getDescripcion(),
+            p.getCodigo(),
+            p.getDescripcion(),
             cantidad,
-            producto.getPrecioVenta(),
+            p.getPrecioVenta(),
             total
         };
         modelo.addRow(dato);
-     
+        
+        verificarIva(p);
     }
     
     public void sumar(){
@@ -51,11 +52,11 @@ public class Factura extends javax.swing.JInternalFrame {
     }
     
     public void verificarIva(Producto p){
-        double iva;
+        double iva=0;
         if(p.getIva()){
             iva=p.getPrecioVenta()*0.12;
             
-            double ivaAnterior=Double.parseDouble(txtIva.getText());
+            double ivaAnterior=Double.parseDouble(txtIva.getText().trim());
             iva=iva+ivaAnterior;
             txtIva.setText(String.valueOf(iva));
         }
@@ -426,9 +427,11 @@ public class Factura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarProducto agregar=new AgregarProducto();
+        //AgregarProducto agregar=new AgregarProducto();
+        AgregarProductos agregar=new AgregarProductos(this, new ControladorProducto());
+        Secundaria.desktopPane.add(agregar);
         agregar.setVisible(true);
-        
+       
     }//GEN-LAST:event_btnAgregarActionPerformed
 
 
