@@ -6,6 +6,7 @@ import ec.edu.ups.controlador.ControladorFacturaDetalle;
 import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Cliente;
+import ec.edu.ups.modelo.Factura;
 import ec.edu.ups.modelo.FacturaDetalle;
 import ec.edu.ups.modelo.Producto;
 import java.text.SimpleDateFormat;
@@ -24,14 +25,17 @@ public class Facturas extends javax.swing.JInternalFrame {
     private int fila;
     private double iva=0;
     private double suma=0;
+    private int stock;
+    private int empleado;
    
-    public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle) {
+    public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle,int empleado) {
         initComponents();
         this.cliente=cliente;
         this.controladorFactura=controladorFactura;
         this.controladorProducto=controladorProducto;
         this.controladorProfesion=controladorProfesion;
         this.facturaDetalle=facturaDetalle;
+        this.empleado=empleado;
         fecha();
         txtNfactura.setText(String.valueOf(controladorFactura.numeroFactura()));
         txtIva.setText("0");
@@ -43,7 +47,7 @@ public class Facturas extends javax.swing.JInternalFrame {
     }
     
     public void llenarFactura(int codigo,int cantidad,int nuevoStock){
-        
+        this.stock=nuevoStock;
         Producto p=controladorProducto.buscarProductoFactura(codigo);
         double total=cantidad*p.getPrecioVenta();
         modelo=(DefaultTableModel) tblDetallefactura.getModel();
@@ -57,7 +61,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         };
         modelo.addRow(dato);
         
-        controladorProducto.ActualizarMercaderia(p);
+        controladorProducto.ActualizarMercaderia(codigo,nuevoStock);
         fdetalle.setCantidad(cantidad);
         fdetalle.setCodigoProducto(codigo);
         fdetalle.setPrecioTotal(total);
@@ -70,6 +74,8 @@ public class Facturas extends javax.swing.JInternalFrame {
     public void sumar(Double t){
          
          suma=suma+t;
+         double des=suma*0.12;
+         suma=suma-des;
          txtTotal.setText(String.valueOf(suma));
          txtSubtotal.setText(String.valueOf(suma-iva));
     }
@@ -133,7 +139,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         txtProfesion = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxFormaPago = new javax.swing.JComboBox<>();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -257,6 +263,11 @@ public class Facturas extends javax.swing.JInternalFrame {
 
         btnConfirmar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 120, 70));
 
         btnCancelar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
@@ -346,7 +357,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("Profesion:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contado", "Tarjeta" }));
+        cbxFormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contado", "Tarjeta" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -370,7 +381,7 @@ public class Facturas extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbxFormaPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -407,7 +418,7 @@ public class Facturas extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel10)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -457,7 +468,7 @@ public class Facturas extends javax.swing.JInternalFrame {
             txtTelefono.setText(c.getTelefono());
             txtEmail.setText(c.getEmail());
             txtProfesion.setText(c.getProfesion());
-            txtDescuento.setText(String.valueOf(controladorProfesion.buscarDescuento(txtProfesion.getText())));
+            txtDescuento.setText(String.valueOf(controladorProfesion.buscarDescuento(txtProfesion.getText()))+" %");
         }
     }//GEN-LAST:event_txtCedulaKeyPressed
 
@@ -481,6 +492,10 @@ public class Facturas extends javax.swing.JInternalFrame {
 
     private void tblDetallefacturaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDetallefacturaKeyPressed
         if(evt.getKeyCode()==127){
+            int nuevoStock=stock+(int)tblDetallefactura.getValueAt(fila, 2);
+            int codigo=(int)tblDetallefactura.getValueAt(fila, 0);
+            controladorProducto.ActualizarMercaderia(codigo, nuevoStock);
+            facturaDetalle.eliminarDetalle(codigo);
             modelo.removeRow(fila);
             suma=0;
             for(int i=0;i<=tblDetallefactura.getRowCount()-1;i++){
@@ -491,12 +506,28 @@ public class Facturas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblDetallefacturaKeyPressed
 
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        Factura f=new Factura();
+        f.setDescuento(Double.parseDouble(txtDescuento.getText()));
+        f.setFecha(new Date());
+        f.setTotal(Double.parseDouble(txtTotal.getText()));
+        f.setIva(Double.parseDouble(txtIva.getText()));
+        f.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
+        f.setFormaPago((String)cbxFormaPago.getSelectedItem());
+        f.setCodigoEmpleado(empleado);
+        
+        
+        for(int i=0;i<=tblDetallefactura.getRowCount()-1;i++){
+            
+        }
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbxFormaPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

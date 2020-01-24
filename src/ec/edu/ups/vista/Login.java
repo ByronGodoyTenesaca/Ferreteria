@@ -127,6 +127,7 @@ public class Login extends javax.swing.JFrame {
         String Pasword=txtPasword.getText();
         
         int Cargo=cl.inicioSesion(User,Pasword);
+        int empleado=cl.codigoEmpleado(User, Pasword);
         System.out.println(Cargo);
         if(Cargo==0){
             JOptionPane.showMessageDialog(this, "Usuario y Contraseña incorrecto");
@@ -134,7 +135,7 @@ public class Login extends javax.swing.JFrame {
             txtPasword.setText("");
             
         }else{
-            new Secundaria(Cargo).setVisible(true);
+            new Secundaria(Cargo,empleado).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnIngresarActionPerformed

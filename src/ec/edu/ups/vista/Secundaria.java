@@ -13,6 +13,7 @@ import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.controlador.ControladorProveedor;
 import java.awt.Dimension;
 
+
 public class Secundaria extends javax.swing.JFrame {
 
     private Clientes c;
@@ -28,8 +29,9 @@ public class Secundaria extends javax.swing.JFrame {
     private ControladorCargo controladorCargo;
     private ControladorCategoria controladorCategoria;
     private ControladorMedida controladorMedida;
+    private int empleado;
     
-    public Secundaria(int n) {
+    public Secundaria(int n, int empleado) {
         initComponents();
         controladorCliente=new ControladorCliente();
         controladorProfesion=new ControladorProfesion();
@@ -38,7 +40,7 @@ public class Secundaria extends javax.swing.JFrame {
         controladorEmpleado = new ControladorEmpleado();
         controladorCategoria = new ControladorCategoria();
         controladorMedida = new ControladorMedida();
-        
+        this.empleado=empleado;
         this.n=n;
         controlar();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -302,7 +304,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        f=new Facturas(new ControladorCliente(),new ControladorFactura(),new ControladorProducto(),new ControladorProfesion(),new ControladorFacturaDetalle());
+        f=new Facturas(new ControladorCliente(),new ControladorFactura(),new ControladorProducto(),new ControladorProfesion(),new ControladorFacturaDetalle(),empleado);
         f.setVisible(true);
         desktopPane.add(f);
     }//GEN-LAST:event_jMenuItem5ActionPerformed

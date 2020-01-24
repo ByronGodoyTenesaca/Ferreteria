@@ -71,7 +71,7 @@ public class ControladorProducto {
         }
     }
     
-    public void ActualizarMercaderia(Producto p){
+    public void ActualizarMercaderia(int p,int nuevo){
         try {
             PreparedStatement pst=null;
             String sql="UPDATE FER_PRODUCTOS SET PRO_CANTIDAD=?"
@@ -79,8 +79,8 @@ public class ControladorProducto {
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
            
-            pst.setInt(1, p.getCantidad());
-            pst.setInt(2, p.getCodigo());
+            pst.setInt(1, nuevo);
+            pst.setInt(2, p);
             
             pst.execute();
             conexion.Desconectar();
