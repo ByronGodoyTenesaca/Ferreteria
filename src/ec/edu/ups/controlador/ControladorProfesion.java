@@ -90,6 +90,24 @@ public class ControladorProfesion {
         return 0;
     }
     
+    public double buscarDescuento(String p){
+        try {
+            String sql="SELECT PRO_DESCUENTO FROM FER_PROFESIONES WHERE PRO_PROFESION = '"+p+"'";
+            System.out.println(sql);
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            double codigo=0;
+            while(respuesta.next()){
+                codigo=respuesta.getDouble(1);
+            }
+            return codigo;
+            }catch(SQLException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "no se puede encontrar el Nombre");
+            }
+        return 0;
+    }
     
      public List<Profesion> buscarNombre(String p){
         try {

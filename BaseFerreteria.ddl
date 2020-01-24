@@ -115,9 +115,8 @@ CREATE TABLE fer_factura_detalles (
     fac_det_cantidad          NUMBER(10) NOT NULL,
     fac_det_precio_uni        NUMBER(10, 2) NOT NULL,
     fac_det_precio_total      NUMBER(10, 2) NOT NULL,
-    fer_factura_fac_codigo    NUMBER(5) NOT NULL,
-    fer_producto_pro_codigo   NUMBER(5) NOT NULL,
-    fac_det_iva               NUMBER(10, 2)
+    fer_factura_fac_codigo    NUMBER(5) ,
+    fer_producto_pro_codigo   NUMBER(5) NOT NULL
 );
 
 COMMENT ON COLUMN fer_factura_detalles.fac_det_cantidad IS
@@ -129,8 +128,6 @@ COMMENT ON COLUMN fer_factura_detalles.fac_det_precio_uni IS
 COMMENT ON COLUMN fer_factura_detalles.fac_det_precio_total IS
     'el precio total que se va a cancelar por los productos ejemplo 30.20';
 
-COMMENT ON COLUMN fer_factura_detalles.fac_det_iva IS
-    'va calculando el iva que tiene algunos productos';
 
 ALTER TABLE fer_factura_detalles ADD CONSTRAINT fer_factura_detalle_pk PRIMARY KEY ( fac_det_codigo );
 

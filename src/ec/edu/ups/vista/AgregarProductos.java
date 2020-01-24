@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 public class AgregarProductos extends javax.swing.JInternalFrame {
 
      private ControladorProducto cp;
-     private Factura fac;
-    public AgregarProductos(Factura fac, ControladorProducto cp) {
+     private Facturas fac;
+    public AgregarProductos(Facturas fac, ControladorProducto cp) {
         initComponents();
         this.cp=cp;
         this.fac =fac;

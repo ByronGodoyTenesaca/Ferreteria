@@ -20,12 +20,12 @@ public class ControladorLogin {
         try {
             int codigo=0;
             String sql="SELECT * FROM FER_EMPLEADOS WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASEÑA='"+pasword+"'";
-            //String sql="SELECT * FROM EMPLEADO";
+           
             System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet res=sta.executeQuery(sql);
-            //System.out.println(res.next());
+            System.out.println(res.next());
             while(res.next()){
                 //System.out.println("login correcto");
                 codigo=res.getInt(10);
@@ -35,9 +35,7 @@ public class ControladorLogin {
             
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Usuario y Contraseña incorrecto");
-        }catch(java.lang.NullPointerException e){
-            e.printStackTrace();
+           
         }
         return 0;
     }

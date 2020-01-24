@@ -32,7 +32,7 @@ public class ControladorProductoProveedor {
             
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "No se pudo completar el guardado de informacion");
+            JOptionPane.showMessageDialog(null, "No se pudo completar el guardado de informacion==>>"+ex.getMessage());
         }
     }
     

@@ -15,9 +15,10 @@ public class ControladorProducto {
     
     public void Crear(Producto p){
         try {
+            boolean estado=true;
             PreparedStatement pst=null;
-            String sql="INSERT INTO FER_PRODUCTOS (PRO_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO, FER_TIPO_MEDIDA_MED_CODIGO)"
-                    + "VALUES (FER_PRODUCTOS_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO FER_PRODUCTOS (PRO_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO, FER_TIPO_MEDIDA_MED_CODIGO,PRO_ESTADO)"
+                    + "VALUES (FER_PRODUCTOS_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?,?)";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setString(1, p.getNombre());
@@ -29,6 +30,7 @@ public class ControladorProducto {
             pst.setBoolean(7, p.getIva());
             pst.setInt(8, p.getCodigoCategoria());
             pst.setInt(9, p.getCodigoMedida());
+            pst.setBoolean(10,estado );
             
             pst.executeUpdate();
             conexion.getConexion().commit();
@@ -92,12 +94,15 @@ public class ControladorProducto {
     
      public void Eliminar(int codigo){
           try {
+            boolean estado=false;
             PreparedStatement pst=null;
-            String sql="DELETE FROM FER_PRODUCTOS WHERE PRO_CODIGO =?";
+            String sql="UPDATE FER_PRODUCTOS SET PRO_ESTADO = ?"
+                    + "WHERE PRO_CODIGO= ?";
             
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            pst.setInt(1, codigo);
+            pst.setBoolean(1, estado);
+            pst.setInt(2, codigo);
              pst.execute();
              conexion.getConexion().commit();
             conexion.Desconectar();
@@ -115,7 +120,8 @@ public class ControladorProducto {
         try {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE FER_CATEGORIA_CAT_CODIGO="+cat+"";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE FER_CATEGORIA_CAT_CODIGO="+cat+" AND PRO_ESTADO= 1";
+            System.out.println(sql);
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
@@ -156,8 +162,8 @@ public class ControladorProducto {
                     + "UNION "
                     + "SELECT PRO_CODIGO,PRO_NOMBRE,PRO_DESCRIPCION,PRO_COSTO_VENTA,"
                     + "PRO_COSTO_COMPRA,PRO_CANTIDAD,PRO_LUGAR_FABRICACION,PRO_IVA,FER_CATEGORIA_CAT_CODIGO,"
-                    + "FER_TIPO_MEDIDA_MED_CODIGO FROM FER_PRODUCTOS";
-            System.out.println(sql);
+                    + "FER_TIPO_MEDIDA_MED_CODIGO FROM FER_PRODUCTOS WHERE PRO_ESTADO= 1";
+            
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
@@ -188,10 +194,10 @@ public class ControladorProducto {
         try {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE LIKE '"+cat+"%'";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE LIKE '"+cat+"%' AND PRO_ESTADO= 1";
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            
+            System.out.println(respuesta.next());
             while(respuesta.next()){
                 Producto p=new Producto();
                 p.setCodigo(respuesta.getInt(1));
@@ -217,7 +223,7 @@ public class ControladorProducto {
      
      public Producto buscarProductoFactura(int codigo){
         try {
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_CODIGO = "+codigo+"";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_CODIGO = "+codigo+" AND PRO_ESTADO= 1";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -244,13 +250,15 @@ public class ControladorProducto {
      
      public int buscarcodproducto(String nombre){
         try {
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ='"+nombre+"'";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ='"+nombre+"' AND PRO_ESTADO = 1 ";
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             int codigoPro=0;
             while(respuesta.next()){
-                codigoPro=respuesta.getInt(1);
+                 codigoPro=respuesta.getInt(1);
+                 System.out.println("es el codigo del producto " +codigoPro);
+               
             }
             return codigoPro;
         } catch (SQLException ex) {

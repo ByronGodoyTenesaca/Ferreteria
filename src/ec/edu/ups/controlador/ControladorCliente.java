@@ -104,7 +104,7 @@ public class ControladorCliente {
                     + "CLI_GENERO,CLI_TELEFONO,PRO_PROFESION"
                     + " FROM FER_CLIENTES C, FER_PROFESIONES P "
                     + "WHERE CLI_CEDULA = '"+Cedula+"' AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO";
-            System.out.println(sql);
+           
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -180,7 +180,7 @@ public class ControladorCliente {
                     + "CLI_GENERO,CLI_TELEFONO,PRO_PROFESION"
                     + " FROM FER_CLIENTES C, FER_PROFESIONES P "
                     + "WHERE C.CLI_NOMBRE LIKE '"+n+"%' AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO";
-             System.out.println(sql);
+            
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

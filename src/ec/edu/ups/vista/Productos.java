@@ -486,7 +486,7 @@ public class Productos extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        cpp.Eliminar(codigo);
+        
         controladorProducto.Eliminar(codigo);
         if((String)cbxBuscar.getSelectedItem()=="Categoria"){
                 for (Categoria c : listaCategoria) {
@@ -516,6 +516,7 @@ public class Productos extends javax.swing.JInternalFrame {
         if (evt.getKeyCode()==10){
             if((String)cbxBuscar.getSelectedItem()=="Categoria"){
                 for (Categoria c : listaCategoria) {
+                    
                     if(c.getCategoria().equals(txtBuscar.getText())){
                         codigo=c.getCodigo();
                         break;
