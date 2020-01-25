@@ -44,11 +44,11 @@ public class ControladorFactura {
                     + "VALUES (FER_FACTURA_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
             conexion.Conectar();
             pst=conexion.getConexion().prepareStatement(sql);
-            SimpleDateFormat formateador = new SimpleDateFormat ("yy-MM-dd");
+            SimpleDateFormat formateador = new SimpleDateFormat ("dd-MMM-yyyy");
             String fecha=formateador.format (new Date());
             pst.setString(1, fecha);
             pst.setDouble(2, factura.getSubtotal());
-            pst.setDouble(2, factura.getDescuento());
+            pst.setDouble(3, factura.getDescuento());
             pst.setDouble(4, factura.getIva());
             pst.setDouble(5, factura.getTotal());
             pst.setString(6, factura.getFormaPago());

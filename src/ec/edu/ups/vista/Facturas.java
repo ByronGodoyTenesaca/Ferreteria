@@ -27,6 +27,9 @@ public class Facturas extends javax.swing.JInternalFrame {
     private double suma=0;
     private int stock;
     private int empleado;
+    private double descuento;
+    private double totalPagar;
+    private int codigoCliente;
    
     public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle,int empleado) {
         initComponents();
@@ -67,27 +70,37 @@ public class Facturas extends javax.swing.JInternalFrame {
         fdetalle.setPrecioTotal(total);
         fdetalle.setPrecioUnitario(p.getPrecioVenta());
         facturaDetalle.crearFactura(fdetalle);
-        verificarIva(p);
+        verificarIva(p,cantidad);
         sumar(total);
     }
     
     public void sumar(Double t){
-         
+         if(tblDetallefactura.getRowCount()<=1){
          suma=suma+t;
-         double des=suma*0.12;
+         totalPagar=suma;
+         txtSubtotal.setText(String.valueOf(suma-iva));
+         double des=(suma*descuento/100);
          suma=suma-des;
          txtTotal.setText(String.valueOf(suma));
-         txtSubtotal.setText(String.valueOf(suma-iva));
+         
+         }else{
+            totalPagar=totalPagar+t;
+            txtSubtotal.setText(String.valueOf(totalPagar-iva));
+            
+            double des=(totalPagar*descuento/100);
+            suma=totalPagar-des;
+            txtTotal.setText(String.valueOf(suma));
+         }
     }
     
-    public void verificarIva(Producto p){
+    public void verificarIva(Producto p,int cantidad){
         
         if(p.getIva()){
-            iva=p.getPrecioVenta()*0.12;
-            
-            double ivaAnterior=Double.parseDouble(txtIva.getText().trim());
-            iva=iva+ivaAnterior;
-            txtIva.setText(String.valueOf(iva));
+                iva=(p.getPrecioVenta()*0.12)*cantidad;
+
+                double ivaAnterior=Double.parseDouble(txtIva.getText().trim());
+                iva=iva+ivaAnterior;
+                txtIva.setText(String.valueOf(iva));
         }
     }
     public void fecha(){
@@ -469,6 +482,8 @@ public class Facturas extends javax.swing.JInternalFrame {
             txtEmail.setText(c.getEmail());
             txtProfesion.setText(c.getProfesion());
             txtDescuento.setText(String.valueOf(controladorProfesion.buscarDescuento(txtProfesion.getText()))+" %");
+            descuento=controladorProfesion.buscarDescuento(txtProfesion.getText());
+            codigoCliente=c.getCodigo();
         }
     }//GEN-LAST:event_txtCedulaKeyPressed
 
@@ -492,36 +507,66 @@ public class Facturas extends javax.swing.JInternalFrame {
 
     private void tblDetallefacturaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDetallefacturaKeyPressed
         if(evt.getKeyCode()==127){
+            
             int nuevoStock=stock+(int)tblDetallefactura.getValueAt(fila, 2);
             int codigo=(int)tblDetallefactura.getValueAt(fila, 0);
+            Producto p=controladorProducto.buscarProductoFactura(codigo);
+            menorarIva((Double)tblDetallefactura.getValueAt(fila, 3),(int)tblDetallefactura.getValueAt(fila, 2),p);
             controladorProducto.ActualizarMercaderia(codigo, nuevoStock);
             facturaDetalle.eliminarDetalle(codigo);
+            
             modelo.removeRow(fila);
             suma=0;
             for(int i=0;i<=tblDetallefactura.getRowCount()-1;i++){
                 suma=suma+(double)tblDetallefactura.getValueAt(i, 4);
             }
-            txtTotal.setText(String.valueOf(suma));
+            double des=(suma*descuento/100);
             txtSubtotal.setText(String.valueOf(suma-iva));
+            suma=suma-des;
+            //txtTotal.setText(String.valueOf(suma));
+            txtTotal.setText(String.valueOf(suma));
+            
+            
         }
     }//GEN-LAST:event_tblDetallefacturaKeyPressed
 
+    public void menorarIva(double precio,int cantidad,Producto p){
+            
+        if(p.getIva()){
+            iva=(precio*0.12)*cantidad;
+            double ivaAnterior=Double.parseDouble(txtIva.getText().trim());
+            iva=ivaAnterior-iva;
+            txtIva.setText(String.valueOf(iva));
+            
+        }
+    }
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         Factura f=new Factura();
-        f.setDescuento(Double.parseDouble(txtDescuento.getText()));
+        f.setDescuento(descuento);
         f.setFecha(new Date());
         f.setTotal(Double.parseDouble(txtTotal.getText()));
         f.setIva(Double.parseDouble(txtIva.getText()));
         f.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
         f.setFormaPago((String)cbxFormaPago.getSelectedItem());
         f.setCodigoEmpleado(empleado);
+        f.setCodigoCliente(codigoCliente);
+        controladorFactura.crearFactura(f);
         
-        
-        for(int i=0;i<=tblDetallefactura.getRowCount()-1;i++){
-            
+        int codigoFactura=controladorFactura.numeroFactura()-1;
+        int numFilas=tblDetallefactura.getRowCount();
+        for(int i=0;i<numFilas;i++){
+            int codigoProducto=(int)tblDetallefactura.getValueAt(i, 0);
+            actualizarDetalleFactura(codigoProducto,codigoFactura);
+            System.out.println("llegeu");
         }
+        System.out.println("completo ");
+       
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
+    public void actualizarDetalleFactura(int codigoP,int codigoF){
+        
+        facturaDetalle.actualizarCodFactura(codigoP, codigoF);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

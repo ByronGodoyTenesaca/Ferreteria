@@ -54,10 +54,11 @@ public class ControladorFacturaDetalle {
             pst=conexion.getConexion().prepareStatement(sql);
             pst.setInt(1, codigoFactura);
             pst.setInt(2, codigoProducto);
+            
             pst.executeUpdate();
             conexion.Desconectar();
         } catch (SQLException ex) {
-            
+            ex.printStackTrace();
         }
     }
     

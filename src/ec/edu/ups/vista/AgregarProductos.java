@@ -31,10 +31,10 @@ public class AgregarProductos extends javax.swing.JInternalFrame {
     public void llenar(){
         List<Producto> lista=cp.buscarProducto(txtBuscar.getText());
         DefaultTableModel modelo=(DefaultTableModel) tblProductos.getModel();
+        //System.out.println(lista.size());
         modelo.setRowCount(0);
         for (Producto p : lista) {
             Object[] dato={
-            
                 p.getCodigo(),
                 p.getNombre(),
                 p.getDescripcion(),
@@ -126,29 +126,31 @@ public class AgregarProductos extends javax.swing.JInternalFrame {
         if(evt.getClickCount()==2){
             int seleccion =tblProductos.getSelectedRow();
             String valor=JOptionPane.showInputDialog("Cantidad de "+tblProductos.getValueAt(seleccion, 1));
+            if(valor!= ""){
             int cantidad=Integer.parseInt(valor);
             int stock=(int)tblProductos.getValueAt(seleccion, 3);
             if(cantidad<=stock){
                 int res=stock-cantidad;
                 int codigo=(int)tblProductos.getValueAt(seleccion, 0);
                 fac.llenarFactura(codigo, cantidad, res);
+                this.dispose();
 
             }else{
                 JOptionPane.showMessageDialog(this, "No hay sificiente mercaderia","error",JOptionPane.ERROR_MESSAGE);
+            }
             }
         }
     }//GEN-LAST:event_tblProductosMouseClicked
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
-
-    }//GEN-LAST:event_txtBuscarKeyPressed
-
-    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
-        String nombre=txtBuscar.getText();
-        System.out.println(nombre+"  "+evt.getKeyChar());
+        System.out.println(txtBuscar.getText());
         if(rbtnNombre.isSelected()){
             llenar();
         }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        
     }//GEN-LAST:event_txtBuscarKeyTyped
 
 

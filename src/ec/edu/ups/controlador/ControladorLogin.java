@@ -21,7 +21,6 @@ public class ControladorLogin {
             int codigo=0;
             String sql="SELECT * FROM FER_EMPLEADOS WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASEÑA='"+pasword+"'";
            
-            System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet res=sta.executeQuery(sql);
@@ -47,7 +46,6 @@ public class ControladorLogin {
             int codigo=0;
             String sql="SELECT * FROM FER_EMPLEADOS WHERE EMP_EMAIL='"+user+"' AND EMP_CONTRASEÑA='"+pasword+"'";
            
-            System.out.println(sql);
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet res=sta.executeQuery(sql);

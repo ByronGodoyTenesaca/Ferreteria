@@ -74,7 +74,7 @@ public class ControladorProfesion {
     public int buscarCodigo(String p){
         try {
             String sql="SELECT * FROM FER_PROFESIONES WHERE PRO_PROFESION = '"+p+"'";
-            System.out.println(sql);
+            
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
@@ -93,7 +93,7 @@ public class ControladorProfesion {
     public double buscarDescuento(String p){
         try {
             String sql="SELECT PRO_DESCUENTO FROM FER_PROFESIONES WHERE PRO_PROFESION = '"+p+"'";
-            System.out.println(sql);
+            
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

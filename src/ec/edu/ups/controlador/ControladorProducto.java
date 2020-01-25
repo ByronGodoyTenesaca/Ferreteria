@@ -84,7 +84,7 @@ public class ControladorProducto {
             
             pst.execute();
             conexion.Desconectar();
-            JOptionPane.showMessageDialog(null, "Producto Actualizado Correctamente");
+            
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo Actualizar el producto");
@@ -106,7 +106,7 @@ public class ControladorProducto {
              pst.execute();
              conexion.getConexion().commit();
             conexion.Desconectar();
-            JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
+            
             
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -194,10 +194,11 @@ public class ControladorProducto {
         try {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
-            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE LIKE '"+cat+"%' AND PRO_ESTADO= 1";
+            String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE LIKE '"+cat+"%' AND PRO_ESTADO = 1";
+            System.out.println(sql);
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            System.out.println(respuesta.next());
+            
             while(respuesta.next()){
                 Producto p=new Producto();
                 p.setCodigo(respuesta.getInt(1));
