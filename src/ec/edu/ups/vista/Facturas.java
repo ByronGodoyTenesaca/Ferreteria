@@ -69,6 +69,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         fdetalle.setCodigoProducto(codigo);
         fdetalle.setPrecioTotal(total);
         fdetalle.setPrecioUnitario(p.getPrecioVenta());
+        fdetalle.setCodigoFactura(controladorFactura.numeroFactura());
         facturaDetalle.crearFactura(fdetalle);
         verificarIva(p,cantidad);
         sumar(total);
@@ -552,15 +553,8 @@ public class Facturas extends javax.swing.JInternalFrame {
         f.setCodigoCliente(codigoCliente);
         controladorFactura.crearFactura(f);
         
-        int codigoFactura=controladorFactura.numeroFactura()-1;
-        int numFilas=tblDetallefactura.getRowCount();
-        for(int i=0;i<numFilas;i++){
-            int codigoProducto=(int)tblDetallefactura.getValueAt(i, 0);
-            actualizarDetalleFactura(codigoProducto,codigoFactura);
-            System.out.println("llegeu");
-        }
-        System.out.println("completo ");
-       
+        
+        
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     public void actualizarDetalleFactura(int codigoP,int codigoF){

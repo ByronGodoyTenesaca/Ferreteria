@@ -712,7 +712,21 @@ public class Productos extends javax.swing.JInternalFrame {
         pp.setCodigoProducto(codigo);
         pp.setCantidad(num2);
         cpp.CrearProductoProveedor(pp);
-        actualizarCategoria();
+         
+            if((String)cbxBuscar.getSelectedItem()=="Categoria"){
+                for (Categoria c : listaCategoria) {
+                    
+                    if(c.getCategoria().equals(txtBuscar.getText())){
+                        codigo=c.getCodigo();
+                        break;
+                    }
+                }
+                actualizarCategoria();
+            }else if((String)cbxBuscar.getSelectedItem()=="Producto"){
+                actualizarProducto();
+            }else{
+                actualizarEmpresa();
+            }
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

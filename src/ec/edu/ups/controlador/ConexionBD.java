@@ -11,10 +11,6 @@ public class ConexionBD {
     private String pasword = "ferreteria";
     private String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 
-    //private String login = "FERRETERIA";
-    //private String pa = "123";
-    //private String url = "jdbc:oracle:thin:@localhost:1521:xe";
-
    public ConexionBD() {
     }
 
@@ -40,7 +36,7 @@ public class ConexionBD {
     public void Desconectar() {
         try {
             conexion.close();
-            System.out.println("desconectado");
+            
         } catch (SQLException ex) {
 
         }

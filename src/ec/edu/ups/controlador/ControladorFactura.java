@@ -89,8 +89,9 @@ public class ControladorFactura {
         List<Factura> lista= new ArrayList<>();
         try {
             String sql="SELECT * FROM FER_FACTURAS F,FER_CLIENTES C"
-                    + "WHERE F.FER_CLIENTE_CLI_CODIGO=C.CLI_CODIGO AND C.CLI_CEDULA= '"+cedula+"' AND F.FAC_ESTADO= 1";
+                    + " WHERE F.FER_CLIENTE_CLI_CODIGO=C.CLI_CODIGO AND C.CLI_CEDULA= '"+cedula+"' AND F.FAC_ESTADO= 1";
             
+            conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             while(respuesta.next()){

@@ -20,6 +20,7 @@ public class Secundaria extends javax.swing.JFrame {
     private Productos p;
     private Proveedores pr;
     private Facturas f;
+    private Reportes r;
     private int n;
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
@@ -83,8 +84,11 @@ public class Secundaria extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         itmCargo = new javax.swing.JMenuItem();
         menuFactura = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         menuReportes = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         menuSesion = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
 
@@ -176,6 +180,9 @@ public class Secundaria extends javax.swing.JFrame {
 
         menuFactura.setText("Facturacion");
 
+        jMenuItem6.setText("Buscar Factura");
+        menuFactura.add(jMenuItem6);
+
         jMenuItem5.setText("Facturacion");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +194,19 @@ public class Secundaria extends javax.swing.JFrame {
         menuBar.add(menuFactura);
 
         menuReportes.setText("Reportes");
+
+        jMenuItem8.setText("Generar");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        menuReportes.add(jMenuItem8);
+
         menuBar.add(menuReportes);
+
+        jMenu2.setText("Estadisticas");
+        menuBar.add(jMenu2);
 
         menuSesion.setText("Sesion");
 
@@ -309,6 +328,15 @@ public class Secundaria extends javax.swing.JFrame {
         desktopPane.add(f);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        r=new Reportes(controladorCliente,new ControladorFactura());
+        r.setVisible(true);
+        desktopPane.add(r);
+        
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane desktopPane;
@@ -317,12 +345,15 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemProveedor;
     private javax.swing.JMenuItem itmCargo;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuEmpleado;
