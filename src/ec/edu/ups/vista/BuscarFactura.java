@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class BuscarFactura extends javax.swing.JInternalFrame {
 private ControladorFactura controladorFactura;
-
+private FacturaBuscada factura;
     public BuscarFactura(ControladorFactura controladorFactura) {
         initComponents();
         
@@ -121,11 +121,20 @@ private ControladorFactura controladorFactura;
 
     private void tblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBuscarMouseClicked
         if(evt.getClickCount()==2){
+            if(factura==null){
             int seleccion=tblBuscar.getSelectedRow();
             int codigo=(int)tblBuscar.getValueAt(seleccion, 0);
-            FacturaBuscada factura=new FacturaBuscada(codigo,new ControladorFactura(),new ControladorFacturaDetalle(),new ControladorCliente(),new ControladorProducto());
+            factura=new FacturaBuscada(codigo,new ControladorFactura(),new ControladorFacturaDetalle(),new ControladorCliente(),new ControladorProducto());
             factura.setVisible(true);
             Secundaria.desktopPane.add(factura);
+            }else{
+            factura.setVisible(false);
+            int seleccion=tblBuscar.getSelectedRow();
+            int codigo=(int)tblBuscar.getValueAt(seleccion, 0);
+            factura=new FacturaBuscada(codigo,new ControladorFactura(),new ControladorFacturaDetalle(),new ControladorCliente(),new ControladorProducto());
+            factura.setVisible(true);
+            Secundaria.desktopPane.add(factura);
+            }
         }
     }//GEN-LAST:event_tblBuscarMouseClicked
 

@@ -11,6 +11,7 @@ import ec.edu.ups.modelo.FacturaDetalle;
 import ec.edu.ups.modelo.Producto;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Facturas extends javax.swing.JInternalFrame {
@@ -22,6 +23,7 @@ public class Facturas extends javax.swing.JInternalFrame {
     private ControladorFacturaDetalle facturaDetalle;
     private  DefaultTableModel modelo;
     private FacturaDetalle fdetalle;
+    private AgregarProductos agregar;
     private int fila;
     private double iva=0;
     private double suma=0;
@@ -50,31 +52,75 @@ public class Facturas extends javax.swing.JInternalFrame {
     }
     
     public void llenarFactura(int codigo,int cantidad,int nuevoStock){
-        this.stock=nuevoStock;
-        Producto p=controladorProducto.buscarProductoFactura(codigo);
-        double total=cantidad*p.getPrecioVenta();
-        modelo=(DefaultTableModel) tblDetallefactura.getModel();
         
-        Object[] dato={
-            p.getCodigo(),
-            p.getDescripcion(),
-            cantidad,
-            p.getPrecioVenta(),
-            total
-        };
-        modelo.addRow(dato);
+        if(tblDetallefactura.getRowCount()==0){
+            
+            this.stock=nuevoStock;
+                Producto p=controladorProducto.buscarProductoFactura(codigo);
+                double total=cantidad*p.getPrecioVenta();
+                modelo=(DefaultTableModel) tblDetallefactura.getModel();
+
+                Object[] dato={
+                    p.getCodigo(),
+                    p.getDescripcion(),
+                    cantidad,
+                    p.getPrecioVenta(),
+                    total
+                };
+                modelo.addRow(dato);
+
+                //controladorProducto.ActualizarMercaderia(codigo,nuevoStock);
+                fdetalle.setCantidad(cantidad);
+                fdetalle.setCodigoProducto(codigo);
+                fdetalle.setPrecioTotal(total);
+                fdetalle.setPrecioUnitario(p.getPrecioVenta());
+                fdetalle.setCodigoFactura(controladorFactura.numeroFactura());
+                facturaDetalle.crearFactura(fdetalle);
+                verificarIva(p,cantidad);
+                sumar(total);
+        }else{
+            int cod=0;
+            boolean estado=false;
+            for(int i=0;i<tblDetallefactura.getRowCount();i++){
+                cod=(int)tblDetallefactura.getValueAt(i, 0);
+                if(cod==codigo){
+                    estado=true;
+                }
+            }
+           
+           
+           if(!estado){
+                this.stock=nuevoStock;
+                Producto p=controladorProducto.buscarProductoFactura(codigo);
+                double total=cantidad*p.getPrecioVenta();
+                modelo=(DefaultTableModel) tblDetallefactura.getModel();
+
+                Object[] dato={
+                    p.getCodigo(),
+                    p.getDescripcion(),
+                    cantidad,
+                    p.getPrecioVenta(),
+                    total
+                };
+                modelo.addRow(dato);
+
+                //controladorProducto.ActualizarMercaderia(codigo,nuevoStock);
+                fdetalle.setCantidad(cantidad);
+                fdetalle.setCodigoProducto(codigo);
+                fdetalle.setPrecioTotal(total);
+                fdetalle.setPrecioUnitario(p.getPrecioVenta());
+                fdetalle.setCodigoFactura(controladorFactura.numeroFactura());
+                facturaDetalle.crearFactura(fdetalle);
+                verificarIva(p,cantidad);
+                sumar(total);
+           }else{
+               JOptionPane.showMessageDialog(this, "El Producto ya existe");
+               
+           }
+            
+         }
         
-        //controladorProducto.ActualizarMercaderia(codigo,nuevoStock);
-        fdetalle.setCantidad(cantidad);
-        fdetalle.setCodigoProducto(codigo);
-        fdetalle.setPrecioTotal(total);
-        fdetalle.setPrecioUnitario(p.getPrecioVenta());
-        fdetalle.setCodigoFactura(controladorFactura.numeroFactura());
-        facturaDetalle.crearFactura(fdetalle);
-        verificarIva(p,cantidad);
-        sumar(total);
     }
-    
     public void sumar(Double t){
          if(tblDetallefactura.getRowCount()<=1){
          suma=suma+t;
@@ -495,10 +541,20 @@ public class Facturas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        
+        if(agregar==null){
+            agregar=new AgregarProductos(this, new ControladorProducto());
+             Secundaria.desktopPane.add(agregar);
+             agregar.setVisible(true);
+        }else{
+            agregar.setVisible(false);
+            agregar=new AgregarProductos(this, new ControladorProducto());
+            agregar.setVisible(true);
+            Secundaria.desktopPane.add(agregar);
+             
+        }
+        
        
-        AgregarProductos agregar=new AgregarProductos(this, new ControladorProducto());
-        Secundaria.desktopPane.add(agregar);
-        agregar.setVisible(true);
        
     }//GEN-LAST:event_btnAgregarActionPerformed
 

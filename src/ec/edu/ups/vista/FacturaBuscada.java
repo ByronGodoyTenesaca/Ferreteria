@@ -83,7 +83,6 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtSubtotal = new javax.swing.JLabel();
         txtIva = new javax.swing.JLabel();
@@ -229,15 +228,6 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         jLabel15.setText("Total :");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 129, -1, -1));
 
-        btnConfirmar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        btnConfirmar.setText("Confirmar");
-        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 120, 70));
-
         btnCancelar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +235,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 120, 70));
+        jPanel4.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 120, 70));
         jPanel4.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 15, 141, 30));
         jPanel4.add(txtIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 52, 141, 29));
 
@@ -262,7 +252,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 130, 70));
+        jPanel4.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 70));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -452,16 +442,10 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tblDetallefacturaKeyPressed
 
-    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        
-        
-    }//GEN-LAST:event_btnConfirmarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConfirmar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
