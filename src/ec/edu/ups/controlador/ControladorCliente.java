@@ -133,6 +133,44 @@ public class ControladorCliente {
         return null;
      }
      
+     public Cliente buscar(int codigo){
+        try {
+            // List<Cliente> lista=new ArrayList<>();
+            Cliente c=new Cliente();
+            String sql="SELECT "
+                    + "CLI_CODIGO,CLI_NOMBRE,CLI_APELLIDO,CLI_DIRECCION,CLI_CEDULA,CLI_EMAIL,CLI_NUM_TARJETA,\n" 
+                    + "CLI_GENERO,CLI_TELEFONO,PRO_PROFESION"
+                    + " FROM FER_CLIENTES C, FER_PROFESIONES P "
+                    + "WHERE CLI_CODIGO = "+codigo+" AND C.PROFESION_PRO_CODIGO=P.PRO_CODIGO";
+           
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            System.out.println(respuesta);
+            
+            while(respuesta.next()){
+                c.setCodigo(respuesta.getInt(1));
+                c.setNombres(respuesta.getString(2));
+                c.setApellidos(respuesta.getString(3));
+                c.setDireccion(respuesta.getString(4));
+                c.setCedula(respuesta.getString(5));
+                c.setEmail(respuesta.getString(6));
+                c.setNumeroTarjeta(respuesta.getString(7));
+                c.setGenero(respuesta.getString(8));
+                c.setTelefono(respuesta.getString(9));
+                c.setProfesion(respuesta.getString(10));
+                break;
+                
+            }
+            conexion.Desconectar();
+            return c;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+           JOptionPane.showMessageDialog(null, "No se pudo encontrar a la persona");
+        }
+        return null;
+     }
+     
      public List<Cliente> ListarProfesion(String n){
         try {
              List<Cliente> lista=new ArrayList<>();

@@ -83,9 +83,37 @@ public class ControladorFactura {
             ex.printStackTrace();
         }
     }
+    public Factura buscarFactura(int codigo){
+        
+        try {
+            String sql="SELECT * FROM FER_FACTURAS"
+                    + " WHERE FAC_CODIGO= "+codigo+"";
+            
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            Factura f=new Factura();
+            while(respuesta.next()){
+                
+                f.setCodigo(respuesta.getInt(1));
+                f.setFecha(respuesta.getDate(2));
+                f.setSubtotal(respuesta.getDouble(3));
+                f.setDescuento(respuesta.getDouble(4));
+                f.setIva(respuesta.getDouble(5));
+                f.setTotal(respuesta.getDouble(6));
+                f.setFormaPago(respuesta.getString(7));
+                f.setCodigoCliente(respuesta.getInt(8));
+                f.setCodigoEmpleado(respuesta.getInt(9));
+                
+            }
+            return f;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
     
-    
-    public List<Factura> buscarFactura(String cedula){
+    public List<Factura> buscarFacturas(String cedula){
         List<Factura> lista= new ArrayList<>();
         try {
             String sql="SELECT * FROM FER_FACTURAS F,FER_CLIENTES C"

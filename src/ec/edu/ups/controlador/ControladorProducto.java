@@ -249,6 +249,24 @@ public class ControladorProducto {
         return null;
     }
      
+      public String descripcion(int codigo){
+        try {
+            String sql="SELECT PRO_DESCRIPCION FROM FER_PRODUCTOS WHERE PRO_CODIGO = "+codigo+" AND PRO_ESTADO= 1";
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet respuesta=sta.executeQuery(sql);
+            String p="";
+            while(respuesta.next()){
+               p=respuesta.getString(1);
+            }
+            conexion.Desconectar();
+            return p;
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+        }
+        return null;
+    }
+     
      public int buscarcodproducto(String nombre){
         try {
             String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE ='"+nombre+"' AND PRO_ESTADO = 1 ";

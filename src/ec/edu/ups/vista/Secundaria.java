@@ -181,6 +181,11 @@ public class Secundaria extends javax.swing.JFrame {
         menuFactura.setText("Facturacion");
 
         jMenuItem6.setText("Buscar Factura");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         menuFactura.add(jMenuItem6);
 
         jMenuItem5.setText("Facturacion");
@@ -336,6 +341,14 @@ public class Secundaria extends javax.swing.JFrame {
         desktopPane.add(r);
         
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        BuscarFactura bf=new BuscarFactura(new ControladorFactura());
+        bf.setVisible(true);
+        desktopPane.add(bf);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

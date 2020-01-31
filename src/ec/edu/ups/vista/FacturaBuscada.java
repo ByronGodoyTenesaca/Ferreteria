@@ -4,111 +4,65 @@ import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorFactura;
 import ec.edu.ups.controlador.ControladorFacturaDetalle;
 import ec.edu.ups.controlador.ControladorProducto;
-import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Factura;
 import ec.edu.ups.modelo.FacturaDetalle;
-import ec.edu.ups.modelo.Producto;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class Facturas extends javax.swing.JInternalFrame {
 
-    private ControladorCliente cliente;
+
+public class FacturaBuscada extends javax.swing.JInternalFrame {
+
+    private int codigo;
     private ControladorFactura controladorFactura;
-    private ControladorProducto controladorProducto;
-    private ControladorProfesion controladorProfesion;
     private ControladorFacturaDetalle facturaDetalle;
-    private  DefaultTableModel modelo;
-    private FacturaDetalle fdetalle;
-    private int fila;
-    private double iva=0;
-    private double suma=0;
-    private int stock;
-    private int empleado;
-    private double descuento;
-    private double totalPagar;
-    private int codigoCliente;
-   
-    public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle,int empleado) {
+    private ControladorCliente controladorCliente;
+    private ControladorProducto controladorProducto;
+    public FacturaBuscada(int codigo,ControladorFactura controladorFactura,ControladorFacturaDetalle facturaDetalle,ControladorCliente controladorCliente, ControladorProducto controladorProducto) {
         initComponents();
-        this.cliente=cliente;
+        this.codigo=codigo;
         this.controladorFactura=controladorFactura;
-        this.controladorProducto=controladorProducto;
-        this.controladorProfesion=controladorProfesion;
         this.facturaDetalle=facturaDetalle;
-        this.empleado=empleado;
-        fecha();
-        txtNfactura.setText(String.valueOf(controladorFactura.numeroFactura()));
-        txtIva.setText("0");
-        fdetalle=new FacturaDetalle();
-    }
-
-    public Facturas() {
-         initComponents();
+        this.controladorCliente=controladorCliente;
+        this.controladorProducto=controladorProducto;
+        llenarFactura();
+        llenarTabla();
     }
     
-    public void llenarFactura(int codigo,int cantidad,int nuevoStock){
-        this.stock=nuevoStock;
-        Producto p=controladorProducto.buscarProductoFactura(codigo);
-        double total=cantidad*p.getPrecioVenta();
-        modelo=(DefaultTableModel) tblDetallefactura.getModel();
-        
-        Object[] dato={
-            p.getCodigo(),
-            p.getDescripcion(),
-            cantidad,
-            p.getPrecioVenta(),
-            total
-        };
-        modelo.addRow(dato);
-        
-        //controladorProducto.ActualizarMercaderia(codigo,nuevoStock);
-        fdetalle.setCantidad(cantidad);
-        fdetalle.setCodigoProducto(codigo);
-        fdetalle.setPrecioTotal(total);
-        fdetalle.setPrecioUnitario(p.getPrecioVenta());
-        fdetalle.setCodigoFactura(controladorFactura.numeroFactura());
-        facturaDetalle.crearFactura(fdetalle);
-        verificarIva(p,cantidad);
-        sumar(total);
-    }
-    
-    public void sumar(Double t){
-         if(tblDetallefactura.getRowCount()<=1){
-         suma=suma+t;
-         totalPagar=suma;
-         txtSubtotal.setText(String.valueOf(suma-iva));
-         double des=(suma*descuento/100);
-         suma=suma-des;
-         txtTotal.setText(String.valueOf(suma));
-         
-         }else{
-            totalPagar=totalPagar+t;
-            txtSubtotal.setText(String.valueOf(totalPagar-iva));
-            
-            double des=(totalPagar*descuento/100);
-            suma=totalPagar-des;
-            txtTotal.setText(String.valueOf(suma));
-         }
-    }
-    
-    public void verificarIva(Producto p,int cantidad){
-        
-        if(p.getIva()){
-                iva=(p.getPrecioVenta()*0.12)*cantidad;
-
-                double ivaAnterior=Double.parseDouble(txtIva.getText().trim());
-                iva=iva+ivaAnterior;
-                txtIva.setText(String.valueOf(iva));
-        }
-    }
-    public void fecha(){
-        Date fecha=new Date();
-            SimpleDateFormat formato=new SimpleDateFormat("dd-MM-YYYY");
-            txtFecha.setText(formato.format(fecha));
-    }
+   public void llenarFactura(){
+       Factura factura=controladorFactura.buscarFactura(codigo);
+       Cliente cliente=controladorCliente.buscar(factura.getCodigoCliente());
+       txtDescuento.setText(String.valueOf(factura.getDescuento())+" %");
+       txtSubtotal.setText(String.valueOf(factura.getSubtotal()));
+       txtTotal.setText(String.valueOf(factura.getTotal()));
+       txtIva.setText(String.valueOf(factura.getIva()));
+       txtNfactura.setText(String.valueOf(factura.getCodigo()));
+       txtFecha.setText(String.valueOf(factura.getFecha()));
+       txtCedula.setText(cliente.getCedula());
+       txtApellido.setText(cliente.getApellidos());
+       txtNombre.setText(cliente.getNombres());
+       txtDireccion.setText(cliente.getDireccion());
+       txtEmail.setText(cliente.getDireccion());
+       txtTelefono.setText(cliente.getTelefono());
+       txtProfesion.setText(cliente.getProfesion());
+       txtFormaPag.setText(factura.getFormaPago());
+   }
+   
+   public void llenarTabla(){
+       DefaultTableModel modelo=(DefaultTableModel) tblDetallefactura.getModel();
+       List<FacturaDetalle> det=facturaDetalle.listar(codigo);
+       for (FacturaDetalle detalle : det) {
+           Object[] dato={
+               detalle.getCodigoProducto(),
+               controladorProducto.descripcion(detalle.getCodigoProducto()),
+               detalle.getCantidad(),
+               detalle.getPrecioUnitario(),
+               detalle.getPrecioTotal()
+           };
+           modelo.addRow(dato);
+       }
+   }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -153,7 +107,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         txtProfesion = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        cbxFormaPago = new javax.swing.JComboBox<>();
+        txtFormaPag = new javax.swing.JTextField();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -177,7 +131,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 227, Short.MAX_VALUE)
+                .addGap(0, 235, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel3)
@@ -332,6 +286,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel6.setText("C.I. Cliente: ");
 
+        txtCedula.setEditable(false);
         txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCedulaKeyPressed(evt);
@@ -371,7 +326,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("Profesion:");
 
-        cbxFormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contado", "Tarjeta" }));
+        txtFormaPag.setEditable(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -395,7 +350,8 @@ public class Facturas extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxFormaPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -425,15 +381,15 @@ public class Facturas extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel9))
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel10)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(cbxFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(35, 35, 35)
                                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -474,18 +430,7 @@ public class Facturas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyPressed
-        if(evt.getKeyCode()==10){
-            Cliente c=cliente.ListarCedula(txtCedula.getText());
-            txtApellido.setText(c.getApellidos());
-            txtNombre.setText(c.getNombres());
-            txtDireccion.setText(c.getDireccion());
-            txtTelefono.setText(c.getTelefono());
-            txtEmail.setText(c.getEmail());
-            txtProfesion.setText(c.getProfesion());
-            txtDescuento.setText(String.valueOf(controladorProfesion.buscarDescuento(txtProfesion.getText()))+" %");
-            descuento=controladorProfesion.buscarDescuento(txtProfesion.getText());
-            codigoCliente=c.getCodigo();
-        }
+        
     }//GEN-LAST:event_txtCedulaKeyPressed
 
     
@@ -495,78 +440,28 @@ public class Facturas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       
-        AgregarProductos agregar=new AgregarProductos(this, new ControladorProducto());
-        Secundaria.desktopPane.add(agregar);
-        agregar.setVisible(true);
-       
+      
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblDetallefacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallefacturaMouseClicked
-        fila=tblDetallefactura.getSelectedRow();
+       
     }//GEN-LAST:event_tblDetallefacturaMouseClicked
 
     private void tblDetallefacturaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDetallefacturaKeyPressed
-        if(evt.getKeyCode()==127){
-            
-            int nuevoStock=stock+(int)tblDetallefactura.getValueAt(fila, 2);
-            int codigo=(int)tblDetallefactura.getValueAt(fila, 0);
-            Producto p=controladorProducto.buscarProductoFactura(codigo);
-            menorarIva((Double)tblDetallefactura.getValueAt(fila, 3),(int)tblDetallefactura.getValueAt(fila, 2),p);
-            controladorProducto.ActualizarMercaderia(codigo, nuevoStock);
-            facturaDetalle.eliminarDetalle(codigo);
-            
-            modelo.removeRow(fila);
-            suma=0;
-            for(int i=0;i<=tblDetallefactura.getRowCount()-1;i++){
-                suma=suma+(double)tblDetallefactura.getValueAt(i, 4);
-            }
-            double des=(suma*descuento/100);
-            txtSubtotal.setText(String.valueOf(suma-iva));
-            suma=suma-des;
-            //txtTotal.setText(String.valueOf(suma));
-            txtTotal.setText(String.valueOf(suma));
-            
-            
-        }
+        
+        
     }//GEN-LAST:event_tblDetallefacturaKeyPressed
 
-    public void menorarIva(double precio,int cantidad,Producto p){
-            
-        if(p.getIva()){
-            iva=(precio*0.12)*cantidad;
-            double ivaAnterior=Double.parseDouble(txtIva.getText().trim());
-            iva=ivaAnterior-iva;
-            txtIva.setText(String.valueOf(iva));
-            
-        }
-    }
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        Factura f=new Factura();
-        f.setDescuento(descuento);
-        f.setFecha(new Date());
-        f.setTotal(Double.parseDouble(txtTotal.getText()));
-        f.setIva(Double.parseDouble(txtIva.getText()));
-        f.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
-        f.setFormaPago((String)cbxFormaPago.getSelectedItem());
-        f.setCodigoEmpleado(empleado);
-        f.setCodigoCliente(codigoCliente);
-        controladorFactura.crearFactura(f);
-        
         
         
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    public void actualizarDetalleFactura(int codigoP,int codigoF){
-        
-        facturaDetalle.actualizarCodFactura(codigoP, codigoF);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JComboBox<String> cbxFormaPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -596,6 +491,7 @@ public class Facturas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JLabel txtFecha;
+    private javax.swing.JTextField txtFormaPag;
     private javax.swing.JLabel txtIva;
     private javax.swing.JLabel txtNfactura;
     private javax.swing.JTextField txtNombre;

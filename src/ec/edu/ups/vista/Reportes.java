@@ -82,7 +82,7 @@ private ControladorFactura controladorFactura;
            String cedula=txtCedula.getText();
            //Cliente c=controladorCliente.ListarCedula(cedula);
            DefaultTableModel modelo=(DefaultTableModel) tblReportes.getModel();
-           List<Factura> fa= controladorFactura.buscarFactura(cedula);
+           List<Factura> fa= controladorFactura.buscarFacturas(cedula);
            modelo.setRowCount(0);
            for (Factura f : fa) {
                Object [] dato={
