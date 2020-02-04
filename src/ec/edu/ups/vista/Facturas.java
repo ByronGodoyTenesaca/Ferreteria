@@ -1,5 +1,6 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ConexionBD;
 import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorFactura;
 import ec.edu.ups.controlador.ControladorFacturaDetalle;
@@ -9,10 +10,22 @@ import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Factura;
 import ec.edu.ups.modelo.FacturaDetalle;
 import ec.edu.ups.modelo.Producto;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Facturas extends javax.swing.JInternalFrame {
 
@@ -32,6 +45,7 @@ public class Facturas extends javax.swing.JInternalFrame {
     private double descuento;
     private double totalPagar;
     private int codigoCliente;
+    private  ConexionBD conexion;
    
     public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle,int empleado) {
         initComponents();
@@ -41,6 +55,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         this.controladorProfesion=controladorProfesion;
         this.facturaDetalle=facturaDetalle;
         this.empleado=empleado;
+        conexion= new ConexionBD();
         fecha();
         txtNfactura.setText(String.valueOf(controladorFactura.numeroFactura()));
         txtIva.setText("0");
@@ -609,10 +624,30 @@ public class Facturas extends javax.swing.JInternalFrame {
         f.setCodigoCliente(codigoCliente);
         controladorFactura.crearFactura(f);
         
-        
+        JOptionPane.showMessageDialog(this, "Factura Creada");
+        generarPDF();
         
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
+    public void generarPDF(){
+        try {
+            conexion.Conectar();
+            File reporteArchivo = new File("src/ec/edu/ups/reporte/ReporteFactura.jasper");
+            JasperReport reporteJasper = (JasperReport) JRLoader.loadObject(reporteArchivo);
+            Map parametro=new HashMap();
+            int codigo=controladorFactura.numeroFactura()-1;
+            parametro.put("codFAc", codigo);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporteJasper, parametro, conexion.getConexion()); 
+          
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "Factura.pdf");
+            
+            JasperViewer.viewReport(jasperPrint,false);
+            
+            conexion.Desconectar();
+        } catch (JRException ex) {
+           ex.printStackTrace();
+        }
+    }
     public void actualizarDetalleFactura(int codigoP,int codigoF){
         
         facturaDetalle.actualizarCodFactura(codigoP, codigoF);
