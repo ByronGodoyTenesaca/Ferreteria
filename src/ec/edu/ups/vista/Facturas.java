@@ -541,6 +541,9 @@ public class Facturas extends javax.swing.JInternalFrame {
     private void txtCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyPressed
         if(evt.getKeyCode()==10){
             Cliente c=cliente.ListarCedula(txtCedula.getText());
+           if(c.getCedula()== null){
+            JOptionPane.showMessageDialog(this, "No existe el cliente \ningrese nuevamente ");
+           }else{
             txtApellido.setText(c.getApellidos());
             txtNombre.setText(c.getNombres());
             txtDireccion.setText(c.getDireccion());
@@ -550,13 +553,28 @@ public class Facturas extends javax.swing.JInternalFrame {
             txtDescuento.setText(String.valueOf(controladorProfesion.buscarDescuento(txtProfesion.getText()))+" %");
             descuento=controladorProfesion.buscarDescuento(txtProfesion.getText());
             codigoCliente=c.getCodigo();
+           }
         }
     }//GEN-LAST:event_txtCedulaKeyPressed
 
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
+        int total=tblDetallefactura.getRowCount();
+        int i=0;
+        while(i<total){
+            
+            int codigo=(int)tblDetallefactura.getValueAt(i, 0);
+            Producto p=controladorProducto.buscarProductoFactura(codigo);
+            
+            int nuevoStock=p.getCantidad()+(int)tblDetallefactura.getValueAt(i, 2);
+            
+            controladorProducto.ActualizarMercaderia(codigo, nuevoStock);
+            facturaDetalle.eliminarDetalle(codigo);
+            
+            i++;
+        }
         this.dispose();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -593,6 +611,7 @@ public class Facturas extends javax.swing.JInternalFrame {
             
             modelo.removeRow(fila);
             suma=0;
+            
             for(int i=0;i<=tblDetallefactura.getRowCount()-1;i++){
                 suma=suma+(double)tblDetallefactura.getValueAt(i, 4);
             }

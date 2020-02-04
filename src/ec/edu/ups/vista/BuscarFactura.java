@@ -108,7 +108,9 @@ private FacturaBuscada factura;
            DefaultTableModel modelo=(DefaultTableModel) tblBuscar.getModel();
            List<Factura> fa= controladorFactura.buscarFacturas(cedula);
            modelo.setRowCount(0);
+           
            for (Factura f : fa) {
+               
                Object [] dato={
                  f.getCodigo(),
                  f.getFecha()
@@ -119,6 +121,25 @@ private FacturaBuscada factura;
        }
     }//GEN-LAST:event_txtCedulaKeyPressed
 
+    public void llenarTabla(String cedula){
+        
+           //Cliente c=controladorCliente.ListarCedula(cedula);
+           txtCedula.setText(cedula);
+           DefaultTableModel modelo=(DefaultTableModel) tblBuscar.getModel();
+           List<Factura> fa= controladorFactura.buscarFacturas(cedula);
+           modelo.setRowCount(0);
+           
+           for (Factura f : fa) {
+               
+               Object [] dato={
+                 f.getCodigo(),
+                 f.getFecha()
+               };
+               modelo.addRow(dato);
+           }
+    }
+    
+    
     private void tblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBuscarMouseClicked
         if(evt.getClickCount()==2){
             if(factura==null){
@@ -127,6 +148,7 @@ private FacturaBuscada factura;
             factura=new FacturaBuscada(codigo,new ControladorFactura(),new ControladorFacturaDetalle(),new ControladorCliente(),new ControladorProducto());
             factura.setVisible(true);
             Secundaria.desktopPane.add(factura);
+            this.dispose();
             }else{
             factura.setVisible(false);
             int seleccion=tblBuscar.getSelectedRow();
@@ -134,6 +156,7 @@ private FacturaBuscada factura;
             factura=new FacturaBuscada(codigo,new ControladorFactura(),new ControladorFacturaDetalle(),new ControladorCliente(),new ControladorProducto());
             factura.setVisible(true);
             Secundaria.desktopPane.add(factura);
+            this.dispose();
             }
         }
     }//GEN-LAST:event_tblBuscarMouseClicked

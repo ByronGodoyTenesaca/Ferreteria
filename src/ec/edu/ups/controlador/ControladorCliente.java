@@ -108,7 +108,7 @@ public class ControladorCliente {
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
-            System.out.println(respuesta);
+           
             
             while(respuesta.next()){
                 c.setCodigo(respuesta.getInt(1));
@@ -121,8 +121,8 @@ public class ControladorCliente {
                 c.setGenero(respuesta.getString(8));
                 c.setTelefono(respuesta.getString(9));
                 c.setProfesion(respuesta.getString(10));
+                System.out.println("enttre");
                 break;
-                
             }
             conexion.Desconectar();
             return c;

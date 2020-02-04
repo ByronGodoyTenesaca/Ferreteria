@@ -79,7 +79,7 @@ public class ControladorFacturaDetalle {
         try {
             List<FacturaDetalle> lista=new ArrayList<>();
             String sql="SELECT * FROM FER_FACTURA_DETALLES WHERE FER_FACTURA_FAC_CODIGO= "+codigo+"";
-            System.out.println(sql);
+            
             conexion.Conectar();
             Statement sta=conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);

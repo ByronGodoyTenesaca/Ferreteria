@@ -7,7 +7,9 @@ import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Factura;
 import ec.edu.ups.modelo.FacturaDetalle;
+import ec.edu.ups.modelo.Producto;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -19,6 +21,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
     private ControladorFacturaDetalle facturaDetalle;
     private ControladorCliente controladorCliente;
     private ControladorProducto controladorProducto;
+    private BuscarFactura buscarFactura;
     public FacturaBuscada(int codigo,ControladorFactura controladorFactura,ControladorFacturaDetalle facturaDetalle,ControladorCliente controladorCliente, ControladorProducto controladorProducto) {
         initComponents();
         this.codigo=codigo;
@@ -26,8 +29,10 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         this.facturaDetalle=facturaDetalle;
         this.controladorCliente=controladorCliente;
         this.controladorProducto=controladorProducto;
+        buscarFactura=new BuscarFactura(controladorFactura);
         llenarFactura();
         llenarTabla();
+        //this.setLocation(750, 60);
     }
     
    public void llenarFactura(){
@@ -89,7 +94,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         jLabel19 = new javax.swing.JLabel();
         txtDescuento = new javax.swing.JLabel();
         txtTotal = new javax.swing.JLabel();
-        btnAgregar = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
@@ -245,14 +250,14 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         jPanel4.add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 88, 141, 29));
         jPanel4.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 124, 141, 29));
 
-        btnAgregar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnAnular.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        btnAnular.setText("Anular");
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnAnularActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 70));
+        jPanel4.add(btnAnular, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 70));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -429,9 +434,30 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
       
-    }//GEN-LAST:event_btnAgregarActionPerformed
+        controladorFactura.anularFactura(codigo);
+        int total=tblDetallefactura.getRowCount();
+        int i=0;
+        while(i<total){
+            
+            int codigode=(int)tblDetallefactura.getValueAt(i, 0);
+            Producto p=controladorProducto.buscarProductoFactura(codigode);
+            
+            int nuevoStock=p.getCantidad()+(int)tblDetallefactura.getValueAt(i, 2);
+            
+            controladorProducto.ActualizarMercaderia(codigode, nuevoStock);
+            //facturaDetalle.eliminarDetalle(codigo);
+            
+            i++;
+        }
+        JOptionPane.showMessageDialog(this, "Factura Anulada");
+       buscarFactura.setVisible(true);
+       buscarFactura.llenarTabla(txtCedula.getText().trim());
+       Secundaria.desktopPane.add(buscarFactura);
+       this.dispose();
+        
+    }//GEN-LAST:event_btnAnularActionPerformed
 
     private void tblDetallefacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallefacturaMouseClicked
        
@@ -444,7 +470,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

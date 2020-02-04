@@ -121,7 +121,7 @@ public class ControladorProducto {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
             String sql="SELECT * FROM FER_PRODUCTOS WHERE FER_CATEGORIA_CAT_CODIGO="+cat+" AND PRO_ESTADO= 1";
-            System.out.println(sql);
+            
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
@@ -195,7 +195,7 @@ public class ControladorProducto {
             List<Producto> lista=new ArrayList<>();
             conexion.Conectar();
             String sql="SELECT * FROM FER_PRODUCTOS WHERE PRO_NOMBRE LIKE '"+cat+"%' AND PRO_ESTADO = 1";
-            System.out.println(sql);
+            
             Statement sta= conexion.getConexion().createStatement();
             ResultSet respuesta=sta.executeQuery(sql);
             
