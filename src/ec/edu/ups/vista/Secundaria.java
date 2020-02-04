@@ -3,6 +3,7 @@ package ec.edu.ups.vista;
 import ec.edu.ups.controlador.ControladorCargo;
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorCliente;
+import ec.edu.ups.controlador.ControladorCorreo;
 import ec.edu.ups.controlador.ControladorEmpleado;
 import ec.edu.ups.controlador.ControladorFactura;
 import ec.edu.ups.controlador.ControladorFacturaDetalle;
@@ -328,7 +329,7 @@ public class Secundaria extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         desktopPane.removeAll();
         desktopPane.repaint();
-        f=new Facturas(new ControladorCliente(),new ControladorFactura(),new ControladorProducto(),new ControladorProfesion(),new ControladorFacturaDetalle(),empleado);
+        f=new Facturas(new ControladorCliente(),new ControladorFactura(),new ControladorProducto(),new ControladorProfesion(),new ControladorFacturaDetalle(),empleado,new ControladorCorreo());
         f.setVisible(true);
         desktopPane.add(f);
     }//GEN-LAST:event_jMenuItem5ActionPerformed

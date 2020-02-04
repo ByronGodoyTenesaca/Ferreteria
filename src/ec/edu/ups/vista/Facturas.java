@@ -2,11 +2,13 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ConexionBD;
 import ec.edu.ups.controlador.ControladorCliente;
+import ec.edu.ups.controlador.ControladorCorreo;
 import ec.edu.ups.controlador.ControladorFactura;
 import ec.edu.ups.controlador.ControladorFacturaDetalle;
 import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Cliente;
+import ec.edu.ups.modelo.Correo;
 import ec.edu.ups.modelo.Factura;
 import ec.edu.ups.modelo.FacturaDetalle;
 import ec.edu.ups.modelo.Producto;
@@ -15,8 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -34,6 +34,7 @@ public class Facturas extends javax.swing.JInternalFrame {
     private ControladorProducto controladorProducto;
     private ControladorProfesion controladorProfesion;
     private ControladorFacturaDetalle facturaDetalle;
+    private ControladorCorreo controladorCorreo;
     private  DefaultTableModel modelo;
     private FacturaDetalle fdetalle;
     private AgregarProductos agregar;
@@ -46,8 +47,9 @@ public class Facturas extends javax.swing.JInternalFrame {
     private double totalPagar;
     private int codigoCliente;
     private  ConexionBD conexion;
+    private Correo c;
    
-    public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle,int empleado) {
+    public Facturas(ControladorCliente cliente, ControladorFactura controladorFactura,ControladorProducto controladorProducto,ControladorProfesion controladorProfesion,ControladorFacturaDetalle facturaDetalle,int empleado,ControladorCorreo controladorCorreo) {
         initComponents();
         this.cliente=cliente;
         this.controladorFactura=controladorFactura;
@@ -55,11 +57,13 @@ public class Facturas extends javax.swing.JInternalFrame {
         this.controladorProfesion=controladorProfesion;
         this.facturaDetalle=facturaDetalle;
         this.empleado=empleado;
+        this.controladorCorreo=controladorCorreo;
         conexion= new ConexionBD();
         fecha();
         txtNfactura.setText(String.valueOf(controladorFactura.numeroFactura()));
         txtIva.setText("0");
         fdetalle=new FacturaDetalle();
+        c=new Correo();
     }
 
     public Facturas() {
@@ -626,7 +630,7 @@ public class Facturas extends javax.swing.JInternalFrame {
         
         JOptionPane.showMessageDialog(this, "Factura Creada");
         generarPDF();
-        
+        enviaCorreo();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     public void generarPDF(){
@@ -646,6 +650,22 @@ public class Facturas extends javax.swing.JInternalFrame {
             conexion.Desconectar();
         } catch (JRException ex) {
            ex.printStackTrace();
+        }
+    }
+    
+    public void enviaCorreo(){
+        c.setContraseña("nmucqqvjcteybqzi");
+        c.setUsuarioCorreo("byrongodoy1998@gmail.com");
+        c.setAsunto("Factura de Ferreteria");
+        c.setMensaje("A continuacion su factura");
+        c.setDestino(txtEmail.getText().trim());
+        c.setNombreArchivo("Factura.pdf");
+        c.setRutaArchivo("Factura.pdf");
+        
+        if(controladorCorreo.correoEnviado(c)){
+            JOptionPane.showMessageDialog(this, "Correo Enviado");
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de Correo");
         }
     }
     public void actualizarDetalleFactura(int codigoP,int codigoF){

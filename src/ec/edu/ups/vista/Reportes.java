@@ -1,19 +1,32 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ConexionBD;
 import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorFactura;
 import ec.edu.ups.modelo.Factura;
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Reportes extends javax.swing.JInternalFrame {
 private ControladorCliente controladorCliente;
 private ControladorFactura controladorFactura;
+private ConexionBD conexion;
 
     public Reportes(ControladorCliente controladorCliente,ControladorFactura controladorFactura) {
         initComponents();
         this.controladorCliente=controladorCliente;
         this.controladorFactura=controladorFactura;
+        conexion= new ConexionBD();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -46,6 +59,11 @@ private ControladorFactura controladorFactura;
             }
         });
         tblReportes.setRowHeight(30);
+        tblReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblReportesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblReportes);
         if (tblReportes.getColumnModel().getColumnCount() > 0) {
             tblReportes.getColumnModel().getColumn(0).setResizable(false);
@@ -95,6 +113,32 @@ private ControladorFactura controladorFactura;
        }
     }//GEN-LAST:event_txtCedulaKeyPressed
 
+    private void tblReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblReportesMouseClicked
+        int valor =tblReportes.getSelectedRow();
+        if(evt.getClickCount()==2){
+            int codigo=(int)tblReportes.getValueAt(valor, 0);
+            generarPDF(codigo);
+        }
+    }//GEN-LAST:event_tblReportesMouseClicked
+
+    public void generarPDF(int codigo){
+        try {
+            conexion.Conectar();
+            File reporteArchivo = new File("src/ec/edu/ups/reporte/ReporteFactura.jasper");
+            JasperReport reporteJasper = (JasperReport) JRLoader.loadObject(reporteArchivo);
+            Map parametro=new HashMap();
+            parametro.put("codFAc", codigo);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporteJasper, parametro, conexion.getConexion()); 
+          
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "Factura.pdf");
+            
+            JasperViewer.viewReport(jasperPrint,false);
+            
+            conexion.Desconectar();
+        } catch (JRException ex) {
+           ex.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
