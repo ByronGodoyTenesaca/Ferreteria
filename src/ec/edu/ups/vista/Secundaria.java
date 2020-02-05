@@ -1,5 +1,6 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ConexionBD;
 import ec.edu.ups.controlador.ControladorCargo;
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.controlador.ControladorCliente;
@@ -12,7 +13,21 @@ import ec.edu.ups.controlador.ControladorProducto;
 import ec.edu.ups.controlador.ControladorProductoProveedor;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.controlador.ControladorProveedor;
+import ec.edu.ups.modelo.Factura;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 public class Secundaria extends javax.swing.JFrame {
@@ -25,19 +40,22 @@ public class Secundaria extends javax.swing.JFrame {
     private int n;
     private ControladorCliente controladorCliente;
     private ControladorProfesion controladorProfesion;
+    private ControladorFactura factura;
     private VistaEmpleado vistaEmpleado;
     private VistaCargo vistaCargo;
+    private Graficas graficas;
     private ControladorEmpleado controladorEmpleado;
     private ControladorCargo controladorCargo;
     private ControladorCategoria controladorCategoria;
     private ControladorMedida controladorMedida;
     private int empleado;
+    private ConexionBD conexion;
     
     public Secundaria(int n, int empleado) {
         initComponents();
         controladorCliente=new ControladorCliente();
         controladorProfesion=new ControladorProfesion();
-        
+        factura=new ControladorFactura();
         controladorCargo = new ControladorCargo();
         controladorEmpleado = new ControladorEmpleado();
         controladorCategoria = new ControladorCategoria();
@@ -45,6 +63,7 @@ public class Secundaria extends javax.swing.JFrame {
         this.empleado=empleado;
         this.n=n;
         controlar();
+        conexion=new ConexionBD();
         this.setExtendedState(MAXIMIZED_BOTH);
       
     }
@@ -90,6 +109,7 @@ public class Secundaria extends javax.swing.JFrame {
         menuReportes = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
         menuSesion = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
 
@@ -212,6 +232,15 @@ public class Secundaria extends javax.swing.JFrame {
         menuBar.add(menuReportes);
 
         jMenu2.setText("Estadisticas");
+
+        jMenuItem9.setText("Estadistica Ganancia");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem9);
+
         menuBar.add(jMenu2);
 
         menuSesion.setText("Sesion");
@@ -351,6 +380,93 @@ public class Secundaria extends javax.swing.JFrame {
         desktopPane.add(bf);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+       //String fe= JOptionPane.showInputDialog("Desde que mes quiere las estadisticas");
+       //String fe1= JOptionPane.showInputDialog("Hasta que mes quiere las estadisticas");
+       
+       //estadistica();
+       desktopPane.removeAll();
+       desktopPane.repaint();
+       graficas=new Graficas();
+       graficas.setVisible(true);
+       desktopPane.add(graficas);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    public void estadistica(){
+        try {
+            LinkedList datosAGraficar = new LinkedList();
+            String sql="select fac_fecha,sum(fac_codigo) " +
+                    "from fer_facturas " +
+                    "where fac_fecha>'01-ENE-2019' and fac_fecha<'4-FEB-2020' and FAC_ESTADO=1 " +
+                    "group by fac_fecha " +
+                    "order by 1";
+            conexion.Conectar();
+            Statement sta=conexion.getConexion().createStatement();
+            ResultSet res=sta.executeQuery(sql);
+            while(res.next()){
+                 LinkedList aux = new LinkedList();
+                    aux.add(res.getString(1));
+                    aux.add(res.getString(2));
+                    datosAGraficar.add(aux);
+                    
+            } 
+        Iterator it=datosAGraficar.iterator();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        while (it.hasNext()) {
+          LinkedList data = (LinkedList) it.next();
+          dataset.setValue(Integer.parseInt(data.get(1).toString()),
+          "Ganancias", data.get(0).toString());
+        }
+        JFreeChart chart = ChartFactory.createBarChart(
+        "GANANCIAS DE VENTAS",
+        "Fechas",
+        "Ganancias en Dolares",
+        dataset,
+        PlotOrientation.VERTICAL,
+        true,
+        false,
+        false
+        );
+        chart.setBackgroundPaint(Color.cyan);
+        chart.getTitle().setPaint(Color.black); 
+        CategoryPlot p = chart.getCategoryPlot(); 
+        p.setRangeGridlinePaint(Color.blue); 
+        ChartFrame frame = new ChartFrame("Estadisticas", chart);
+        frame.pack();
+        frame.setVisible(true);
+        
+        }catch(Exception e){
+            
+        }
+    }
+    public String comprovarFecha(String fecha){
+        if(fecha.equals("Enero")){
+            return "ENE";
+        }else if(fecha.equals("Febrero")){
+            return "FEB";
+        }else if(fecha.equals("Marzo")){
+            return "MAR";
+        }else if(fecha.equals("Abril")){
+            return "ABR";
+        }else if(fecha.equals("Mayo")){
+            return "MAY";
+        }else if(fecha.equals("Junio")){
+            return "JUN";
+        }else if(fecha.equals("Julio")){
+            return "JUL";
+        }else if(fecha.equals("Agosto")){
+            return "AGO";
+        }else if(fecha.equals("Septiembre")){
+            return "SEP";
+        }else if(fecha.equals("Octubre")){
+            return "OCT";
+        }else if(fecha.equals("Noviembre")){
+            return "NOV";
+        }else{
+            return "DIC"; 
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane desktopPane;
@@ -368,6 +484,7 @@ public class Secundaria extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuEmpleado;
