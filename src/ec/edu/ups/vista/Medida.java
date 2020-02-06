@@ -1,6 +1,7 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorMedida;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -245,13 +246,16 @@ public class Medida extends javax.swing.JInternalFrame {
     public void Actualizar(){
         ec.edu.ups.modelo.Medida m=controladorMedida.buscar(txtBuscar.getText());
             DefaultTableModel modelo=(DefaultTableModel) tblMedida.getModel();
+            if(m.getTipo()!=null){
             Object[] dato={
                 m.getCodigo(),
                 m.getTipo()
             };
               modelo.addRow(dato);
+            }else{
+                JOptionPane.showMessageDialog(this, "No existe la medida");
+            }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;

@@ -537,6 +537,7 @@ public class Productos extends javax.swing.JInternalFrame {
         DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
         List<Producto>lista=controladorProducto.buscarEmpresa(txtBuscar.getText());
         modelo.setRowCount(0);
+        if(lista.size()!=0){
         for (Producto p : lista) {
 
             Object[] dato={
@@ -554,6 +555,9 @@ public class Productos extends javax.swing.JInternalFrame {
                 buscarMedida(p.getCodigoMedida())
             };
             modelo.addRow(dato);
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "No existen productoss"); 
         }
     }
     public void actualizarCategoria(){
@@ -561,6 +565,7 @@ public class Productos extends javax.swing.JInternalFrame {
         DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
         List<Producto>lista=controladorProducto.buscarCategoria(codigo);
         modelo.setRowCount(0);
+        if(lista.size()!=0){
         for (Producto p : lista) {
 
             Object[] dato={
@@ -579,12 +584,16 @@ public class Productos extends javax.swing.JInternalFrame {
             };
             modelo.addRow(dato);
         }
+        }else{
+            JOptionPane.showMessageDialog(this, "No existen productoss");
+        }
     }
     
     public void actualizarProducto(){
         DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
         List<Producto>lista=controladorProducto.buscarProducto(txtBuscar.getText());
         modelo.setRowCount(0);
+        if(lista.size()!=0){
         for (Producto p : lista) {
 
             Object[] dato={
@@ -602,6 +611,9 @@ public class Productos extends javax.swing.JInternalFrame {
                 buscarMedida(p.getCodigoMedida())
             };
             modelo.addRow(dato);
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "No existen los productos");
         }
     }
     

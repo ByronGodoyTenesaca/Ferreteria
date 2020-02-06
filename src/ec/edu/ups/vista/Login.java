@@ -11,6 +11,7 @@ public class Login extends javax.swing.JFrame {
         cl=new ControladorLogin();
         txtPasword.setText("byron");
         txtUser.setText("byron@hotmail.com");
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

@@ -275,10 +275,10 @@ public class Secundaria extends javax.swing.JFrame {
         Categorias c=new Categorias(controladorCategoria);
         c.setVisible(true);
         desktopPane.add(c);
-        Dimension desktopSize = desktopPane.getSize();
+        /*Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = c.getSize();
-        c.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        c.show();
+        //c.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
+        c.show();*/
     }//GEN-LAST:event_itemCategoriaActionPerformed
 
     private void itemMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMedidaActionPerformed
@@ -287,10 +287,10 @@ public class Secundaria extends javax.swing.JFrame {
         Medida m=new Medida(controladorMedida);
         m.setVisible(true);
         desktopPane.add(m);
-        Dimension desktopSize = desktopPane.getSize();
+       /* Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = m.getSize();
         m.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        m.show();
+        m.show();*/
     }//GEN-LAST:event_itemMedidaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -299,10 +299,10 @@ public class Secundaria extends javax.swing.JFrame {
         Profesiones p=new Profesiones(controladorProfesion);
         p.setVisible(true);
         desktopPane.add(p);
-        Dimension desktopSize = desktopPane.getSize();
+        /*Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = p.getSize();
         p.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        p.show();
+        p.show();*/
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -311,10 +311,10 @@ public class Secundaria extends javax.swing.JFrame {
         c=new Clientes(controladorCliente,controladorProfesion);
         c.setVisible(true);
         desktopPane.add(c);
-        Dimension desktopSize = desktopPane.getSize();
+        /*Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = c.getSize();
         c.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        c.show();
+        c.show();*/
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -323,10 +323,10 @@ public class Secundaria extends javax.swing.JFrame {
         p=new Productos(new ControladorCategoria(),new ControladorMedida(),new ControladorProducto(),new ControladorProveedor(),new ControladorProductoProveedor());
         p.setVisible(true);
         desktopPane.add(p);
-        Dimension desktopSize = desktopPane.getSize();
+       /* Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = p.getSize();
         p.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        p.show();
+        p.show();*/
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -335,7 +335,7 @@ public class Secundaria extends javax.swing.JFrame {
         vistaEmpleado = new VistaEmpleado(controladorEmpleado,new ControladorCargo());
         vistaEmpleado.setVisible(true);
         desktopPane.add(vistaEmpleado);
-        vistaEmpleado.show();
+        //vistaEmpleado.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void itemProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProveedorActionPerformed
@@ -344,10 +344,10 @@ public class Secundaria extends javax.swing.JFrame {
         pr=new Proveedores(new ControladorProveedor(),new ControladorProductoProveedor());
         pr.setVisible(true);
         desktopPane.add(pr);
-        Dimension desktopSize = desktopPane.getSize();
+        /*Dimension desktopSize = desktopPane.getSize();
         Dimension FrameSize = pr.getSize();
         pr.setLocation((desktopSize.width - FrameSize.width-940)/7, (desktopSize.height- FrameSize.height)/7);
-        pr.show();
+        pr.show();*/
     }//GEN-LAST:event_itemProveedorActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed

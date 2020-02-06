@@ -6,6 +6,7 @@ import ec.edu.ups.modelo.Cargo;
 import ec.edu.ups.modelo.Empleado;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -465,6 +466,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         Empleado e=controladorEmpleado.buscarXCedula(txtValorBuscar.getText());
         DefaultTableModel modelo= (DefaultTableModel) tblEmpleados.getModel();
         modelo.setRowCount(0);
+        if(e.getApellidos()!= null){
        Object[] dato ={
            e.getCodigo(),
            e.getCedula(),
@@ -478,12 +480,16 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
            e.getDireccion()
        };
        modelo.addRow(dato);
+    }else{
+            JOptionPane.showMessageDialog(this, "No existe el empleado");
+        }
     }
     
     public void BuscarNombre(){
         List<Empleado> lista=controladorEmpleado.buscarXNombre(txtValorBuscar.getText());
         DefaultTableModel modelo= (DefaultTableModel) tblEmpleados.getModel();
         modelo.setRowCount(0);
+        if(lista.size()!=0){
         for (Empleado e : lista) {
            Object[] dato ={
            e.getCodigo(),
@@ -499,12 +505,16 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
            };
            modelo.addRow(dato);
         }
+        }else{
+            JOptionPane.showMessageDialog(this, "Los empleados no existen");
+        }
     }
     
     public void BuscarPuesto(){
         List<Empleado> lista=controladorEmpleado.buscarXTrabajo(BuscarCargo(txtValorBuscar.getText()));
         DefaultTableModel modelo= (DefaultTableModel) tblEmpleados.getModel();
         modelo.setRowCount(0);
+        if(lista.size()!=0){
         for (Empleado e : lista) {
            Object[] dato ={
            e.getCodigo(),
@@ -519,6 +529,9 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
            e.getDireccion()
            };
            modelo.addRow(dato);
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "No existen los empleados");
         }
     }
     

@@ -3,6 +3,7 @@ package ec.edu.ups.vista;
 import ec.edu.ups.controlador.ControladorProfesion;
 import ec.edu.ups.modelo.Profesion;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -281,6 +282,7 @@ public class Profesiones extends javax.swing.JInternalFrame {
         List<Profesion> m=controladorProfesion.buscarNombre(txtBuscar.getText());
             DefaultTableModel modelo=(DefaultTableModel) tblProfesion.getModel();
             modelo.setRowCount(0);
+            if(m.size()!=0){
             for(Profesion p:m){
             Object[] dato={
                 p.getCodigo(),
@@ -289,6 +291,9 @@ public class Profesiones extends javax.swing.JInternalFrame {
             };
               modelo.addRow(dato);
         }
+        }else{
+                 JOptionPane.showMessageDialog(this, "No existen productoss");
+            }
     }
     private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
         Profesion p=new Profesion();

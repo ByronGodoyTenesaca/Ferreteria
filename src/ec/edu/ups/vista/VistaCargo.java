@@ -8,6 +8,7 @@ package ec.edu.ups.vista;
 import ec.edu.ups.controlador.ControladorCargo;
 import ec.edu.ups.modelo.Cargo;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -246,12 +247,15 @@ public class VistaCargo extends javax.swing.JInternalFrame {
         Cargo c=controladorCargo.Buscar(txtBuscar.getText());
             DefaultTableModel modelo=(DefaultTableModel) tblCargo.getModel();
             modelo.setRowCount(0);
-           
+           if(c.getCargo()!=null){
             Object[] dato={
                 c.getCodigo(),
                 c.getCargo()
             };
             modelo.addRow(dato);
+            }else{
+               JOptionPane.showMessageDialog(this, "No existe el cargo");
+           }
     }
     
 

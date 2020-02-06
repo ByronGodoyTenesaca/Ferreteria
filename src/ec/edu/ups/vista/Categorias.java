@@ -2,6 +2,7 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorCategoria;
 import ec.edu.ups.modelo.Categoria;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Categorias extends javax.swing.JInternalFrame {
@@ -246,13 +247,16 @@ public class Categorias extends javax.swing.JInternalFrame {
     public void Actualizar(){
         Categoria m=controladorCategoria.buscar(txtBuscar.getText());
             DefaultTableModel modelo=(DefaultTableModel) tblCategoria.getModel();
+            if(m.getCategoria()!=null){
             Object[] dato={
                 m.getCodigo(),
                 m.getCategoria()
             };
               modelo.addRow(dato);
-}
-
+            }else{
+                JOptionPane.showMessageDialog(this, "No existe la categoria");
+            }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;

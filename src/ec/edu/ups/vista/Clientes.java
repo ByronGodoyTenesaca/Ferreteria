@@ -6,6 +6,7 @@ import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Profesion;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Clientes extends javax.swing.JInternalFrame {
@@ -503,7 +504,7 @@ public class Clientes extends javax.swing.JInternalFrame {
                 String cedula=txtBuscar.getText();
                 modelo.setRowCount(0);
                 Cliente c=controladorCliente.ListarCedula(cedula);
-               
+               if(c.getApellidos()!=null){
                 Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -518,14 +519,18 @@ public class Clientes extends javax.swing.JInternalFrame {
                   
                 };
                 modelo.addRow(dato);
+                }else{
+                   JOptionPane.showMessageDialog(this, "No existen clientes");
+               }
     }
-
     public void ActualizarProfesion(){
         String profesion = txtBuscar.getText();
                 List<Cliente> lista=controladorCliente.ListarProfesion(profesion);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 modelo.setRowCount(0);
+                if(lista.size()!=0){
                 for (Cliente c : lista) {
+                    
                     Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -540,15 +545,20 @@ public class Clientes extends javax.swing.JInternalFrame {
                   
                 };
                 modelo.addRow(dato);
-                }
+                    
+                 }
+        }else{
+                        JOptionPane.showMessageDialog(this, "No existen Clientes");
+                    }
     }
-    
     public void ActualizarNombre(){
         String nombre = txtBuscar.getText();
                 List<Cliente> lista=controladorCliente.ListarNombre(nombre);
                 DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
                 modelo.setRowCount(0);
+                 if(lista.size()!=0){
                 for (Cliente c : lista) {
+                    if(c.getApellidos()!=null){
                     Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -563,7 +573,12 @@ public class Clientes extends javax.swing.JInternalFrame {
                   
                 };
                 modelo.addRow(dato);
+                    }
                 }
+                 }else{
+                        JOptionPane.showMessageDialog(this, "No existen Clientes");
+                    }
+                
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

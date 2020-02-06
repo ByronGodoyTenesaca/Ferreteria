@@ -4,6 +4,7 @@ import ec.edu.ups.controlador.ControladorProductoProveedor;
 import ec.edu.ups.controlador.ControladorProveedor;
 import ec.edu.ups.modelo.Proveedor;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Proveedores extends javax.swing.JInternalFrame {
@@ -460,6 +461,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
                 Proveedor c=controladorProveedor.buscarCedula(txtBuscar.getText());
                 DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
                 modelo.setRowCount(0);
+                if(c.getApellidos()!=null){
                 Object[] dato={
                     c.getCodigo(),
                     c.getCedula(),
@@ -474,13 +476,16 @@ public class Proveedores extends javax.swing.JInternalFrame {
                  
                 };
                 modelo.addRow(dato);
+                }else{
+                     JOptionPane.showMessageDialog(this, "No existe el proveedor");
+                }
     }
     
     public void BuscarEmpresa(){
         List<Proveedor> lista = controladorProveedor.buscarEmpresa(txtBuscar.getText());
                 DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
                 modelo.setRowCount(0);
-               
+               if(lista.size()!=0){
                     for(Proveedor c:lista){
                     Object[] dato={
                     c.getCodigo(),
@@ -496,6 +501,9 @@ public class Proveedores extends javax.swing.JInternalFrame {
                 };
                 modelo.addRow(dato);
                }
+             }else{
+                    JOptionPane.showMessageDialog(this, "No existe los proveedores");
+               }
     }
     
     public void BuscarNombre(){
@@ -503,6 +511,7 @@ public class Proveedores extends javax.swing.JInternalFrame {
                 DefaultTableModel modelo=(DefaultTableModel) tblProveedor.getModel();
                 modelo.setRowCount(0);
                
+                    if(lista.size()!=0){
                     for(Proveedor c:lista){
                     Object[] dato={
                     c.getCodigo(),
@@ -517,7 +526,10 @@ public class Proveedores extends javax.swing.JInternalFrame {
                   
                 };
                 modelo.addRow(dato);
-                    }
+               }
+             }else{
+                    JOptionPane.showMessageDialog(this, "No existe los proveedores");
+               }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
