@@ -234,6 +234,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 129, -1, -1));
 
         btnCancelar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/images/cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,6 +252,7 @@ public class FacturaBuscada extends javax.swing.JInternalFrame {
         jPanel4.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 124, 141, 29));
 
         btnAnular.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        btnAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/images/confirmarF.png"))); // NOI18N
         btnAnular.setText("Anular");
         btnAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -9,7 +9,7 @@ public class ConexionBD {
     private Connection conexion= null;
     private String login = "ProyectoFerreteria";
     private String pasword = "ferreteria";
-    private String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+    private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
    public ConexionBD() {
     }
